@@ -94,31 +94,58 @@
                         <table class="table table-light table-bordered table-hover table-striped" id="dataTable">
                             <thead>
                                 <tr>
+                                    <th>No</th>
+                                    <th>Bulan / Tahun</th>
                                     <th>NPP</th>
                                     <th>Nama</th>
                                     <th>Gaji Pokok</th>
                                     <th>Tunjangan Keluarga</th>
-                                    <th>Tunjangan Jabatan</th>
-                                    <th>Tunjangan Kesja</th>
                                     <th>Tunjangan Pendidikan</th>
+                                    <th>Nilai Bruto</th>
+                                    <th>Tunjangan Jabatan</th>
+                                    <th>Tunjangan Peralihan</th>
+                                    <th>Tunjangan Kesejahteraan</th>
+                                    <th>Tunjangan Beras</th>
+                                    <th>Tunjangan Rayon</th>
+                                    <th>Tunjangan Makan</th>
+                                    <th>Tunjangan BPJS Ketenagakerjaan</th>
+                                    <th>Tunjangan BPJS Kesehatan</th>
+                                    <th>Tunjangan Dapen</th>
+                                    <th>Tunjangan Kehadiran</th>
+                                    <th>Tunjangan BHY</th>
                                     <th>Lembur</th>
                                     <th>Kekurangan</th>
-                                    <th>Bruto</th>
+                                    <th>Jumlah Hasil</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($gaji as $gj)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->isoFormat('MMM') }}{{ ' ' }}
+                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->format('Y') }}
+                                        </td>
                                         <td>{{ $gj->npp }}</td>
                                         <td>{{ $gj->nama }}</td>
                                         <td>@currency($gj->gapok) </td>
                                         <td>@currency($gj->tj_kelu) </td>
+                                        <td>@currency($gj->tj_pend) </td>
+                                        <td>@currency($gj->nl_bruto1) </td>
                                         <td>@currency($gj->tj_jbt) </td>
+                                        <td>@currency($gj->tj_alih) </td>
                                         <td>@currency($gj->tj_kesja) </td>
-                                        <td>@currency($gj->tj_didik) </td>
+                                        <td>@currency($gj->tj_beras) </td>
+                                        <td>@currency($gj->tj_rayon) </td>
+                                        <td>@currency($gj->tj_makan) </td>
+                                        <td>@currency($gj->tj_sostek) </td>
+                                        <td>@currency($gj->tj_kes) </td>
+                                        <td>@currency($gj->tj_dapen) </td>
+                                        <td>@currency($gj->tj_hadir) </td>
+                                        <td>@currency($gj->tj_bhy) </td>
                                         <td>@currency($gj->lembur) </td>
                                         <td>@currency($gj->kurang) </td>
-                                        <td>@currency($gj->gapok + $gj->tj_kelu + $gj->tj_jbt + $gj->tj_kesja + $gj->tj_didik + $gj->lembur + $gj->kurang)</td>
+                                        <td>@currency($gj->jm_hasil) </td>
                                     </tr>
                                 @endforeach
                             </tbody>

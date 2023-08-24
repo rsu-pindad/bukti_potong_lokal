@@ -14,14 +14,13 @@ class GajiController extends Controller
 
     public function index()
     {
-        $month = Gaji::selectRaw('MONTH(bulan) as bulan')->groupBy(DB::raw('bulan'))->get();
-        $year = Gaji::selectRaw('YEAR(bulan) as tahun')->groupBy(DB::raw('tahun'))->get();
+        $month = Gaji::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
+        $year = Gaji::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
 
         $getMonth = request()->input('month') ?? Carbon::now()->month;
         $getYear = request()->input('year') ?? Carbon::now()->year;
 
-        $gaji = Gaji::whereRaw("MONTH(bulan) = $getMonth AND YEAR(bulan) = $getYear")->get();
-
+        $gaji = Gaji::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
 
         $data = [
             'title' => 'Data Gaji Pegawai', 'gaji' => $gaji,
@@ -40,7 +39,7 @@ class GajiController extends Controller
         try {
             Excel::import(new GajiImport, $validated['fileGaji']);
         } catch (\Throwable $th) {
-            return redirect()->route('gaji')->with('error', 'upload file gaji!');
+            return dd($th);
         }
 
         return redirect()->route('gaji')->with('success', 'All good!');
