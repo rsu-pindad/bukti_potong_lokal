@@ -80,12 +80,29 @@
                             </select>
                         </form>
                         <div class="my-auto">
-                            <button type="" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#modalCreateSalary"><i class="fa-solid fa-plus"></i>
-                                Tambah</button>
-                            <button type="" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#modalImportSalary"><i class="fa-solid fa-file-excel"></i>
-                                Impor</button>
+
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modalCreateSalary"><i
+                                                class="fa-solid fa-plus text-primary"></i>
+                                            Tambah</a></li>
+                                    <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modalImportSalary"><i
+                                                class="fa-solid fa-file-excel text-success"></i>
+                                            Impor Data Gaji</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="{{ route('gaji/import-template') }}">Download
+                                            Template Impor</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,7 +187,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitleId">Tambah Data Gaji</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
 
                     </div>
                     <div class="modal-body">
@@ -225,7 +243,7 @@
 
     </footer>
 
-    <script src="/dist/js/bootstrap.min.js"></script>
+    <script src="/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/dist/datatables.min.js"></script>
     <script src="/dist/fontawesome-free-6.4.2-web/css/all.min.js"></script>
     <script>

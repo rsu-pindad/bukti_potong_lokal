@@ -7,6 +7,7 @@ use App\Models\Gaji;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GajiController extends Controller
@@ -30,6 +31,11 @@ class GajiController extends Controller
         return view('gaji.index', $data);
     }
 
+    public function import_template()
+    {
+        return Storage::download('template_impor_gaji.xlsx');
+    }
+
     public function import(Request $request)
     {
         $validated = $request->validate([
@@ -51,7 +57,7 @@ class GajiController extends Controller
         $getMonth = $request->input('month') ?? Carbon::now()->month;
         $getYear = $request->input('year') ?? Carbon::now()->year;
 
-        $gaji = Gaji::whereRaw("MONTH(bulan) = $getMonth AND YEAR(bulan) = $getYear")->get();
+        $gaji = Gaji::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
 
         $dataPPH21 = [];
 
