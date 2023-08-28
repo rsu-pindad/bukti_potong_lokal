@@ -40,6 +40,16 @@
 
                             <li><a class="dropdown-item" href="{{ route('gaji/import-template') }}">Download
                                     Template Impor</a></li>
+
+                            <li>
+                                <form action="{{ route('gaji/pph21') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="month" value="{{ $getMonth }}">
+                                    <input type="hidden" name="year" value="{{ $getYear }}">
+                                    <button type="submit" class="dropdown-item">Hitung
+                                        PPH21</button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tbl_pph21', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('npp');
+            $table->string('npp');
             $table->string('nama');
             $table->double('gapok');
             $table->double('tunjangan');
@@ -26,6 +26,9 @@ return new class extends Migration
             $table->double('biaya_jabatan');
             $table->double('iuran_pensiun');
             $table->double('potongan');
+            $table->double('total_penghasilan');
+            $table->double('neto_sebulan');
+            $table->double('neto_setahun');
             $table->double('ptkp');
             $table->double('pkp');
             $table->double('pph21_setahun');

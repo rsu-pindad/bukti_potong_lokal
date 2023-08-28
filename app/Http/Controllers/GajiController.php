@@ -55,7 +55,6 @@ class GajiController extends Controller
 
     public function calculatePPH21(Request $request)
     {
-
         $getMonth = $request->input('month') ?? Carbon::now()->month;
         $getYear = $request->input('year') ?? Carbon::now()->year;
 
@@ -89,7 +88,7 @@ class GajiController extends Controller
 
             $premiAS = $gj->tj_kes + $gj->tj_sostek;
 
-            $tjPajak = $request->session()->pull("pph21_$gj->id");
+            $tjPajak = $request->session()->get("pph21_$gj->id");
 
             $bruto = $gapok + $totalTunjangan + $gj->thr + $gj->bonus + $premiAS + $tjPajak;
 
@@ -133,6 +132,9 @@ class GajiController extends Controller
                 'biaya_jabatan' => $biayaJabatan,
                 'iuran_pensiun' => $iuranPensiun,
                 'potongan' => $potongan,
+                'total_penghasilan' => $totalPenghasilan,
+                'neto_sebulan' => $netoSebulan,
+                'neto_setahun' => $netoSetahun,
                 'ptkp' => $ptkp,
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
@@ -143,7 +145,7 @@ class GajiController extends Controller
             $request->session()->put("pph21_$gj->id", $pph21Sebulan);
             PPH21::updateOrCreate(['npp' => $gj->npp], $dataPPH21);
         }
-        return redirect()->back()->with('success', 'berhasil menghitung pph21');
+        return redirect()->route('pph21')->with('success', 'berhasil menghitung pph21');
     }
 
     private function pph21_setahun($pkp)

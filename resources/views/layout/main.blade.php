@@ -14,7 +14,19 @@
 
     <!-- FontAwesome 6.2.0 CSS -->
     <link rel="stylesheet" href="/dist/fontawesome-free-6.4.2-web/css/all.min.css" />
-
+    <style>
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 99999;
+        }
+    </style>
 
 </head>
 
@@ -36,10 +48,12 @@
                                 href="{{ route('pegawai') }}" aria-current="page">Pegawai </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('gaji') }}">Gaji</a>
+                            <a class="nav-link {{ Route::currentRouteName() == 'gaji' ? 'active' : '' }}"
+                                href="{{ route('gaji') }}">Gaji</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">PPH21</a>
+                            <a class="nav-link {{ Route::currentRouteName() == 'pph21' ? 'active' : '' }}"
+                                href="{{ route('pph21') }}">PPH21</a>
                         </li>
 
                     </ul>
@@ -52,6 +66,12 @@
         </nav>
 
     </header>
+    <div id="loader" class="row">
+        <div class="col-auto m-auto ">
+            <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl text-white"></i>
+        </div>
+
+    </div>
     <main class="mt-4">
         <div class="container">
             @yield('content')
@@ -82,6 +102,14 @@
         selectYear.addEventListener('change', function(event) {
             formGet.submit()
         })
+    </script>
+
+    <script>
+        $(function() {
+            $("form").submit(function() {
+                $('#loader').css('display', 'flex');
+            });
+        });
     </script>
 </body>
 
