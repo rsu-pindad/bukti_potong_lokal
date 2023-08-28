@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\GajiImport;
 use App\Models\Gaji;
+use App\Models\PPH21;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,8 +45,7 @@ class GajiController extends Controller
         ]);
 
         try {
-            $gaji = Excel::import(new GajiImport, $validated['fileGaji']);
-            dd($gaji);
+            Excel::import(new GajiImport, $validated['fileGaji']);
         } catch (\Throwable $th) {
             return dd($th);
         }
@@ -89,7 +89,9 @@ class GajiController extends Controller
 
             $premiAS = $gj->tj_kes + $gj->tj_sostek;
 
-            $bruto = $gapok + $totalTunjangan + $gj->thr + $gj->bonus + $premiAS;
+            $tjPajak = $request->session()->pull("pph21_$gj->id");
+
+            $bruto = $gapok + $totalTunjangan + $gj->thr + $gj->bonus + $premiAS + $tjPajak;
 
             $penghasilan = 0;
 
@@ -113,17 +115,21 @@ class GajiController extends Controller
             $pph21Setahun =  $this->pph21_setahun($pkp);
             $pph21Sebulan = $pph21Setahun / 12 > 0 ? $pph21Setahun / 12 : 0;
 
-            // dd($request->session()->all());
-            $dataPPH21[] = [
+
+            $now = Carbon::now();
+
+            $dataPPH21 = [
+                'tgl_gaji' => $gj->tgl_gaji,
                 'npp' => $gj->npp,
                 'nama' => $gj->nama,
                 'gapok' => $gj->gapok,
-                'tunj' => $totalTunjangan,
+                'tunjangan' => $totalTunjangan,
                 'premi_as' => $premiAS,
                 'thr' => $gj->thr,
                 'bonus' => $gj->bonus,
+                'tj_pajak' => $tjPajak,
                 'bruto' => $bruto,
-                'peng' => $penghasilan,
+                'penghasilan' => $penghasilan,
                 'biaya_jabatan' => $biayaJabatan,
                 'iuran_pensiun' => $iuranPensiun,
                 'potongan' => $potongan,
@@ -131,61 +137,14 @@ class GajiController extends Controller
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
                 'pph21_sebulan' => $pph21Sebulan,
+                'created_at' => $now,
+                'updated_at' => $now
             ];
+            $request->session()->put("pph21_$gj->id", $pph21Sebulan);
+            PPH21::updateOrCreate(['npp' => $gj->npp], $dataPPH21);
         }
-
-        return redirect()->route('gaji/pph21/calculated')->with('dataPPH21', $dataPPH21);
+        return redirect()->back()->with('success', 'berhasil menghitung pph21');
     }
-
-    public function calculatedPPH21(Request $request)
-    {
-        $dataPPH21 = $request->session()->pull('dataPPH21') ?? [];
-        $hasilPPH21 = [];
-        foreach ($dataPPH21 as $dp) {
-            $npp = $dp['npp'];
-            $nama = $dp['nama'];
-            $gapok = $dp['gapok'];
-            $tunj = $dp['tunj'];
-            $premiAS = $dp['premi_as'];
-            $thr = $dp['thr'];
-            $bonus = $dp['bonus'];
-            $tj_pajak = $dp['pph21_sebulan'];
-            $bruto = $gapok + $tunj + $premiAS + $thr + $bonus + $tj_pajak;
-            $peng = $dp['peng'];
-            $biayaJabatan = $dp['biaya_jabatan'];
-            $iuranPensiun = $dp['iuran_pensiun'];
-            $potongan = $dp['potongan'];
-            $totalPenghasilan = $biayaJabatan + $peng + $iuranPensiun + $potongan;
-            $netoSebulan = $bruto - $totalPenghasilan;
-            $netoSetahun = $netoSebulan * 12;
-            $ptkp = $dp['ptkp'];
-            $pkp = $netoSetahun - $ptkp;
-            $pph21Setahun = $this->pph21_setahun($pkp);
-            $pph21Sebulan = $pph21Setahun / 12;
-
-            $hasilPPH21[] = [
-                'npp' => $npp,
-                'nama' => $nama,
-                'gapok' => $gapok,
-                'tunj' => $tunj,
-                'premi_as' => $premiAS,
-                'thr' => $dp['thr'],
-                'bonus' => $dp['bonus'],
-                'bruto' => $bruto,
-                'peng' => $peng,
-                'biaya_jabatan' => $biayaJabatan,
-                'iuran_pensiun' => $iuranPensiun,
-                'potongan' => $potongan,
-                'ptkp' => $ptkp,
-                'pkp' => $pkp,
-                'pph21_setahun' => $pph21Setahun,
-                'pph21_sebulan' => $pph21Sebulan,
-            ];
-        }
-
-        dd($hasilPPH21);
-    }
-
 
     private function pph21_setahun($pkp)
     {

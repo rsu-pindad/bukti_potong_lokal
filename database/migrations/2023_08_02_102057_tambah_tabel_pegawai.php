@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_hitung_pph21', function (Blueprint $table) {
+        Schema::create('tbl_pegawai', function (Blueprint $table) {
             $table->id();
+            $table->string('npp')->unique();
+            $table->string('nama');
+            $table->string('npwp');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_hitung_pph21');
+        Schema::dropIfExists('tbl_pegawai');
     }
 };

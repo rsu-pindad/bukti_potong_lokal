@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GajiController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PPH21Controller;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,16 @@ use Maatwebsite\Excel\Facades\Excel;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::controller(PegawaiController::class)->group(function () {
+    Route::get('pegawai', 'index')->name('pegawai');
+
+    Route::post('pegawai/store', 'store')->name('pegawai/store');
+
+    Route::post('pegawai/import', 'import')->name('pegawai/import');
+
+    Route::get('pegawai/export', 'export')->name('pegawai/export');
+});
 
 Route::controller(GajiController::class)->group(function () {
     Route::get('gaji', 'index')->name('gaji');
