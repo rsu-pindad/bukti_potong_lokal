@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GajiExport;
 use App\Imports\GajiImport;
 use App\Models\Gaji;
 use App\Models\PPH21;
@@ -33,9 +34,13 @@ class GajiController extends Controller
         return view('gaji.index', $data);
     }
 
-    public function import_template()
+    public function export(Request $request)
     {
-        return Storage::download('template_impor_gaji.xlsx');
+        $month = $request->get('month');
+        $year = $request->get('year');
+
+        $fileName = $year . '_' . $month . '_' . 'data_gaji.xlsx';
+        return Excel::download(new GajiExport($month, $year), $fileName, \Maatwebsite\Excel\Excel::XLSX);
     }
 
     public function import(Request $request)

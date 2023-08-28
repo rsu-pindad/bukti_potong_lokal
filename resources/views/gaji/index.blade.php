@@ -29,24 +29,27 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modalCreateSalary"><i class="fa-solid fa-plus text-primary"></i>
+                                    data-bs-target="#modalCreateSalary"><i class="fa-solid fa-plus fa-fw text-primary"></i>
                                     Tambah</a></li>
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modalImportSalary"><i class="fa-solid fa-file-excel text-success"></i>
+                                    data-bs-target="#modalImportSalary"><i
+                                        class="fa-solid fa-file-excel fa-fw text-success"></i>
                                     Impor Data Gaji</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
 
-                            <li><a class="dropdown-item" href="{{ route('gaji/import-template') }}">Download
-                                    Template Impor</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{{ route('gaji/export', ['month' => $getMonth, 'year' => $getYear]) }}">
+                                    <i class="fa-solid fa-download fa-fw text-success"></i> Ekspor Data Gaji</a></li>
 
                             <li>
                                 <form action="{{ route('gaji/pph21') }}" method="post">
                                     @csrf
                                     <input type="hidden" name="month" value="{{ $getMonth }}">
                                     <input type="hidden" name="year" value="{{ $getYear }}">
-                                    <button type="submit" class="dropdown-item">Hitung
+                                    <button type="submit" class="dropdown-item"><i
+                                            class="fa-solid fa-calculator fa-fw text-warning"></i> Hitung
                                         PPH21</button>
                                 </form>
                             </li>

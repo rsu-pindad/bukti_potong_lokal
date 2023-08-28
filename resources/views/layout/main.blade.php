@@ -73,14 +73,6 @@
             @yield('content')
         </div>
     </main>
-    <footer>
-
-
-
-
-
-
-    </footer>
 
     <script src="/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/dist/datatables.min.js"></script>
