@@ -35,7 +35,7 @@
         <!-- place navbar here -->
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="navbar-brand" href="{{ route('gaji') }}">PMU</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -57,10 +57,6 @@
                         </li>
 
                     </ul>
-                    <form class="d-flex my-2 my-lg-0">
-                        <input class="form-control me-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
