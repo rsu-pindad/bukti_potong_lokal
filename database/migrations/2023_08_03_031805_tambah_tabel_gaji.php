@@ -34,11 +34,18 @@ return new class extends Migration
             $table->double('tj_dapen')->nullable();
             $table->double('tj_hadir')->nullable();
             $table->double('tj_bhy')->nullable();
+            $table->double('thr')->nullable();
+            $table->double('bonus')->nullable();
             $table->double('lembur')->nullable();
             $table->double('kurang')->nullable();
             $table->double('jm_hasil')->nullable();
             $table->double('tj_pph21')->nullable();
             $table->date('tgl_gaji')->nullable();
+
+            $table->double('pot_dapen')->nullable();
+            $table->double('pot_sostek')->nullable();
+            $table->double('pot_kes')->nullable();
+            $table->double('pot_swk')->nullable();
             $table->timestamps();
         });
     }

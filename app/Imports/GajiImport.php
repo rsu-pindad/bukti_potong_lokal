@@ -21,12 +21,16 @@ class GajiImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
+        $tglGaji = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[0]['TGL_GAJI']);
 
-        // dd(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[0]['TGL_GAJI']));
-        // dd(date("Y-m-d", $rows[0]['TGL_GAJI']));
-        Gaji::where('tgl_gaji', $rows[0]['TGL_GAJI'])->delete();
+        Gaji::where('tgl_gaji', $tglGaji)->delete();
+
 
         foreach ($rows as $row) {
+            $nlBruto1 = $row['TJ_KELU'] + $row['TJ_PEND'];
+            $jmHasil = $nlBruto1 + $row['TJ_JBT'] + $row['TJ_ALIH'] + $row['TJ_KESJA'] + $row['TJ_BERAS'] + $row['TJ_RAYON'] + $row['TJ_MAKAN'] + $row['TJ_SOSTEK'] + $row['TJ_KES'] + $row['TJ_DAPEN'] + $row['TJ_HADIR_18'] + $row['TJ_BHY'] + $row['THR'] + $row['BONUS'] + $row['LEMBUR'] + $row['KURANG'];
+
+
             Gaji::create([
                 'npp'  => $row['NPP'],
                 'nama'  => $row['NAMA'],
@@ -35,7 +39,7 @@ class GajiImport implements ToCollection, WithHeadingRow
                 'gapok'  => $row['GAPOK'],
                 'tj_kelu'  => $row['TJ_KELU'],
                 'tj_pend'  => $row['TJ_PEND'],
-                'nl_bruto1'  => $row['NL_BRUTO1'],
+                'nl_bruto1'  => $nlBruto1,
                 'tj_jbt'  => $row['TJ_JBT'],
                 'tj_alih'  => $row['TJ_ALIH'],
                 'tj_kesja'  => $row['TJ_KESJA'],
@@ -45,12 +49,18 @@ class GajiImport implements ToCollection, WithHeadingRow
                 'tj_sostek'  => $row['TJ_SOSTEK'],
                 'tj_kes'  => $row['TJ_KES'],
                 'tj_dapen'  => $row['TJ_DAPEN'],
-                'tj_hadir'  => $row['TJ_HADIR'],
+                'tj_hadir'  => $row['TJ_HADIR_18'],
                 'tj_bhy'  => $row['TJ_BHY'],
+                'thr'  => $row['THR'],
+                'bonus'  => $row['BONUS'],
                 'lembur'  => $row['LEMBUR'],
                 'kurang'  => $row['KURANG'],
-                'jm_hasil' => $row['JM_HASIL'],
-                'tgl_gaji' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['TGL_GAJI'])
+                'jm_hasil' => $jmHasil,
+                'tgl_gaji' => $tglGaji,
+                'pot_dapen'  => $row['POT_DAPEN'],
+                'pot_sostek'  => $row['POT_SOSTEK'],
+                'pot_kes'  => $row['POT_KES'],
+                'pot_swk'  => $row['POT_SWK'],
 
             ]);
         }

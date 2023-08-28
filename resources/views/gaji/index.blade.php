@@ -130,6 +130,8 @@
                                     <th>Tunjangan Dapen</th>
                                     <th>Tunjangan Kehadiran</th>
                                     <th>Tunjangan BHY</th>
+                                    <th>THR</th>
+                                    <th>Bonus</th>
                                     <th>Lembur</th>
                                     <th>Kekurangan</th>
                                     <th>Jumlah Hasil</th>
@@ -160,6 +162,8 @@
                                         <td>@currency($gj->tj_dapen) </td>
                                         <td>@currency($gj->tj_hadir) </td>
                                         <td>@currency($gj->tj_bhy) </td>
+                                        <td>@currency($gj->thr) </td>
+                                        <td>@currency($gj->bonus) </td>
                                         <td>@currency($gj->lembur) </td>
                                         <td>@currency($gj->kurang) </td>
                                         <td>@currency($gj->jm_hasil) </td>

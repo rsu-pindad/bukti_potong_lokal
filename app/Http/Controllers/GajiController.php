@@ -23,6 +23,7 @@ class GajiController extends Controller
 
         $gaji = Gaji::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
 
+
         $data = [
             'title' => 'Data Gaji Pegawai', 'gaji' => $gaji,
             'year' => $year, 'month' => $month,
@@ -43,7 +44,8 @@ class GajiController extends Controller
         ]);
 
         try {
-            Excel::import(new GajiImport, $validated['fileGaji']);
+            $gaji = Excel::import(new GajiImport, $validated['fileGaji']);
+            dd($gaji);
         } catch (\Throwable $th) {
             return dd($th);
         }
@@ -81,79 +83,126 @@ class GajiController extends Controller
                 $stPTKP = 72000000;
             }
 
-            // print_r($request->session()->all());
-            $ss =  $request->session()->put("tj_pajak_$gj->id", 0);
-            echo $ss;
-            // die;
-
-            //pegawai
             $gapok = $gj->gapok;
-            $tjBPJSKerja = $gapok * 0.0624;
-            $tjBPJSKes = $gapok * 0.047253795;
 
-            $totalTunjangan = $gj->tj_kelu + $gj->tj_jbt + $gj->tj_kesja + $gj->tj_profesi + $gj->tj_beras + $gj->tj_rayon + $gj->tj_didik + $gj->tj_bhy + $gj->tj_hadir + $gj->tj_alih + $gj->kurang;
-            $premiAS = 0;
-            $tjPajak = 0;
-            $bruto = $gapok + $totalTunjangan + $premiAS + $tjPajak;
+            $totalTunjangan = $gj->tj_kelu + $gj->tj_pend + $gj->tj_jbt + $gj->tj_alih + $gj->tj_kesja + $gj->tj_beras + $gj->tj_rayon + $gj->tj_makan + $gj->tj_dapen + $gj->tj_hadir + $gj->tj_bhy + $gj->thr + $gj->bonus + $gj->lembur + $gj->kurang;
+
+            $premiAS = $gj->tj_kes + $gj->tj_sostek;
+
+            $bruto = $gapok + $totalTunjangan + $gj->thr + $gj->bonus + $premiAS;
+
             $penghasilan = 0;
+
             $biayaJabatan = 500000;
-            $iuranPenghasilan = 0;
-            $totalPenghasilan = $biayaJabatan;
+
+            $iuranPensiun = $gj->pot_dapen;
+
+            $potongan = $gj->pot_sostek + $gj->pot_kes  + $gj->pot_swk;
+
+            $totalPenghasilan = $biayaJabatan + $iuranPensiun + $potongan;
+
             $netoSebulan = $bruto - $totalPenghasilan;
+
+
             $netoSetahun = $netoSebulan * 12;
+
             $ptkp = $stPTKP;
+
             $pkp = $netoSetahun - $stPTKP > 0 ? $netoSetahun - $stPTKP : 0;
 
-
-
-            // =IF(B16<=60000000,B16*0.05,IF(AND(B16>60000000,B16<=250000000),(60000000*0.05)+((B16-60000000)*0.15),IF(AND(B16>250000000,B16<=500000000),(60000000*0.05)+((250000000*0.15)+(B16*0.25)),IF(AND(B16>500000000,B16<=5000000000),(60000000*0.05)+((250000000*0.15)+(5000000000*0.25)+(B16*0.3)),IF(AND(B16>5000000000,B16<=9999990000),B16*35%,0)))))
-            if ($pkp <= 60000000) {
-                $pph21Setahun =  $pkp * 0.05;
-            } elseif ($pkp > 60000000 && $pkp <= 250000000) {
-                $pph21Setahun =  60000000 * 0.05 + ($pkp - 60000000) * 0.15;
-            } elseif ($pkp > 250000000 && $pkp <= 500000000) {
-                $pph21Setahun =  60000000 * 0.05 + ($pkp - 60000000) * 0.25;
-            } elseif ($pkp > 500000000 && $pkp <= 5000000000) {
-                $pph21Setahun =  60000000 * 0.05 + 250000000 * 0.15 + 5000000000 * 0.25 + $pkp * 0.3;
-            } elseif ($pkp > 5000000000 && $pkp <= 9999990000) {
-                $pph21Setahun =  $pkp * 0.35;
-            } else {
-                $pph21Setahun = 0;
-            }
+            $pph21Setahun =  $this->pph21_setahun($pkp);
             $pph21Sebulan = $pph21Setahun / 12 > 0 ? $pph21Setahun / 12 : 0;
 
-            $request->session()->put("tj_pajak_$gj->id");
-
+            // dd($request->session()->all());
             $dataPPH21[] = [
+                'npp' => $gj->npp,
                 'nama' => $gj->nama,
+                'gapok' => $gj->gapok,
                 'tunj' => $totalTunjangan,
-                'tj_bpjs_kerja' => $tjBPJSKerja,
-                'tj_bpjs_sehat' => $tjBPJSKes,
                 'premi_as' => $premiAS,
-                'tj_pajak' => 0,
+                'thr' => $gj->thr,
+                'bonus' => $gj->bonus,
                 'bruto' => $bruto,
-                'penghasilan' => $penghasilan,
-                'iuran_penghasilan' => $iuranPenghasilan,
+                'peng' => $penghasilan,
                 'biaya_jabatan' => $biayaJabatan,
-                'total_penghasilan' => $totalPenghasilan,
-                'neto_sebulan' => $netoSebulan,
-                'neto_setahun' => $netoSetahun,
-                'ptpk' => $ptkp,
+                'iuran_pensiun' => $iuranPensiun,
+                'potongan' => $potongan,
+                'ptkp' => $ptkp,
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
                 'pph21_sebulan' => $pph21Sebulan,
             ];
         }
 
-        echo "<pre>";
-        print_r($dataPPH21);
-        echo "</pre>";
-        die;
+        return redirect()->route('gaji/pph21/calculated')->with('dataPPH21', $dataPPH21);
+    }
 
-        // $pph21Setahun1 =  60000000 * 0.05 + ((250000000 * 0.15) + (5000000000 * 0.25) + ($pkp * 0.3));
-        // $pph21Setahun2 =  60000000 * 0.05 + 250000000 * 0.15 + 5000000000 * 0.25 + $pkp * 0.3;
-        // echo $pph21Setahun1;
-        // echo '<br>';
-        // echo $pph21Setahun2;
+    public function calculatedPPH21(Request $request)
+    {
+        $dataPPH21 = $request->session()->pull('dataPPH21') ?? [];
+        $hasilPPH21 = [];
+        foreach ($dataPPH21 as $dp) {
+            $npp = $dp['npp'];
+            $nama = $dp['nama'];
+            $gapok = $dp['gapok'];
+            $tunj = $dp['tunj'];
+            $premiAS = $dp['premi_as'];
+            $thr = $dp['thr'];
+            $bonus = $dp['bonus'];
+            $tj_pajak = $dp['pph21_sebulan'];
+            $bruto = $gapok + $tunj + $premiAS + $thr + $bonus + $tj_pajak;
+            $peng = $dp['peng'];
+            $biayaJabatan = $dp['biaya_jabatan'];
+            $iuranPensiun = $dp['iuran_pensiun'];
+            $potongan = $dp['potongan'];
+            $totalPenghasilan = $biayaJabatan + $peng + $iuranPensiun + $potongan;
+            $netoSebulan = $bruto - $totalPenghasilan;
+            $netoSetahun = $netoSebulan * 12;
+            $ptkp = $dp['ptkp'];
+            $pkp = $netoSetahun - $ptkp;
+            $pph21Setahun = $this->pph21_setahun($pkp);
+            $pph21Sebulan = $pph21Setahun / 12;
+
+            $hasilPPH21[] = [
+                'npp' => $npp,
+                'nama' => $nama,
+                'gapok' => $gapok,
+                'tunj' => $tunj,
+                'premi_as' => $premiAS,
+                'thr' => $dp['thr'],
+                'bonus' => $dp['bonus'],
+                'bruto' => $bruto,
+                'peng' => $peng,
+                'biaya_jabatan' => $biayaJabatan,
+                'iuran_pensiun' => $iuranPensiun,
+                'potongan' => $potongan,
+                'ptkp' => $ptkp,
+                'pkp' => $pkp,
+                'pph21_setahun' => $pph21Setahun,
+                'pph21_sebulan' => $pph21Sebulan,
+            ];
+        }
+
+        dd($hasilPPH21);
+    }
+
+
+    private function pph21_setahun($pkp)
+    {
+        if ($pkp <= 60000000) {
+            $pph21Setahun =  $pkp * 0.05;
+        } elseif ($pkp > 60000000 && $pkp <= 250000000) {
+            $pph21Setahun =  60000000 * 0.05 + ($pkp - 60000000) * 0.15;
+        } elseif ($pkp > 250000000 && $pkp <= 500000000) {
+            $pph21Setahun =  60000000 * 0.05 + ($pkp - 60000000) * 0.25;
+        } elseif ($pkp > 500000000 && $pkp <= 5000000000) {
+            $pph21Setahun =  60000000 * 0.05 + 250000000 * 0.15 + 5000000000 * 0.25 + $pkp * 0.3;
+        } elseif ($pkp > 5000000000 && $pkp <= 9999990000) {
+            $pph21Setahun =  $pkp * 0.35;
+        } else {
+            $pph21Setahun = 0;
+        }
+
+        return $pph21Setahun;
     }
 }

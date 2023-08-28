@@ -22,6 +22,8 @@ Route::controller(GajiController::class)->group(function () {
     Route::get('gaji/pph21', 'calculatePPH21')->name('gaji/pph21');
 
     Route::get('gaji/import-template', 'import_template')->name('gaji/import-template');
+    Route::get('gaji/pph21', 'calculatePPH21')->name('gaji/pph21');
+    Route::get('gaji/pph21/calculated', 'calculatedPPH21')->name('gaji/pph21/calculated');
 });
 
 
