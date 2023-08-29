@@ -77,7 +77,7 @@ class GajiExport implements FromCollection, WithHeadings
             'tj_sostek',
             'tj_kes',
             'tj_dapen',
-            'tj_hadir',
+            'tj_hadir_18',
             'tj_bhy',
             'thr',
             'bonus',
