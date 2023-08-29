@@ -93,6 +93,10 @@
         selectYear.addEventListener('change', function(event) {
             formGet.submit()
         })
+
+        $("#selectPPH21").on("change", function() {
+            formGet.submit()
+        })
     </script>
 
     <script>

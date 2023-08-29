@@ -15,14 +15,22 @@ class PPH21Controller extends Controller
 
     public function index()
     {
-        // request()->session()->flush();
         $month = PPH21::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
         $year = PPH21::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
 
+        $getPajak = request()->input('pajak') ?? "all";
         $getMonth = request()->input('month') ?? Carbon::now()->month;
         $getYear = request()->input('year') ?? Carbon::now()->year;
 
-        $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
+
+        $pph21 = [];
+        if ($getPajak == 0) {
+            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear AND pph21_sebulan = 0")->get();
+        } elseif ($getPajak == 1) {
+            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear AND pph21_sebulan > 0")->get();
+        } else {
+            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
+        }
 
         $data = [
             'title' => 'Data PPH21',
@@ -30,7 +38,8 @@ class PPH21Controller extends Controller
             'year' => $year,
             'month' => $month,
             'getMonth' => $getMonth,
-            'getYear' => $getYear
+            'getYear' => $getYear,
+            'getPajak' => $getPajak
         ];
 
         return view('pph21.index', $data);
@@ -44,5 +53,15 @@ class PPH21Controller extends Controller
         $fileName = $year . '_' . $month . '_' . 'pph21.xlsx';
 
         return Excel::download(new PPH21Export($month, $year), $fileName, \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function destroy(Request $request)
+    {
+        $getMonth = $request->input('month');
+        $getYear = $request->input('year');
+
+        PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->delete();
+
+        return redirect()->back()->withToastSuccess("berhasil menghapus data bulan $getMonth tahun $getYear");
     }
 }

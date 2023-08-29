@@ -88,10 +88,6 @@ class GajiController extends Controller
                 $stPTKP = 72000000;
             }
 
-
-
-
-
             $bool = false;
             do {
                 $gapok = $gj->gapok;
@@ -133,7 +129,6 @@ class GajiController extends Controller
                 }
             } while ($bool == false);
 
-            $now = Carbon::now();
             $dataPPH21 = [
                 'tgl_gaji' => $gj->tgl_gaji,
                 'npp' => $gj->npp,
@@ -158,7 +153,7 @@ class GajiController extends Controller
                 'pph21_sebulan' => round($pph21Sebulan)
             ];
 
-            PPH21::updateOrCreate(['npp' => $gj->npp], $dataPPH21);
+            PPH21::updateOrCreate(['npp' => $gj->npp, 'tgl_gaji' => $gj->tgl_gaji], $dataPPH21);
         }
 
         if (count($gaji) < 1) {
