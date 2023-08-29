@@ -20,7 +20,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="{{ route('pegawai/export') }}"><i
-                                    class="fa-solid fa-file-excel fa-fw text-success"></i> Ekspor Data Pegawai</a></li>
+                                    class="fa-solid fa-file-download fa-fw text-success"></i> Ekspor Data Pegawai</a></li>
                     </ul>
                 </div>
             </div>

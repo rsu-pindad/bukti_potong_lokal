@@ -23,14 +23,14 @@
                 <div class="my-auto">
 
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="{{ route('pph21/export', ['month' => $getMonth, 'year' => $getYear]) }}"
-                                    class="dropdown-item ">Ekspor Data
+                                    class="dropdown-item "><i class="fa-solid fa-file-download fa-fw text-success"></i>
+                                    Ekspor Data
                                     PPH21</a>
                             </li>
                         </ul>
