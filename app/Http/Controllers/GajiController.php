@@ -93,7 +93,7 @@ class GajiController extends Controller
 
             $premiAS = $gj->tj_kes + $gj->tj_sostek;
 
-            $tjPajak = $request->session()->get("pph21_$gj->id");
+            $tjPajak = $request->session()->get("pph21_$gj->id") ?? 0;
 
             $bruto = $gapok + $totalTunjangan + $gj->thr + $gj->bonus + $premiAS + $tjPajak;
 
@@ -119,8 +119,8 @@ class GajiController extends Controller
             $pph21Setahun =  $this->pph21_setahun($pkp);
             $pph21Sebulan = $pph21Setahun / 12 > 0 ? round($pph21Setahun / 12) : 0;
 
-
-            $dataPPH21 = [
+            $now = Carbon::now();
+            $dataPPH21[] = [
                 'tgl_gaji' => $gj->tgl_gaji,
                 'npp' => $gj->npp,
                 'nama' => $gj->nama,
@@ -142,11 +142,15 @@ class GajiController extends Controller
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
                 'pph21_sebulan' => $pph21Sebulan,
+                'created_at' => $now,
+                'updated_at' => $now
             ];
 
             $request->session()->put("pph21_$gj->id", $pph21Sebulan);
-            PPH21::updateOrCreate(['npp' => $gj->npp], $dataPPH21);
         }
+        PPH21::where('tgl_gaji', $gaji[0]->tgl_gaji)->delete();
+        PPH21::insert($dataPPH21);
+
         return redirect()->route('pph21')->withToastSuccess('berhasil menghitung pph21');
     }
 
