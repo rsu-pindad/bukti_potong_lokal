@@ -31,8 +31,7 @@
 </head>
 
 <body>
-    <header>
-        <!-- place navbar here -->
+    <header class="border-bottom ">
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('gaji') }}">PMU</a>
@@ -55,7 +54,11 @@
                             <a class="nav-link {{ Route::currentRouteName() == 'pph21' ? 'active' : '' }}"
                                 href="{{ route('pph21') }}">PPH21</a>
                         </li>
-
+                    </ul>
+                    <ul class="navbar-nav mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('auth/logout') }}">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>

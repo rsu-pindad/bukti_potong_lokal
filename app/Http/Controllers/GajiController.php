@@ -101,7 +101,7 @@ class GajiController extends Controller
 
             $biayaJabatan = 500000;
 
-            $iuranPensiun = $gj->pot_dapen;
+            $iuranPensiun = $gj->pot_dapen ?? 0;
 
             $potongan = $gj->pot_sostek + $gj->pot_kes  + $gj->pot_swk;
 
@@ -117,10 +117,8 @@ class GajiController extends Controller
             $pkp = $netoSetahun - $stPTKP > 0 ? $netoSetahun - $stPTKP : 0;
 
             $pph21Setahun =  $this->pph21_setahun($pkp);
-            $pph21Sebulan = $pph21Setahun / 12 > 0 ? $pph21Setahun / 12 : 0;
+            $pph21Sebulan = $pph21Setahun / 12 > 0 ? round($pph21Setahun / 12) : 0;
 
-
-            $now = Carbon::now();
 
             $dataPPH21 = [
                 'tgl_gaji' => $gj->tgl_gaji,
@@ -129,8 +127,8 @@ class GajiController extends Controller
                 'gapok' => $gj->gapok,
                 'tunjangan' => $totalTunjangan,
                 'premi_as' => $premiAS,
-                'thr' => $gj->thr,
-                'bonus' => $gj->bonus,
+                'thr' => $gj->thr ?? 0,
+                'bonus' => $gj->bonus ?? 0,
                 'tj_pajak' => $tjPajak,
                 'bruto' => $bruto,
                 'penghasilan' => $penghasilan,
@@ -144,10 +142,10 @@ class GajiController extends Controller
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
                 'pph21_sebulan' => $pph21Sebulan,
-                'created_at' => $now,
-                'updated_at' => $now
             ];
+
             $request->session()->put("pph21_$gj->id", $pph21Sebulan);
+
             PPH21::updateOrCreate(['npp' => $gj->npp], $dataPPH21);
         }
         return redirect()->route('pph21')->with('success', 'berhasil menghitung pph21');

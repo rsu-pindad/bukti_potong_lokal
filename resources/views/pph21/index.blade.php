@@ -77,24 +77,24 @@
                                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $p->tgl_gaji)->format('Y') }}</td>
                                 <td>{{ $p->npp }}</td>
                                 <td>{{ $p->nama }}</td>
-                                <td>{{ $p->gapok }}</td>
-                                <td>{{ $p->tunjangan }}</td>
-                                <td>{{ $p->premi_as }}</td>
-                                <td>{{ $p->thr }}</td>
-                                <td>{{ $p->bonus }}</td>
-                                <td>{{ $p->tj_pajak }}</td>
-                                <td>{{ $p->bruto }}</td>
-                                <td>{{ $p->penghasilan }}</td>
-                                <td>{{ $p->biaya_jabatan }}</td>
-                                <td>{{ $p->iuran_pensiun }}</td>
-                                <td>{{ $p->potongan }}</td>
-                                <td>{{ $p->total_penghasilan }}</td>
-                                <td>{{ $p->neto_sebulan }}</td>
-                                <td>{{ $p->neto_setahun }}</td>
-                                <td>{{ $p->ptkp }}</td>
-                                <td>{{ $p->pkp }}</td>
-                                <td>{{ $p->pph21_setahun }}</td>
-                                <td>{{ $p->pph21_sebulan }}</td>
+                                <td>@currency($p->gapok)</td>
+                                <td>@currency($p->tunjangan)</td>
+                                <td>@currency($p->premi_as)</td>
+                                <td>@currency($p->thr)</td>
+                                <td>@currency($p->bonus)</td>
+                                <td>@currency($p->tj_pajak)</td>
+                                <td>@currency($p->bruto)</td>
+                                <td>@currency($p->penghasilan)</td>
+                                <td>@currency($p->biaya_jabatan)</td>
+                                <td>@currency($p->iuran_pensiun)</td>
+                                <td>@currency($p->potongan)</td>
+                                <td>@currency($p->total_penghasilan)</td>
+                                <td>@currency($p->neto_sebulan)</td>
+                                <td>@currency($p->neto_setahun)</td>
+                                <td>@currency($p->ptkp)</td>
+                                <td>@currency($p->pkp)</td>
+                                <td>@currency($p->pph21_setahun)</td>
+                                <td>@currency($p->pph21_sebulan)</td>
                             </tr>
                         @endforeach
                     </tbody>
