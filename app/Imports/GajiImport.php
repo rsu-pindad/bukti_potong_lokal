@@ -25,7 +25,7 @@ class GajiImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) {
             $nlBruto1 = $row['tj_kelu'] + $row['tj_pend'];
 
-            $jmHasil = $nlBruto1 + $row['tj_jbt'] + $row['tj_alih'] + $row['tj_kesja'] + $row['tj_beras'] + $row['tj_rayon'] + $row['tj_makan'] + $row['tj_sostek'] + $row['tj_kes'] + $row['tj_dapen'] + $row['tj_hadir'] + $row['tj_bhy'] + $row['thr'] + $row['bonus'] + $row['lembur'] + $row['kurang'];
+            $jmHasil = $nlBruto1 + $row['tj_jbt'] + $row['tj_alih'] + $row['tj_kesja'] + $row['tj_beras'] + $row['tj_rayon'] + $row['tj_makan'] + $row['tj_sostek'] + $row['tj_kes'] + $row['tj_dapen'] + $row['tj_hadir_18'] + $row['tj_bhy'] + $row['thr'] + $row['bonus'] + $row['lembur'] + $row['kurang'];
 
 
             Gaji::updateOrCreate(['npp' => $row['npp']], [
@@ -46,7 +46,7 @@ class GajiImport implements ToCollection, WithHeadingRow
                 'tj_sostek'  => $row['tj_sostek'],
                 'tj_kes'  => $row['tj_kes'],
                 'tj_dapen'  => $row['tj_dapen'],
-                'tj_hadir'  => $row['tj_hadir'],
+                'tj_hadir'  => $row['tj_hadir_18'],
                 'tj_bhy'  => $row['tj_bhy'],
                 'thr'  => $row['thr'],
                 'bonus'  => $row['bonus'],

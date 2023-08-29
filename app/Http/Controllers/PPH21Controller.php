@@ -15,6 +15,7 @@ class PPH21Controller extends Controller
 
     public function index()
     {
+        // request()->session()->flush();
         $month = PPH21::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
         $year = PPH21::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
 
