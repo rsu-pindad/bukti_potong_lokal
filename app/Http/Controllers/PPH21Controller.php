@@ -15,7 +15,6 @@ class PPH21Controller extends Controller
 
     public function index()
     {
-        // request()->session()->flush();
         $month = PPH21::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
         $year = PPH21::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
 
@@ -44,5 +43,15 @@ class PPH21Controller extends Controller
         $fileName = $year . '_' . $month . '_' . 'pph21.xlsx';
 
         return Excel::download(new PPH21Export($month, $year), $fileName, \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function destroy(Request $request)
+    {
+        $getMonth = $request->input('month');
+        $getYear = $request->input('year');
+
+        PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->delete();
+
+        return redirect()->back()->withToastSuccess("berhasil menghapus data bulan $getMonth tahun $getYear");
     }
 }

@@ -28,10 +28,24 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
                                 <a href="{{ route('pph21/export', ['month' => $getMonth, 'year' => $getYear]) }}"
                                     class="dropdown-item "><i class="fa-solid fa-file-download fa-fw text-success"></i>
                                     Ekspor Data
                                     PPH21</a>
+                            </li>
+                            <li>
+                                <form action="{{ route('pph21/delete') }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="month" value="{{ $getMonth }}">
+                                    <input type="hidden" name="year" value="{{ $getYear }}">
+                                    <button type="submit" class="dropdown-item"><i
+                                            class="fa-solid fa-trash-alt fa-fw text-danger"></i> Hapus Data
+                                        PPH21</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
