@@ -28,7 +28,7 @@ class PegawaiController extends Controller
         ]);
         Pegawai::updateOrCreate(['npp' => $validated['npp']], $validated);
 
-        return redirect()->back()->with('success', 'berhasil memperbarui data pegawai');
+        return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
     }
 
     public function import(Request $request)
@@ -36,8 +36,12 @@ class PegawaiController extends Controller
         $request->validate([
             'filePegawai' => 'required'
         ]);
-        Excel::import(new PegawaiImport, $request->file('filePegawai'));
-        return redirect()->back()->with('success', 'berhasil memperbarui data pegawai');
+        try {
+            Excel::import(new PegawaiImport, $request->file('filePegawai'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('toast_error', 'upload file yang benar!');
+        }
+        return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
     }
 
     public function export()
