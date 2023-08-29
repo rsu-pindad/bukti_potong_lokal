@@ -18,10 +18,19 @@ class PPH21Controller extends Controller
         $month = PPH21::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
         $year = PPH21::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
 
+        $getPajak = request()->input('pajak') ?? "all";
         $getMonth = request()->input('month') ?? Carbon::now()->month;
         $getYear = request()->input('year') ?? Carbon::now()->year;
 
-        $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
+
+        $pph21 = [];
+        if ($getPajak == 0) {
+            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear AND pph21_sebulan = 0")->get();
+        } elseif ($getPajak == 1) {
+            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear AND pph21_sebulan > 0")->get();
+        } else {
+            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
+        }
 
         $data = [
             'title' => 'Data PPH21',
@@ -29,7 +38,8 @@ class PPH21Controller extends Controller
             'year' => $year,
             'month' => $month,
             'getMonth' => $getMonth,
-            'getYear' => $getYear
+            'getYear' => $getYear,
+            'getPajak' => $getPajak
         ];
 
         return view('pph21.index', $data);

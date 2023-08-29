@@ -5,6 +5,12 @@
             <span>Data PPH21</span>
             <div class="d-flex gap-2 my-2">
                 <form action="" method="get" class="d-flex gap-2 " id="formGet">
+                    <select class="form-select form-select-sm" name="pajak" id="selectPPH21">
+                        <option value="">Pilih Pajak</option>
+                        <option value="all" {{ $getPajak == 'all' ? 'selected' : '' }}>Semua Data</option>
+                        <option value="0" {{ $getPajak == '0' ? 'selected' : '' }}>Tidak Kena Pajak</option>
+                        <option value="1" {{ $getPajak == '1' ? 'selected' : '' }}>Kena Pajak</option>
+                    </select>
                     <select class="form-select form-select-sm" name="month" id="selectMonth">
                         <option value="">Pilih Bulan</option>
                         @foreach ($month as $m)
@@ -90,25 +96,25 @@
                                 </td>
                                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $p->tgl_gaji)->format('Y') }}</td>
                                 <td>{{ $p->npp }}</td>
-                                <td>{{ $p->nama }}</td>
-                                <td>@currency($p->gapok)</td>
-                                <td>@currency($p->tunjangan)</td>
-                                <td>@currency($p->premi_as)</td>
-                                <td>@currency($p->thr)</td>
-                                <td>@currency($p->bonus)</td>
-                                <td>@currency($p->tj_pajak)</td>
-                                <td>@currency($p->bruto)</td>
-                                <td>@currency($p->penghasilan)</td>
-                                <td>@currency($p->biaya_jabatan)</td>
-                                <td>@currency($p->iuran_pensiun)</td>
-                                <td>@currency($p->potongan)</td>
-                                <td>@currency($p->total_penghasilan)</td>
-                                <td>@currency($p->neto_sebulan)</td>
-                                <td>@currency($p->neto_setahun)</td>
-                                <td>@currency($p->ptkp)</td>
-                                <td>@currency($p->pkp)</td>
-                                <td>@currency($p->pph21_setahun)</td>
-                                <td>@currency($p->pph21_sebulan)</td>
+                                <td class="text-nowrap">{{ $p->nama }}</td>
+                                <td class="text-nowrap">@currency($p->gapok)</td>
+                                <td class="text-nowrap">@currency($p->tunjangan)</td>
+                                <td class="text-nowrap">@currency($p->premi_as)</td>
+                                <td class="text-nowrap">@currency($p->thr)</td>
+                                <td class="text-nowrap">@currency($p->bonus)</td>
+                                <td class="text-nowrap">@currency($p->tj_pajak)</td>
+                                <td class="text-nowrap">@currency($p->bruto)</td>
+                                <td class="text-nowrap">@currency($p->penghasilan)</td>
+                                <td class="text-nowrap">@currency($p->biaya_jabatan)</td>
+                                <td class="text-nowrap">@currency($p->iuran_pensiun)</td>
+                                <td class="text-nowrap">@currency($p->potongan)</td>
+                                <td class="text-nowrap">@currency($p->total_penghasilan)</td>
+                                <td class="text-nowrap">@currency($p->neto_sebulan)</td>
+                                <td class="text-nowrap">@currency($p->neto_setahun)</td>
+                                <td class="text-nowrap">@currency($p->ptkp)</td>
+                                <td class="text-nowrap">@currency($p->pkp)</td>
+                                <td class="text-nowrap">@currency($p->pph21_setahun)</td>
+                                <td class="text-nowrap">@currency($p->pph21_sebulan)</td>
                             </tr>
                         @endforeach
                     </tbody>

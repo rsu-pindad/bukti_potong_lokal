@@ -63,7 +63,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Bulan / Tahun</th>
+                            <th>Bulan</th>
+                            <th>Tahun</th>
                             <th>NPP</th>
                             <th>Nama</th>
                             <th>Gaji Pokok</th>
@@ -92,32 +93,30 @@
                         @foreach ($gaji as $gj)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->isoFormat('MMM') }}{{ ' ' }}
-                                    {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->format('Y') }}
-                                </td>
+                                <td> {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->isoFormat('MMM') }}</td>
+                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->format('Y') }}</td>
                                 <td>{{ $gj->npp }}</td>
-                                <td>{{ $gj->nama }}</td>
-                                <td>@currency($gj->gapok) </td>
-                                <td>@currency($gj->tj_kelu) </td>
-                                <td>@currency($gj->tj_pend) </td>
-                                <td>@currency($gj->nl_bruto1) </td>
-                                <td>@currency($gj->tj_jbt) </td>
-                                <td>@currency($gj->tj_alih) </td>
-                                <td>@currency($gj->tj_kesja) </td>
-                                <td>@currency($gj->tj_beras) </td>
-                                <td>@currency($gj->tj_rayon) </td>
-                                <td>@currency($gj->tj_makan) </td>
-                                <td>@currency($gj->tj_sostek) </td>
-                                <td>@currency($gj->tj_kes) </td>
-                                <td>@currency($gj->tj_dapen) </td>
-                                <td>@currency($gj->tj_hadir) </td>
-                                <td>@currency($gj->tj_bhy) </td>
-                                <td>@currency($gj->thr) </td>
-                                <td>@currency($gj->bonus) </td>
-                                <td>@currency($gj->lembur) </td>
-                                <td>@currency($gj->kurang) </td>
-                                <td>@currency($gj->jm_hasil) </td>
+                                <td class="text-nowrap">{{ $gj->nama }}</td>
+                                <td class="text-nowrap">@currency($gj->gapok) </td>
+                                <td class="text-nowrap">@currency($gj->tj_kelu) </td>
+                                <td class="text-nowrap">@currency($gj->tj_pend) </td>
+                                <td class="text-nowrap">@currency($gj->nl_bruto1) </td>
+                                <td class="text-nowrap">@currency($gj->tj_jbt) </td>
+                                <td class="text-nowrap">@currency($gj->tj_alih) </td>
+                                <td class="text-nowrap">@currency($gj->tj_kesja) </td>
+                                <td class="text-nowrap">@currency($gj->tj_beras) </td>
+                                <td class="text-nowrap">@currency($gj->tj_rayon) </td>
+                                <td class="text-nowrap">@currency($gj->tj_makan) </td>
+                                <td class="text-nowrap">@currency($gj->tj_sostek) </td>
+                                <td class="text-nowrap">@currency($gj->tj_kes) </td>
+                                <td class="text-nowrap">@currency($gj->tj_dapen) </td>
+                                <td class="text-nowrap">@currency($gj->tj_hadir) </td>
+                                <td class="text-nowrap">@currency($gj->tj_bhy) </td>
+                                <td class="text-nowrap">@currency($gj->thr) </td>
+                                <td class="text-nowrap">@currency($gj->bonus) </td>
+                                <td class="text-nowrap">@currency($gj->lembur) </td>
+                                <td class="text-nowrap">@currency($gj->kurang) </td>
+                                <td class="text-nowrap">@currency($gj->jm_hasil) </td>
                             </tr>
                         @endforeach
                     </tbody>
