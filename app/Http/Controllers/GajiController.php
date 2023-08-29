@@ -52,10 +52,10 @@ class GajiController extends Controller
         try {
             Excel::import(new GajiImport, $validated['fileGaji']);
         } catch (\Throwable $th) {
-            return dd($th);
+            return redirect()->back()->with('toast_error', 'Impor file yang benar');
         }
 
-        return redirect()->route('gaji')->with('success', 'All good!');
+        return redirect()->route('gaji')->withToastSuccess('berhasil mengimpor file gaji');
     }
 
     public function calculatePPH21(Request $request)
@@ -145,10 +145,9 @@ class GajiController extends Controller
             ];
 
             $request->session()->put("pph21_$gj->id", $pph21Sebulan);
-
             PPH21::updateOrCreate(['npp' => $gj->npp], $dataPPH21);
         }
-        return redirect()->route('pph21')->with('success', 'berhasil menghitung pph21');
+        return redirect()->route('pph21')->withToastSuccess('berhasil menghitung pph21');
     }
 
     private function pph21_setahun($pkp)
