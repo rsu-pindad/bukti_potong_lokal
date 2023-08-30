@@ -7,13 +7,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
+    <link href="/vendor/bootstrap-5.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="/dist/datatables.min.css" rel="stylesheet">
 
-    <!-- FontAwesome 6.2.0 CSS -->
-    <link rel="stylesheet" href="/dist/fontawesome-free-6.4.2-web/css/all.min.css" />
+    <link href="/vendor/DataTables-1.13.6/datatables.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/vendor/fontawesome-free-6.4.2-web/css/all.min.css" />
+
     <style>
         #loader {
             display: none;
@@ -77,9 +77,10 @@
         </div>
     </main>
 
-    <script src="/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/dist/datatables.min.js"></script>
-    <script src="/dist/fontawesome-free-6.4.2-web/css/all.min.js"></script>
+    <script src="/vendor/bootstrap-5.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/DataTables-1.13.6/datatables.min.js"></script>
+    <script src="/vendor/fontawesome-free-6.4.2/js/all.min.js"></script>
+
     <script>
         new DataTable('#dataTable');
 
@@ -108,6 +109,29 @@
     </script>
     @include('sweetalert::alert')
 
+
+    @if (Route::currentRouteName())
+        <script>
+            const npp = $("#nppDataList");
+            const employee = {{ Js::from($pegawai) }}
+            npp.click(function() {
+                npp.val('');
+            }).keyup(function() {
+
+                let findData = employee.find(element => {
+                    return this.value == element.npp
+                });
+
+                if (findData) {
+                    npp.removeClass('is-invalid').addClass('is-valid')
+                    $('#nama').val(findData.nama)
+                } else {
+                    npp.removeClass('is-valid').addClass('is-invalid');
+                    $('#nama').val("")
+                }
+            })
+        </script>
+    @endif
 </body>
 
 </html>

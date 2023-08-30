@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\GajiExport;
 use App\Imports\GajiImport;
 use App\Models\Gaji;
+use App\Models\Pegawai;
 use App\Models\PPH21;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,13 +26,60 @@ class GajiController extends Controller
 
         $gaji = Gaji::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
 
+        $pegawai = Pegawai::all();
 
         $data = [
             'title' => 'Data Gaji Pegawai', 'gaji' => $gaji,
             'year' => $year, 'month' => $month,
-            'getMonth' => $getMonth, 'getYear' => $getYear
+            'getMonth' => $getMonth, 'getYear' => $getYear,
+            'pegawai' => $pegawai
         ];
         return view('gaji.index', $data);
+    }
+
+    public function store(Request $request)
+    {
+        $getMonth = $request->input('month');
+        $getYear = $request->input('year');
+
+        $tglGaji = Carbon::createFromDate($getYear, $getMonth, 25)->format("Y-m-d");
+
+        $validated = $request->validate([
+            'npp' => 'required',
+            'nama' => 'required',
+            'gapok' => 'required',
+            'tj_kelu' => 'required',
+            'tj_pend' => 'required',
+            'tj_jbt' => 'required',
+            'tj_alih' => 'required',
+            'tj_kesja' => 'required',
+            'tj_beras' => 'required',
+            'tj_rayon' => 'required',
+            'tj_makan' => 'required',
+            'tj_kes' => 'required',
+            'tj_sostek' => 'required',
+            'tj_dapen' => 'required',
+            'tj_hadir' => 'required',
+            'tj_bhy' => 'required',
+            'tj_lainnya' => 'required',
+            'thr' => 'required',
+            'bonus' => 'required',
+            'lembur' => 'required',
+            'kurang' => 'required',
+            'pot_dapen' => 'required',
+            'pot_sostek' => 'required',
+            'pot_kes' => 'required',
+            'pot_swk' => 'required',
+        ]);
+
+        $validated['tgl_gaji'] = $tglGaji;
+
+        Gaji::updateOrCreate(
+            ['npp' => $validated['npp'], 'tgl_gaji' => $validated['tgl_gaji']],
+            $validated
+        );
+
+        return redirect()->route('gaji')->withToastSuccess('berhasil menambah data gaji');
     }
 
     public function export(Request $request)

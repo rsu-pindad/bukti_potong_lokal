@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('gaji/import', 'import')->name('gaji/import');
 
+        Route::post('gaji/store', 'store')->name('gaji/store');
+
         Route::post('gaji/pph21', 'calculatePPH21')->name('gaji/pph21');
 
         Route::get('gaji/export', 'export')->name('gaji/export');
