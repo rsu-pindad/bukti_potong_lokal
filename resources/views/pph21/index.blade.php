@@ -83,6 +83,7 @@
                             <th>PKP</th>
                             <th>PPH21 Setahun</th>
                             <th>PPH21 Sebulan</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,6 +109,13 @@
                                 <td class="text-nowrap">@currency($p->pkp)</td>
                                 <td class="text-nowrap">@currency($p->pph21_setahun)</td>
                                 <td class="text-nowrap">@currency($p->pph21_sebulan)</td>
+                                <td class="text-nowrap">
+                                    <a name="" id="" class="btn btn-outline-primary btn-sm"
+                                        href="{{ route('pph21/detail', $p->id) }}" role="button"><i
+                                            class="fa-solid fa-info fa-fw fa-beat"></i></a>
+                                    <a name="" id="" class="btn btn-outline-danger btn-sm" href="#"
+                                        role="button"><i class="fa-solid fa-trash-alt fa-fw"></i></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

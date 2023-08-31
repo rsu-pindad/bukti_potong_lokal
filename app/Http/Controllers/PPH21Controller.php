@@ -44,6 +44,21 @@ class PPH21Controller extends Controller
         return view('pph21.index', $data);
     }
 
+    public function show(PPH21 $pph21, Request $request)
+    {
+        $tooltip = collect([
+            'neto_sebulan' => "bruto - total penghasilan",
+            'neto_setahun' => "neto sebulan * 12",
+            'pkp' => "neto setahun - ptkp",
+            'pph21_setahun' => "pkp < 60jt = pkp * 5% || pkp > 60jt & pkp < 250jt = 60jt*5% + (pkp-60jt)*15% || pkp > 250jt & pkp < 500jt = 60jt*5% + 250jt*15% + pkp * 25% || pkp > 500jt & pkp < 9999990000 = pkp * 35%",
+            'pph21_sebulan' => "pph21 setahun / 12"
+        ]);
+
+
+        $data = ['title' => 'Detil Gaji', 'pph21' => $pph21, 'tooltip' => $tooltip];
+        return view('pph21.detail', $data);
+    }
+
     public function export(Request $request)
     {
         $month = $request->get('month');

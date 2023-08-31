@@ -53,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(PPH21Controller::class)->group(function () {
         Route::get('pph21', 'index')->name('pph21');
 
+        Route::get('pph21/detail/{pph21}', 'show')->name('pph21/detail');
+
         Route::get('pph21/export', 'export')->name('pph21/export');
 
         Route::delete('pph21/delete', 'destroy')->name('pph21/delete');
