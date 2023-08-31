@@ -64,8 +64,6 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Bulan</th>
-                            <th>Tahun</th>
                             <th>NPP</th>
                             <th>Nama</th>
                             <th>Gapok</th>
@@ -75,46 +73,49 @@
                             <th>Bonus</th>
                             <th>Tunjangan Pajak</th>
                             <th>Bruto</th>
-                            <th>Penghasilan</th>
                             <th>Biaya Jabatan</th>
                             <th>Iuran Pensiun</th>
                             <th>Potongan</th>
-                            <th>Total Penghasilan</th>
+                            <th>Total Potongan</th>
                             <th>Neto Sebulan</th>
                             <th>Neto Setahun</th>
                             <th>PTKP</th>
                             <th>PKP</th>
                             <th>PPH21 Setahun</th>
                             <th>PPH21 Sebulan</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pph21 as $p)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $p->tgl_gaji)->isoFormat('MMM') }}
-                                </td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $p->tgl_gaji)->format('Y') }}</td>
-                                <td>{{ $p->npp }}</td>
-                                <td class="text-nowrap">{{ $p->nama }}</td>
-                                <td class="text-nowrap">@currency($p->gapok)</td>
+                                <td>{{ $p->gaji->npp }}</td>
+                                <td class="text-nowrap">{{ $p->gaji->nama }}</td>
+                                <td class="text-nowrap">@currency($p->gaji->gapok)</td>
                                 <td class="text-nowrap">@currency($p->tunjangan)</td>
                                 <td class="text-nowrap">@currency($p->premi_as)</td>
                                 <td class="text-nowrap">@currency($p->thr)</td>
                                 <td class="text-nowrap">@currency($p->bonus)</td>
                                 <td class="text-nowrap">@currency($p->tj_pajak)</td>
                                 <td class="text-nowrap">@currency($p->bruto)</td>
-                                <td class="text-nowrap">@currency($p->penghasilan)</td>
                                 <td class="text-nowrap">@currency($p->biaya_jabatan)</td>
                                 <td class="text-nowrap">@currency($p->iuran_pensiun)</td>
                                 <td class="text-nowrap">@currency($p->potongan)</td>
-                                <td class="text-nowrap">@currency($p->total_penghasilan)</td>
+                                <td class="text-nowrap">@currency($p->total_potongan)</td>
                                 <td class="text-nowrap">@currency($p->neto_sebulan)</td>
                                 <td class="text-nowrap">@currency($p->neto_setahun)</td>
                                 <td class="text-nowrap">@currency($p->ptkp)</td>
                                 <td class="text-nowrap">@currency($p->pkp)</td>
                                 <td class="text-nowrap">@currency($p->pph21_setahun)</td>
                                 <td class="text-nowrap">@currency($p->pph21_sebulan)</td>
+                                <td class="text-nowrap">
+                                    <a name="" id="" class="btn btn-outline-primary btn-sm"
+                                        href="{{ route('pph21/detail', $p->id) }}" role="button"><i
+                                            class="fa-solid fa-info fa-fw fa-beat"></i></a>
+                                    <a name="" id="" class="btn btn-outline-danger btn-sm" href="#"
+                                        role="button"><i class="fa-solid fa-trash-alt fa-fw"></i></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

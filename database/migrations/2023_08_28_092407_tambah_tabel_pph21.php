@@ -13,27 +13,21 @@ return new class extends Migration
     {
         Schema::create('tbl_pph21', function (Blueprint $table) {
             $table->id();
-            $table->string('npp');
-            $table->string('nama');
-            $table->double('gapok');
             $table->double('tunjangan');
             $table->double('premi_as');
-            $table->double('thr');
-            $table->double('bonus');
             $table->double('tj_pajak');
             $table->double('bruto');
-            $table->double('penghasilan');
             $table->double('biaya_jabatan');
             $table->double('iuran_pensiun');
             $table->double('potongan');
-            $table->double('total_penghasilan');
+            $table->double('total_potongan');
             $table->double('neto_sebulan');
             $table->double('neto_setahun');
             $table->double('ptkp');
             $table->double('pkp');
             $table->double('pph21_setahun');
             $table->double('pph21_sebulan');
-            $table->date('tgl_gaji');
+            $table->date('tgl_pph21');
             $table->timestamps();
         });
     }

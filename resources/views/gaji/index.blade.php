@@ -28,11 +28,12 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modalCreateSalary"><i class="fa-solid fa-plus fa-fw text-primary"></i>
-                                    Tambah</a></li>
+                                    data-bs-target="#modalCreateSalary"><i
+                                        class="fa-regular fa-pen-to-square fa-fw text-primary"></i>
+                                    Tambah / Perbarui Data Gaji</a></li>
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
                                     data-bs-target="#modalImportSalary"><i
-                                        class="fa-solid fa-file-excel fa-fw text-success"></i>
+                                        class="fa-regular fa-file-excel fa-fw text-success"></i>
                                     Impor Data Gaji</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -63,8 +64,6 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Bulan</th>
-                            <th>Tahun</th>
                             <th>NPP</th>
                             <th>Nama</th>
                             <th>Gaji Pokok</th>
@@ -72,29 +71,25 @@
                             <th>Tunjangan Pendidikan</th>
                             <th>Nilai Bruto</th>
                             <th>Tunjangan Jabatan</th>
-                            <th>Tunjangan Peralihan</th>
                             <th>Tunjangan Kesejahteraan</th>
-                            <th>Tunjangan Beras</th>
-                            <th>Tunjangan Rayon</th>
                             <th>Tunjangan Makan</th>
                             <th>Tunjangan BPJS Ketenagakerjaan</th>
                             <th>Tunjangan BPJS Kesehatan</th>
                             <th>Tunjangan Dapen</th>
                             <th>Tunjangan Kehadiran</th>
-                            <th>Tunjangan BHY</th>
+                            <th>Tunjangan Lainnya</th>
                             <th>THR</th>
                             <th>Bonus</th>
                             <th>Lembur</th>
                             <th>Kekurangan</th>
                             <th>Jumlah Hasil</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($gaji as $gj)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td> {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->isoFormat('MMM') }}</td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->format('Y') }}</td>
                                 <td>{{ $gj->npp }}</td>
                                 <td class="text-nowrap">{{ $gj->nama }}</td>
                                 <td class="text-nowrap">@currency($gj->gapok) </td>
@@ -102,21 +97,25 @@
                                 <td class="text-nowrap">@currency($gj->tj_pend) </td>
                                 <td class="text-nowrap">@currency($gj->nl_bruto1) </td>
                                 <td class="text-nowrap">@currency($gj->tj_jbt) </td>
-                                <td class="text-nowrap">@currency($gj->tj_alih) </td>
                                 <td class="text-nowrap">@currency($gj->tj_kesja) </td>
-                                <td class="text-nowrap">@currency($gj->tj_beras) </td>
-                                <td class="text-nowrap">@currency($gj->tj_rayon) </td>
                                 <td class="text-nowrap">@currency($gj->tj_makan) </td>
                                 <td class="text-nowrap">@currency($gj->tj_sostek) </td>
                                 <td class="text-nowrap">@currency($gj->tj_kes) </td>
                                 <td class="text-nowrap">@currency($gj->tj_dapen) </td>
                                 <td class="text-nowrap">@currency($gj->tj_hadir) </td>
-                                <td class="text-nowrap">@currency($gj->tj_bhy) </td>
+                                <td class="text-nowrap">@currency($gj->tj_lainnya) </td>
                                 <td class="text-nowrap">@currency($gj->thr) </td>
                                 <td class="text-nowrap">@currency($gj->bonus) </td>
                                 <td class="text-nowrap">@currency($gj->lembur) </td>
                                 <td class="text-nowrap">@currency($gj->kurang) </td>
                                 <td class="text-nowrap">@currency($gj->jm_hasil) </td>
+                                <td class="text-nowrap">
+                                    <a name="" id="" class="btn btn-outline-primary btn-sm"
+                                        href="{{ route('gaji/detail', $gj->id) }}" role="button"><i
+                                            class="fa-solid fa-info fa-fw fa-beat"></i></a>
+                                    <a name="" id="" class="btn btn-outline-danger btn-sm" href="#"
+                                        role="button"><i class="fa-solid fa-trash-alt fa-fw"></i></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -127,59 +126,6 @@
     </div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalCreateSalary" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
-        aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId">Tambah Data Gaji</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        @csrf
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalImportSalary" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
-        aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-lg" role="document">
-            <div class="modal-content">
-                <form action="{{ route('gaji/import') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title">Impor Data Gaji</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">File</label>
-                            <input type="file" class="form-control @error('fileGaji') is-invalid @enderror"
-                                name="fileGaji" id="fileGaji"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-                            @error('fileGaji')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('gaji.create')
+    @include('gaji.import')
 @endsection

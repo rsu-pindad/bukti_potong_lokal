@@ -7,10 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS v5.3.1 -->
+    <link href="/vendor/bootstrap-5.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome 6.4.2 CSS -->
-    <link rel="stylesheet" href="/dist/fontawesome-free-6.4.2-web/css/all.min.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome-free-6.4.2-web/css/all.min.css" />
 
 </head>
 
@@ -56,8 +56,7 @@
             </div>
         </div>
     </main>
-
-    <script src="/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/fontawesome-free-6.4.2/js/all.min.js"></script>
 </body>
 
 </html>

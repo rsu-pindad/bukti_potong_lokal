@@ -15,21 +15,20 @@ class PPH21Controller extends Controller
 
     public function index()
     {
-        $month = PPH21::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
-        $year = PPH21::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
+        $month = PPH21::selectRaw('MONTH(tgl_pph21) as bulan')->groupBy(DB::raw('bulan'))->get();
+        $year = PPH21::selectRaw('YEAR(tgl_pph21) as tahun')->groupBy(DB::raw('tahun'))->get();
 
         $getPajak = request()->input('pajak') ?? "all";
         $getMonth = request()->input('month') ?? Carbon::now()->month;
         $getYear = request()->input('year') ?? Carbon::now()->year;
 
-
         $pph21 = [];
         if ($getPajak == 0) {
-            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear AND pph21_sebulan = 0")->get();
+            $pph21 = PPH21::whereRaw("MONTH(tgl_pph21) = $getMonth AND YEAR(tgl_pph21) = $getYear AND pph21_sebulan = 0")->get();
         } elseif ($getPajak == 1) {
-            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear AND pph21_sebulan > 0")->get();
+            $pph21 = PPH21::whereRaw("MONTH(tgl_pph21) = $getMonth AND YEAR(tgl_pph21) = $getYear AND pph21_sebulan > 0")->get();
         } else {
-            $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->get();
+            $pph21 = PPH21::whereRaw("MONTH(tgl_pph21) = $getMonth AND YEAR(tgl_pph21) = $getYear")->get();
         }
 
         $data = [
@@ -43,6 +42,21 @@ class PPH21Controller extends Controller
         ];
 
         return view('pph21.index', $data);
+    }
+
+    public function show(PPH21 $pph21, Request $request)
+    {
+        $tooltip = collect([
+            'neto_sebulan' => "bruto - total penghasilan",
+            'neto_setahun' => "neto sebulan * 12",
+            'pkp' => "neto setahun - ptkp",
+            'pph21_setahun' => "pkp < 60jt = pkp * 5% || pkp > 60jt & pkp < 250jt = 60jt*5% + (pkp-60jt)*15% || pkp > 250jt & pkp < 500jt = 60jt*5% + 250jt*15% + pkp * 25% || pkp > 500jt & pkp < 9999990000 = pkp * 35%",
+            'pph21_sebulan' => "pph21 setahun / 12"
+        ]);
+
+
+        $data = ['title' => 'Detil Gaji', 'pph21' => $pph21, 'tooltip' => $tooltip];
+        return view('pph21.detail', $data);
     }
 
     public function export(Request $request)
