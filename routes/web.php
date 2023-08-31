@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(GajiController::class)->group(function () {
         Route::get('gaji', 'index')->name('gaji');
 
+        Route::get('gaji/detail/{gaji}', 'show')->name('gaji/detail');
+
         Route::post('gaji/import', 'import')->name('gaji/import');
 
         Route::post('gaji/store', 'store')->name('gaji/store');

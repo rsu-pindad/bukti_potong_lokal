@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tbl_gaji', function (Blueprint $table) {
-            $table->double('tj_lainnya')->nullable()->after('tj_bhy');
-            $table->double('jm_potongan')->nullable()->after('pot_swk');
+        Schema::table('tbl_pph21', function (Blueprint $table) {
+            $table->foreignId('id_gaji')->after('id');
+
+            $table->foreign('id_gaji')->references('id')->on('tbl_gaji')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_gaji');
+        Schema::dropIfExists('tbl_pph21');
     }
 };

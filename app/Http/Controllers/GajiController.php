@@ -70,6 +70,7 @@ class GajiController extends Controller
         ]);
 
         $validated['tgl_gaji'] = $tglGaji;
+        $validated['jm_potongan'] = $validated['pot_dapen'] + $validated['pot_sostek'] + $validated['pot_kes'] + $validated['pot_swk'];
 
         Gaji::updateOrCreate(
             ['npp' => $validated['npp'], 'tgl_gaji' => $validated['tgl_gaji']],
@@ -77,6 +78,13 @@ class GajiController extends Controller
         );
 
         return redirect()->route('gaji')->withToastSuccess('berhasil menambah data gaji');
+    }
+
+    public function show(Gaji $gaji, Request $request)
+    {
+
+        $data = ['title' => 'Detil Gaji', 'gaji' => $gaji];
+        return view('gaji.detail', $data);
     }
 
     public function export(Request $request)
@@ -140,12 +148,9 @@ class GajiController extends Controller
 
                 $premiAS = $gj->tj_kes + $gj->tj_sostek;
 
-
                 $tjPajak = $request->session()->get("pph21_$gj->npp");
 
                 $bruto = $gapok + $totalTunjangan + $gj->thr + $gj->bonus + $premiAS + $tjPajak;
-
-                $penghasilan = 0;
 
                 $biayaJabatan = 500000;
 
@@ -153,9 +158,9 @@ class GajiController extends Controller
 
                 $potongan = $gj->pot_sostek + $gj->pot_kes  + $gj->pot_swk;
 
-                $totalPenghasilan = $biayaJabatan + $iuranPensiun + $potongan;
+                $totalPotongan = $biayaJabatan + $iuranPensiun + $potongan;
 
-                $netoSebulan = $bruto - $totalPenghasilan;
+                $netoSebulan = $bruto - $totalPotongan;
 
 
                 $netoSetahun = $netoSebulan * 12;
@@ -174,30 +179,25 @@ class GajiController extends Controller
             } while ($bool == false);
 
             $dataPPH21 = [
-                'tgl_gaji' => $gj->tgl_gaji,
-                'npp' => $gj->npp,
-                'nama' => $gj->nama,
-                'gapok' => $gj->gapok,
+                'id_gaji' => $gj->id,
                 'tunjangan' => $totalTunjangan,
                 'premi_as' => $premiAS,
-                'thr' => $gj->thr ?? 0,
-                'bonus' => $gj->bonus ?? 0,
                 'tj_pajak' => round($tjPajak),
                 'bruto' => $bruto,
-                'penghasilan' => $penghasilan,
                 'biaya_jabatan' => $biayaJabatan,
                 'iuran_pensiun' => $iuranPensiun,
                 'potongan' => $potongan,
-                'total_penghasilan' => $totalPenghasilan,
+                'total_potongan' => $totalPotongan,
                 'neto_sebulan' => $netoSebulan,
                 'neto_setahun' => $netoSetahun,
                 'ptkp' => $ptkp,
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
-                'pph21_sebulan' => round($pph21Sebulan)
+                'pph21_sebulan' => round($pph21Sebulan),
+                'tgl_pph21' => $gj->tgl_gaji
             ];
 
-            PPH21::updateOrCreate(['npp' => $gj->npp, 'tgl_gaji' => $gj->tgl_gaji], $dataPPH21);
+            PPH21::updateOrCreate(['id_gaji' => $gj->id], $dataPPH21);
         }
 
         if (count($gaji) < 1) {

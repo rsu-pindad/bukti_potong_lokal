@@ -108,7 +108,7 @@
     </script>
     @include('sweetalert::alert')
 
-    @include('js.gaji');
+    @include('js.gaji')
 
 </body>
 
