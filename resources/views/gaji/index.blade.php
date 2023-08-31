@@ -71,16 +71,12 @@
                             <th>Tunjangan Pendidikan</th>
                             <th>Nilai Bruto</th>
                             <th>Tunjangan Jabatan</th>
-                            <th>Tunjangan Peralihan</th>
                             <th>Tunjangan Kesejahteraan</th>
-                            <th>Tunjangan Beras</th>
-                            <th>Tunjangan Rayon</th>
                             <th>Tunjangan Makan</th>
                             <th>Tunjangan BPJS Ketenagakerjaan</th>
                             <th>Tunjangan BPJS Kesehatan</th>
                             <th>Tunjangan Dapen</th>
                             <th>Tunjangan Kehadiran</th>
-                            <th>Tunjangan BHY</th>
                             <th>Tunjangan Lainnya</th>
                             <th>THR</th>
                             <th>Bonus</th>
@@ -100,16 +96,12 @@
                                 <td class="text-nowrap">@currency($gj->tj_pend) </td>
                                 <td class="text-nowrap">@currency($gj->nl_bruto1) </td>
                                 <td class="text-nowrap">@currency($gj->tj_jbt) </td>
-                                <td class="text-nowrap">@currency($gj->tj_alih) </td>
                                 <td class="text-nowrap">@currency($gj->tj_kesja) </td>
-                                <td class="text-nowrap">@currency($gj->tj_beras) </td>
-                                <td class="text-nowrap">@currency($gj->tj_rayon) </td>
                                 <td class="text-nowrap">@currency($gj->tj_makan) </td>
                                 <td class="text-nowrap">@currency($gj->tj_sostek) </td>
                                 <td class="text-nowrap">@currency($gj->tj_kes) </td>
                                 <td class="text-nowrap">@currency($gj->tj_dapen) </td>
                                 <td class="text-nowrap">@currency($gj->tj_hadir) </td>
-                                <td class="text-nowrap">@currency($gj->tj_bhy) </td>
                                 <td class="text-nowrap">@currency($gj->tj_lainnya) </td>
                                 <td class="text-nowrap">@currency($gj->thr) </td>
                                 <td class="text-nowrap">@currency($gj->bonus) </td>
