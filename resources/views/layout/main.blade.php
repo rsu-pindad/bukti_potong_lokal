@@ -9,7 +9,6 @@
 
     <link href="/vendor/bootstrap-5.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-
     <link href="/vendor/DataTables-1.13.6/datatables.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/vendor/fontawesome-free-6.4.2-web/css/all.min.css" />
@@ -109,29 +108,8 @@
     </script>
     @include('sweetalert::alert')
 
+    @include('js.gaji');
 
-    @if (Route::currentRouteName())
-        <script>
-            const npp = $("#nppDataList");
-            const employee = {{ Js::from($pegawai) }}
-            npp.click(function() {
-                npp.val('');
-            }).keyup(function() {
-
-                let findData = employee.find(element => {
-                    return this.value == element.npp
-                });
-
-                if (findData) {
-                    npp.removeClass('is-invalid').addClass('is-valid')
-                    $('#nama').val(findData.nama)
-                } else {
-                    npp.removeClass('is-valid').addClass('is-invalid');
-                    $('#nama').val("")
-                }
-            })
-        </script>
-    @endif
 </body>
 
 </html>

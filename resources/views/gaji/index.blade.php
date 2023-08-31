@@ -28,11 +28,12 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modalCreateSalary"><i class="fa-solid fa-plus fa-fw text-primary"></i>
-                                    Tambah</a></li>
+                                    data-bs-target="#modalCreateSalary"><i
+                                        class="fa-regular fa-pen-to-square fa-fw text-primary"></i>
+                                    Tambah / Perbarui Data Gaji</a></li>
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
                                     data-bs-target="#modalImportSalary"><i
-                                        class="fa-solid fa-file-excel fa-fw text-success"></i>
+                                        class="fa-regular fa-file-excel fa-fw text-success"></i>
                                     Impor Data Gaji</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -63,8 +64,6 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Bulan</th>
-                            <th>Tahun</th>
                             <th>NPP</th>
                             <th>Nama</th>
                             <th>Gaji Pokok</th>
@@ -94,8 +93,6 @@
                         @foreach ($gaji as $gj)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td> {{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->isoFormat('MMM') }}</td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $gj->tgl_gaji)->format('Y') }}</td>
                                 <td>{{ $gj->npp }}</td>
                                 <td class="text-nowrap">{{ $gj->nama }}</td>
                                 <td class="text-nowrap">@currency($gj->gapok) </td>
