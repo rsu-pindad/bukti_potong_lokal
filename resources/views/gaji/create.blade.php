@@ -119,50 +119,11 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="mb-3">
-                            <label for="" class="form-label">Tunjangan Peralihan</label>
-                            <input type="text" class="form-control @error('tj_alih') is-invalid @enderror"
-                                name="tj_alih" id="tj_alih" placeholder="Tunjangan Peralihan"
-                                value="{{ old('tj_alih', 0) }}">
-                            @error('tj_alih')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="mb-3">
                             <label for="" class="form-label">Tunjangan Kesejahteraan</label>
                             <input type="text" class="form-control @error('tj_kesja') is-invalid @enderror"
                                 name="tj_kesja" id="tj_kesja" placeholder="Tunjangan Kesejahteraan"
                                 value="{{ old('tj_kesja', 0) }}">
                             @error('tj_kesja')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Tunjangan Beras</label>
-                            <input type="text" class="form-control @error('tj_beras') is-invalid @enderror"
-                                name="tj_beras" id="tj_beras" placeholder="Tunjangan Beras"
-                                value="{{ old('tj_beras', 0) }}">
-                            @error('tj_beras')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Tunjangan Rayon</label>
-                            <input type="text" class="form-control @error('tj_rayon') is-invalid @enderror"
-                                name="tj_rayon" id="tj_rayon" placeholder="Tunjangan Rayon"
-                                value="{{ old('tj_rayon', 0) }}">
-                            @error('tj_rayon')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -228,19 +189,6 @@
                                 name="tj_hadir" id="tj_hadir" placeholder="Tunjangan Kehadiran"
                                 value="{{ old('tj_hadir', 0) }}">
                             @error('tj_hadir')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Tunjangan BHY</label>
-                            <input type="text" class="form-control @error('tj_bhy') is-invalid @enderror"
-                                name="tj_bhy" id="tj_bhy" placeholder="Tunjangan BHY"
-                                value="{{ old('tj_bhy', 0) }}">
-                            @error('tj_bhy')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
