@@ -18,8 +18,12 @@ class GajiController extends Controller
 
     public function index()
     {
-        $month = Gaji::selectRaw('MONTH(tgl_gaji) as bulan')->groupBy(DB::raw('bulan'))->get();
-        $year = Gaji::selectRaw('YEAR(tgl_gaji) as tahun')->groupBy(DB::raw('tahun'))->get();
+        for ($i = 1; $i <= 12; $i++) {
+            $month[] = ['bulan' => $i];
+        }
+        for ($i = 2023; $i <= Carbon::now()->year + 1; $i++) {
+            $year[] = ['tahun' => $i];
+        }
 
         $getMonth = request()->input('month') ?? Carbon::now()->month;
         $getYear = request()->input('year') ?? Carbon::now()->year;
