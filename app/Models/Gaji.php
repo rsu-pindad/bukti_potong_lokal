@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Gaji extends Model
@@ -12,6 +13,12 @@ class Gaji extends Model
 
     protected $table = 'tbl_gaji';
     protected $guarded = ['id'];
+
+
+    public function pegawai(): BelongsTo
+    {
+        return $this->belongsTo(Pegawai::class, 'npp', 'npp');
+    }
 
     public function pph21(): HasOne
     {
