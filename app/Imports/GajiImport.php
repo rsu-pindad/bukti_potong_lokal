@@ -21,8 +21,15 @@ class GajiImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-
         foreach ($rows as $row) {
+            if ($row['tgl_gaji'] == (int)$row['tgl_gaji']) {
+                $year = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_gaji'])->format('Y');
+                $month = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_gaji'])->format('m');
+                $tglGaji = Carbon::createFromDate($year, $month, 25);
+            } else {
+                $tglGaji = $row['tgl_gaji'];
+            }
+
             $nlBruto1 = $row['gapok'] + $row['tj_kelu'] + $row['tj_pend'];
 
             $jmHasil = $nlBruto1 + $row['tj_jbt'] + $row['tj_alih'] + $row['tj_kesja'] + $row['tj_beras'] + $row['tj_rayon'] + $row['tj_makan'] + $row['tj_sostek'] + $row['tj_kes'] + $row['tj_dapen'] + $row['tj_hadir_18'] + $row['tj_bhy'] + $row['thr'] + $row['bonus'] + $row['lembur'] + $row['kurang'];
@@ -30,7 +37,7 @@ class GajiImport implements ToCollection, WithHeadingRow
 
 
             Gaji::updateOrCreate(
-                ['npp' => $row['npp'], 'tgl_gaji' => $row['tgl_gaji']],
+                ['npp' => $row['npp'], 'tgl_gaji' => $tglGaji],
                 [
                     'npp'  => $row['npp'],
                     'nama'  => $row['nama'],
@@ -52,7 +59,7 @@ class GajiImport implements ToCollection, WithHeadingRow
                     'lembur'  => $row['lembur'],
                     'kurang'  => $row['kurang'],
                     'jm_hasil' => $jmHasil,
-                    'tgl_gaji' => $row['tgl_gaji'],
+                    'tgl_gaji' => $tglGaji,
                     'pot_dapen'  => $row['pot_dapen'],
                     'pot_sostek'  => $row['pot_sostek'],
                     'pot_kes'  => $row['pot_kes'],
