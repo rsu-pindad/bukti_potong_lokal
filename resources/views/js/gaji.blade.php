@@ -27,13 +27,14 @@
             if (findEmployee) {
                 npp.removeClass('is-invalid').addClass('is-valid')
                 $('#nama').val(findEmployee.nama)
+                $("#st_ptkp").val(findEmployee.st_ptkp);
             } else {
                 npp.removeClass('is-valid').addClass('is-invalid');
                 $('#nama').val("")
+                $('#st_ptkp').val("")
             }
 
             if (findSalary) {
-                $("#st_ptkp option[value='" + findSalary.st_ptkp + "']").attr("selected", "selected");
                 $('#gapok').val(findSalary.gapok)
                 $('#tj_kelu').val(findSalary.tj_kelu)
                 $('#tj_pend').val(findSalary.tj_pend)
@@ -54,7 +55,6 @@
                 $('#lembur').val(findSalary.lembur)
                 $('#kurang').val(findSalary.kurang)
             } else {
-                $("#st_ptkp option").removeAttr("selected");
                 $('#gapok').val(0)
                 $('#tj_kelu').val(0)
                 $('#tj_pend').val(0)

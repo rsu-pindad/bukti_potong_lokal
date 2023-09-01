@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('tbl_pegawai', function (Blueprint $table) {
             $table->id();
             $table->string('npp')->unique();
-            $table->string('nama');
-            $table->string('npwp');
+            $table->string('nama')->nullable();
+            $table->string('st_ptkp')->nullable();
+            $table->string('npwp')->nullable();
             $table->timestamps();
         });
     }

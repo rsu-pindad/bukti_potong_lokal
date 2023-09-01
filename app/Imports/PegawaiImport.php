@@ -22,6 +22,7 @@ class PegawaiImport implements ToCollection, WithHeadingRow
                 [
                     'npp'  => $row['npp'],
                     'nama' => $row['nama'],
+                    'st_ptkp' => $row['st_ptkp'],
                     'npwp' => $row['npwp'],
                 ]
             );
