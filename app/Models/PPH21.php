@@ -18,9 +18,4 @@ class PPH21 extends Model
     {
         return $this->belongsTo(Gaji::class, 'id_gaji');
     }
-
-    public function pegawai(): BelongsTo
-    {
-        return $this->belongsTo(Pegawai::class, 'npp', 'npp');
-    }
 }

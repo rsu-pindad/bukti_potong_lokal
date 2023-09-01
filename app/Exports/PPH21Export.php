@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+use App\Models\Gaji;
+use App\Models\Pegawai;
 use App\Models\PPH21;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -24,15 +26,15 @@ class PPH21Export implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $pph21 = PPH21::whereRaw("MONTH(tgl_gaji) = $this->month AND YEAR(tgl_gaji) = $this->year")->get();
+        $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year")->get();
         $filter = $pph21->map(function ($item) {
             return [
-                'masa_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_gaji)->format('m'),
-                'tahun_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_gaji)->format('Y'),
+                'masa_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_pph21)->format('m'),
+                'tahun_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_pph21)->format('Y'),
                 'pembetulan' => 0,
-                'npwp' => $item->pegawai->npwp ?? 0,
-                'nama' => $item->nama,
-                'kode_pajak' => 0,
+                'npwp' => $item->gaji->pegawai->npwp,
+                'nama' => $item->gaji->pegawai->nama,
+                'kode_pajak' => "21-100-01",
                 'jumlah_bruto' => $item->bruto,
                 'jumlah_pph' => $item->pph21_sebulan,
             ];

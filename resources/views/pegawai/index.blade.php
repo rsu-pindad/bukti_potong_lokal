@@ -10,11 +10,12 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
-                                data-bs-target="#modalCreateEmployee"><i class="fa-solid fa-plus fa-fw text-primary"></i>
+                                data-bs-target="#modalCreateEmployee"><i
+                                    class="fa-regular fa-pen-to-square fa-fw text-primary"></i>
                                 Tambah Data Pegawai</a></li>
                         <li><a type="button" class="dropdown-item" data-bs-toggle="modal"
                                 data-bs-target="#modalImportEmployee"><i
-                                    class="fa-solid fa-file-excel fa-fw text-success"></i>
+                                    class="fa-regular fa-file-excel fa-fw text-success"></i>
                                 Impor Data Pegawai</a></li>
                         <li>
                             <hr class="dropdown-divider">
