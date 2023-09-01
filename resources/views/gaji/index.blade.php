@@ -1,5 +1,9 @@
 @extends('layout.main')
 @section('content')
+    <div class="alert alert-primary" role="alert">
+        Data Gaji Bulan {{ $getMonth }} Tahun {{ $getYear }}
+    </div>
+
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between py-0">
             <span>Data Gaji</span>
@@ -8,15 +12,15 @@
                     <select class="form-select form-select-sm" name="month" id="selectMonth">
                         <option value="">Pilih Bulan</option>
                         @foreach ($month as $m)
-                            <option value="{{ $m->bulan }}" {{ $getMonth == $m->bulan ? 'selected' : '' }}>
-                                {{ $m->bulan }}</option>
+                            <option value="{{ $m['bulan'] }}" {{ $getMonth == $m['bulan'] ? 'selected' : '' }}>
+                                {{ $m['bulan'] }}</option>
                         @endforeach
                     </select>
                     <select class="form-select form-select-sm" name="year" id="selectYear">
                         <option value="">Pilih Tahun</option>
                         @foreach ($year as $y)
-                            <option value="{{ $y->tahun }}" {{ $getYear == $y->tahun ? 'selected' : '' }}>
-                                {{ $y->tahun }}</option>
+                            <option value="{{ $y['tahun'] }}" {{ $getYear == $y['tahun'] ? 'selected' : '' }}>
+                                {{ $y['tahun'] }}</option>
                         @endforeach
                     </select>
                 </form>
