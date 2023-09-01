@@ -21,11 +21,14 @@ class GajiImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-
         foreach ($rows as $row) {
-            $year = Carbon::createFromFormat("Y-m-d", $row['tgl_gaji'])->format('Y');
-            $month = Carbon::createFromFormat("Y-m-d", $row['tgl_gaji'])->format('m');
-            $tglGaji = Carbon::createFromDate($year, $month, 25);
+            if ($row['tgl_gaji'] == (int)$row['tgl_gaji']) {
+                $year = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_gaji'])->format('Y');
+                $month = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_gaji'])->format('m');
+                $tglGaji = Carbon::createFromDate($year, $month, 25);
+            } else {
+                $tglGaji = $row['tgl_gaji'];
+            }
 
             $nlBruto1 = $row['gapok'] + $row['tj_kelu'] + $row['tj_pend'];
 
@@ -34,7 +37,7 @@ class GajiImport implements ToCollection, WithHeadingRow
 
 
             Gaji::updateOrCreate(
-                ['npp' => $row['npp'], 'tgl_gaji' => $row['tgl_gaji']],
+                ['npp' => $row['npp'], 'tgl_gaji' => $tglGaji],
                 [
                     'npp'  => $row['npp'],
                     'nama'  => $row['nama'],
