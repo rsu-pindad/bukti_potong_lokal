@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('content')
-    <div class="alert alert-primary" role="alert">
+    <div class="alert alert-info" role="alert">
         Data Gaji Bulan {{ $getMonth }} Tahun {{ $getYear }}
     </div>
 
@@ -117,8 +117,14 @@
                                     <a name="" id="" class="btn btn-outline-primary btn-sm"
                                         href="{{ route('gaji/detail', $gj->id) }}" role="button"><i
                                             class="fa-solid fa-info fa-fw fa-beat"></i></a>
-                                    <a name="" id="" class="btn btn-outline-danger btn-sm" href="#"
-                                        role="button"><i class="fa-solid fa-trash-alt fa-fw"></i></a>
+                                    <form action="{{ route('gaji/delete', $gj->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" name="" id=""
+                                            class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('Yakin akan menghapus data ini?')"><i
+                                                class="fa-solid fa-trash-alt fa-fw"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
