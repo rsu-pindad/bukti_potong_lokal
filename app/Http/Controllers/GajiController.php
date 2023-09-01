@@ -84,11 +84,16 @@ class GajiController extends Controller
         return redirect()->route('gaji')->withToastSuccess('berhasil menambah data gaji');
     }
 
-    public function show(Gaji $gaji, Request $request)
+    public function show(Gaji $gaji)
     {
-
         $data = ['title' => 'Detil Gaji', 'gaji' => $gaji];
         return view('gaji.detail', $data);
+    }
+
+    public function destroy(Gaji $gaji)
+    {
+        $gaji->delete();
+        return back()->withToastSuccess('berhasil menghapus data gaji');
     }
 
     public function export(Request $request)
