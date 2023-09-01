@@ -112,6 +112,7 @@
     </script>
     @include('sweetalert::alert')
 
+    @include('js.pegawai')
     @include('js.gaji')
 
 

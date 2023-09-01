@@ -45,18 +45,9 @@
                     <div class="col-lg-6">
                         <div class="mb-3">
                             <label for="" class="form-label">Status PTKP</label>
-                            <select class="form-select @error('st_ptkp') is-invalid @enderror" name="st_ptkp"
-                                id="st_ptkp">
-                                <option value="">Pilih Status PTKP</option>
-                                <option value="TK0">TK0</option>
-                                <option value="TK1">TK1</option>
-                                <option value="TK2">TK2</option>
-                                <option value="TK3">TK3</option>
-                                <option value="K0">K0</option>
-                                <option value="K1">K1</option>
-                                <option value="K2">K2</option>
-                                <option value="K3">K3</option>
-                            </select>
+                            <input type="text" class="form-control bg-light @error('st_ptkp') is-invalid @enderror"
+                                name="st_ptkp" id="st_ptkp" placeholder="Status PTKP" value="{{ old('st_ptkp') }}"
+                                readonly>
                             @error('st_ptkp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
