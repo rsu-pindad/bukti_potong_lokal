@@ -44,7 +44,7 @@ class PPH21Controller extends Controller
         return view('pph21.index', $data);
     }
 
-    public function show(PPH21 $pph21, Request $request)
+    public function show(PPH21 $pph21)
     {
         $tooltip = collect([
             'neto_sebulan' => "bruto - total potongan",
@@ -63,10 +63,18 @@ class PPH21Controller extends Controller
     {
         $month = $request->get('month');
         $year = $request->get('year');
+        $pph21 = $request->get('pajak');
+        if ($pph21 == 0) {
+            $pph21 = false;
+        } elseif ($pph21 == 1) {
+            $pph21 = true;
+        } else {
+            $pph21 = 'all';
+        }
 
         $fileName = $year . '_' . $month . '_' . 'pph21.xlsx';
 
-        return Excel::download(new PPH21Export($month, $year), $fileName, \Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new PPH21Export($month, $year, $pph21), $fileName, \Maatwebsite\Excel\Excel::XLSX);
     }
 
     public function destroy(Request $request)
@@ -76,6 +84,6 @@ class PPH21Controller extends Controller
 
         PPH21::whereRaw("MONTH(tgl_gaji) = $getMonth AND YEAR(tgl_gaji) = $getYear")->delete();
 
-        return redirect()->back()->withToastSuccess("berhasil menghapus data bulan $getMonth tahun $getYear");
+        return back()->withToastSuccess("berhasil menghapus data bulan $getMonth tahun $getYear");
     }
 }
