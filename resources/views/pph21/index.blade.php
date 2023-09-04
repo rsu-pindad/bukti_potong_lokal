@@ -37,7 +37,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a href="{{ route('pph21/export', ['month' => $getMonth, 'year' => $getYear]) }}"
+                                <a href="{{ route('pph21/export', ['month' => $getMonth, 'year' => $getYear, 'pajak' => $getPajak]) }}"
                                     class="dropdown-item "><i class="fa-solid fa-file-download fa-fw text-success"></i>
                                     Ekspor Data
                                     PPH21</a>

@@ -81,7 +81,7 @@ class GajiController extends Controller
             $validated
         );
 
-        return redirect()->route('gaji')->withToastSuccess('berhasil menambah data gaji');
+        return back()->withToastSuccess('berhasil menambah data gaji');
     }
 
     public function show(Gaji $gaji)
@@ -114,11 +114,10 @@ class GajiController extends Controller
         try {
             Excel::import(new GajiImport, $validated['fileGaji']);
         } catch (\Throwable $th) {
-            dd($th);
-            return redirect()->back()->with('toast_error', "Impor file yg benar, $th");
+            return redirect()->back()->with('toast_error', "Impor file yg benar");
         }
 
-        return redirect()->route('gaji')->withToastSuccess('berhasil mengimpor file gaji');
+        return back()->withToastSuccess('berhasil mengimpor file gaji');
     }
 
     public function calculatePPH21(Request $request)
