@@ -27,15 +27,16 @@ class PPH21Export implements FromCollection, WithHeadings
 
 
     public function collection()
-    {
-        if ($this->pph21 == false) {
-            $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year AND pph21_sebulan = 0")->get();
-        } elseif ($this->pph21 == true) {
+    {   
+        if ($this->pph21 == 0) {
+            $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year AND pph21_sebulan < 1")->get();
+        } elseif($this->pph21 == 1) {
             $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year AND pph21_sebulan > 0")->get();
-        } else {
-            $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year ")->get();
+        } else{
+            $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year")->get();
         }
-        $filter = $pph21->map(function ($item) {
+
+       return $pph21->map(function ($item) {
             return [
                 'masa_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_pph21)->format('m'),
                 'tahun_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_pph21)->format('Y'),
@@ -47,7 +48,6 @@ class PPH21Export implements FromCollection, WithHeadings
                 'jumlah_pph' => $item->pph21_sebulan,
             ];
         });
-        return $filter;
     }
 
     public function headings(): array
