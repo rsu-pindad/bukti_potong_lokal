@@ -24,7 +24,8 @@ class PegawaiController extends Controller
         $validated = $request->validate([
             'npp' => 'required',
             'nama' => 'required',
-            'npwp' => 'required'
+            'npwp' => 'required',
+            'st_ptkp'=>'required'
         ]);
         Pegawai::updateOrCreate(['npp' => $validated['npp']], $validated);
 
