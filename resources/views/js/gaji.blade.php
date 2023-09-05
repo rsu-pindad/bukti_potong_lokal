@@ -35,9 +35,10 @@
             }
 
             if (findSalary) {
+                let tj_lainnya = findSalary.tj_lainnya ?? 0;
                 let thr = findSalary.thr ?? 0;
                 let bonus = findSalary.bonus ?? 0;
-                
+
                 $('#gapok').val(findSalary.gapok)
                 $('#tj_kelu').val(findSalary.tj_kelu)
                 $('#tj_pend').val(findSalary.tj_pend)
@@ -52,7 +53,7 @@
                 $('#tj_dapen').val(findSalary.tj_dapen)
                 $('#tj_hadir').val(findSalary.tj_hadir)
                 $('#tj_bhy').val(findSalary.tj_bhy)
-                $('#tj_lainnya').val(findSalary.tj_lainnya)
+                $('#tj_lainnya').val(tj_lainnya)
                 $('#thr').val(thr) 
                 $('#bonus').val(bonus) 
                 $('#lembur').val(findSalary.lembur)
