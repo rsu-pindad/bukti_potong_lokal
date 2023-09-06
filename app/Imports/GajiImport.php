@@ -25,9 +25,11 @@ class GajiImport implements ToCollection, WithHeadingRow
             if ($row['tgl_gaji'] == (int)$row['tgl_gaji']) {
                 $year = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_gaji'])->format('Y');
                 $month = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_gaji'])->format('m');
-                $tglGaji = Carbon::createFromDate($year, $month, 25);
+                $tglGaji = Carbon::createFromDate($year, $month, 25)->format("Y-m-d");
             } else {
-                $tglGaji = $row['tgl_gaji'];
+                $year = Carbon::createFromFormat('Y-m-d', $row['tgl_gaji'])->format('Y');
+                $month = Carbon::createFromFormat('Y-m-d', $row['tgl_gaji'])->format('m');
+                $tglGaji = Carbon::createFromDate($year, $month, 25)->format("Y-m-d");
             }
 
             $nlBruto1 = $row['gapok'] + $row['tj_kelu'] + $row['tj_pend'];
