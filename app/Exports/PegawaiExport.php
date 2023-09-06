@@ -26,7 +26,9 @@ class PegawaiExport implements FromCollection, WithHeadings
             'No',
             'NPP',
             'Nama',
-            'NPWP'
+            'ST PTKP',
+            'NPWP',
+            'ST PEG'
         ];
     }
 }
