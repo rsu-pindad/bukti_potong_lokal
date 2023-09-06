@@ -81,21 +81,23 @@
     <script src="/vendor/fontawesome-free-6.4.2/js/all.min.js"></script>
 
     <script>
-        new DataTable('#dataTable');
+        $(document).ready(function() {
+            new DataTable('#dataTable');
 
-        const formGet = document.getElementById('formGet')
-        const selectMonth = document.getElementById('selectMonth')
-        const selectYear = document.getElementById('selectYear')
+            const formGet = document.getElementById('formGet')
+            const selectMonth = document.getElementById('selectMonth')
+            const selectYear = document.getElementById('selectYear')
 
-        selectMonth.addEventListener('change', function(event) {
-            formGet.submit()
-        })
-        selectYear.addEventListener('change', function(event) {
-            formGet.submit()
-        })
+            selectMonth.addEventListener('change', function(event) {
+                formGet.submit()
+            })
+            selectYear.addEventListener('change', function(event) {
+                formGet.submit()
+            })
 
-        $("#selectPPH21").on("change", function() {
-            formGet.submit()
+            $("#selectPPH21").on("change", function() {
+                formGet.submit()
+            })
         })
     </script>
 
