@@ -40,7 +40,23 @@
                              @enderror
                          </div>
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Status Pegawai</label>
+                            <select class="form-select @error('st_peg') is-invalid @enderror" name="st_peg"
+                                id="st_peg">
+                                <option value="">Pilih Status Pegawai</option>
+                                <option value="KONTRAK">KONTRAK</option>
+                                <option value="TETAP">TETAP</option>
+                            </select>
+                            @error('st_peg')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                     </div>
+                     <div class="col-md-4">
                          <div class="mb-3">
                              <label for="" class="form-label">Status PTKP</label>
                              <select class="form-select @error('st_ptkp') is-invalid @enderror" name="st_ptkp"
@@ -62,7 +78,7 @@
                              @enderror
                          </div>
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-4">
                          <div class="mb-3">
                              <label for="" class="form-label">NPWP</label>
                              <input type="text" class="form-control @error('npwp') is-invalid @enderror"

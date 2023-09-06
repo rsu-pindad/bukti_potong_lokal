@@ -36,6 +36,7 @@
                             <th>Nama</th>
                             <th>Status PTKP</th>
                             <th>NPWP</th>
+                            <th>Status Pegawai</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +47,7 @@
                                 <td>{{ $p->nama }}</td>
                                 <td>{{ $p->st_ptkp }}</td>
                                 <td>{{ $p->npwp }}</td>
+                                <td>{{ $p->st_peg }}</td>
                             </tr>
                         @endforeach
                     </tbody>
