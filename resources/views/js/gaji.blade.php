@@ -35,29 +35,29 @@
             }
 
             if (findSalary) {
-                let tj_lainnya = findSalary.tj_lainnya ?? 0;
-                let thr = findSalary.thr ?? 0;
-                let bonus = findSalary.bonus ?? 0;
-
-                $('#gapok').val(findSalary.gapok)
-                $('#tj_kelu').val(findSalary.tj_kelu)
-                $('#tj_pend').val(findSalary.tj_pend)
-                $('#tj_jbt').val(findSalary.tj_jbt)
-                $('#tj_alih').val(findSalary.tj_alih)
-                $('#tj_kesja').val(findSalary.tj_kesja)
-                $('#tj_beras').val(findSalary.tj_beras)
-                $('#tj_rayon').val(findSalary.tj_rayon)
-                $('#tj_makan').val(findSalary.tj_makan)
-                $('#tj_sostek').val(findSalary.tj_sostek)
-                $('#tj_kes').val(findSalary.tj_kes)
-                $('#tj_dapen').val(findSalary.tj_dapen)
-                $('#tj_hadir').val(findSalary.tj_hadir)
-                $('#tj_bhy').val(findSalary.tj_bhy)
-                $('#tj_lainnya').val(tj_lainnya)
-                $('#thr').val(thr) 
-                $('#bonus').val(bonus) 
-                $('#lembur').val(findSalary.lembur)
-                $('#kurang').val(findSalary.kurang)
+                $('#gapok').val(findSalary.gapok ?? 0)
+                $('#tj_kelu').val(findSalary.tj_kelu ?? 0)
+                $('#tj_pend').val(findSalary.tj_pend ?? 0)
+                $('#tj_jbt').val(findSalary.tj_jbt ?? 0)
+                $('#tj_alih').val(findSalary.tj_alih ?? 0)
+                $('#tj_kesja').val(findSalary.tj_kesja ?? 0)
+                $('#tj_beras').val(findSalary.tj_beras ?? 0)
+                $('#tj_rayon').val(findSalary.tj_rayon ?? 0)
+                $('#tj_makan').val(findSalary.tj_makan ?? 0)
+                $('#tj_sostek').val(findSalary.tj_sostek ?? 0)
+                $('#tj_kes').val(findSalary.tj_kes ?? 0)
+                $('#tj_dapen').val(findSalary.tj_dapen ?? 0)
+                $('#tj_hadir').val(findSalary.tj_hadir ?? 0)
+                $('#tj_bhy').val(findSalary.tj_bhy ?? 0)
+                $('#tj_lainnya').val(findSalary.tj_lainnya ?? 0)
+                $('#thr').val(findSalary.thr ?? 0) 
+                $('#bonus').val(findSalary.bonus ?? 0) 
+                $('#lembur').val(findSalary.lembur ?? 0) 
+                $('#kurang').val(findSalary.kurang ?? 0) 
+                $('#pot_dapen').val(findSalary.pot_dapen ?? 0) 
+                $('#pot_sostek').val(findSalary.pot_sostek ?? 0) 
+                $('#pot_kes').val(findSalary.pot_kes ?? 0) 
+                $('#pot_swk').val(findSalary.pot_swk ?? 0) 
             } else {
                 $('#gapok').val(0)
                 $('#tj_kelu').val(0)
@@ -78,6 +78,10 @@
                 $('#bonus').val(0)
                 $('#lembur').val(0)
                 $('#kurang').val(0)
+                $('#pot_dapen').val(0) 
+                $('#pot_sostek').val(0) 
+                $('#pot_kes').val(0) 
+                $('#pot_swk').val(0) 
             }
         })
     </script>
