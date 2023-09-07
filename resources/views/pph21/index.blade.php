@@ -90,9 +90,9 @@
                         @foreach ($pph21 as $p)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $p->gaji->npp }}</td>
-                                <td class="text-nowrap">{{ $p->gaji->nama }}</td>
-                                <td class="text-nowrap">@currency($p->gaji->gapok)</td>
+                                <td>{{ $p->gaji->npp ?? '' }}</td>
+                                <td class="text-nowrap">{{ $p->gaji->nama ?? '' }}</td>
+                                <td class="text-nowrap">@currency($p->gaji->gapok ?? 0)</td>
                                 <td class="text-nowrap">@currency($p->tunjangan)</td>
                                 <td class="text-nowrap">@currency($p->premi_as)</td>
                                 <td class="text-nowrap">@currency($p->thr)</td>
