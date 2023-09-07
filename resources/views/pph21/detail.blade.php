@@ -57,7 +57,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="fw-bold">Iuran Pensiun</div>
-                            <span class="fw-normal">@currency($pph21->iur_pen)</span>
+                            <span class="fw-normal">@currency($pph21->iuran_pensiun)</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="fw-bold">Potongan Ketenagakerjaan</div>

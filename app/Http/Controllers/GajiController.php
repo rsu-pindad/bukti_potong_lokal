@@ -203,7 +203,7 @@ class GajiController extends Controller
 
             PPH21::updateOrCreate(['id_gaji' => $gj->id], $dataPPH21);
         }
-        
+
         if (count($gaji) < 1) {
             return back()->with('toast_error', 'pilih bulan & tahun terlebih dahulu untuk menghitung');
         }
@@ -220,11 +220,11 @@ class GajiController extends Controller
         } elseif ($pkp > 60000000 && $pkp <= 250000000) {
             $pph21Setahun = 60000000 * 0.05 + ($pkp - 60000000) * 0.15;
         } elseif ($pkp > 250000000 && $pkp <= 500000000) {
-            $pph21Setahun = 60000000 * 0.05 + 250000000 * 0.15 + ($pkp - 60000000) * 0.25;
+            $pph21Setahun = 60000000 * 0.05 + 190000000 * 0.15 + ($pkp - 250000000) * 0.25;
         } elseif ($pkp > 500000000 && $pkp <= 5000000000) {
-            $pph21Setahun = 60000000 * 0.05 + 250000000 * 0.15 + 500000000 * 0.25 + ($pkp - 500000000) * 0.3;
+            $pph21Setahun = 60000000 * 0.05 + 190000000 * 0.15 + 250000000 * 0.25 + ($pkp - 500000000) * 0.3;
         } elseif ($pkp > 5000000000 && $pkp <= 9999990000) {
-            $pph21Setahun = 60000000 * 0.05 + 250000000 * 0.15 + 500000000 * 0.25 + 5000000000 * 0.3 + ($pkp - 5000000000) * 0.35;
+            $pph21Setahun = 60000000 * 0.05 + 190000000 * 0.15 + 250000000 * 0.25 + 5000000000 * 0.3 + ($pkp - 5000000000) * 0.35;
         } else {
             $pph21Setahun = 0;
         }
