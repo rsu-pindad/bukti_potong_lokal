@@ -9,13 +9,10 @@ use App\Models\Pegawai;
 use App\Models\PPH21;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GajiController extends Controller
 {
-
     public function index()
     {
         for ($i = 1; $i <= 12; $i++) {
@@ -33,10 +30,13 @@ class GajiController extends Controller
         $pegawai = Pegawai::all();
 
         $data = [
-            'title' => 'Data Gaji Pegawai', 'gaji' => $gaji,
-            'year' => $year, 'month' => $month,
-            'getMonth' => $getMonth, 'getYear' => $getYear,
-            'pegawai' => $pegawai
+            'title' => 'Data Gaji Pegawai',
+            'gaji' => $gaji,
+            'year' => $year,
+            'month' => $month,
+            'getMonth' => $getMonth,
+            'getYear' => $getYear,
+            'pegawai' => $pegawai,
         ];
         return view('gaji.index', $data);
     }
@@ -46,7 +46,7 @@ class GajiController extends Controller
         $getMonth = $request->input('month');
         $getYear = $request->input('year');
 
-        $tglGaji = Carbon::createFromDate($getYear, $getMonth, 25)->format("Y-m-d");
+        $tglGaji = Carbon::createFromDate($getYear, $getMonth, 25)->format('Y-m-d');
 
         $validated = $request->validate([
             'npp' => 'required',
@@ -76,10 +76,7 @@ class GajiController extends Controller
         $validated['tgl_gaji'] = $tglGaji;
         $validated['jm_potongan'] = $validated['pot_dapen'] + $validated['pot_sostek'] + $validated['pot_kes'] + $validated['pot_swk'];
 
-        Gaji::updateOrCreate(
-            ['npp' => $validated['npp'], 'tgl_gaji' => $validated['tgl_gaji']],
-            $validated
-        );
+        Gaji::updateOrCreate(['npp' => $validated['npp'], 'tgl_gaji' => $validated['tgl_gaji']], $validated);
 
         return back()->withToastSuccess('berhasil menambah data gaji');
     }
@@ -108,13 +105,13 @@ class GajiController extends Controller
     public function import(Request $request)
     {
         $validated = $request->validate([
-            'fileGaji' => 'required|file'
+            'fileGaji' => 'required|file',
         ]);
 
         try {
-            Excel::import(new GajiImport, $validated['fileGaji']);
+            Excel::import(new GajiImport(), $validated['fileGaji']);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('toast_error', "Impor file yg benar");
+            return back()->with('toast_error', 'Impor file yg benar');
         }
 
         return back()->withToastSuccess('berhasil mengimpor file gaji');
@@ -130,22 +127,21 @@ class GajiController extends Controller
         $dataPPH21 = [];
 
         foreach ($gaji as $gj) {
-
-            if ($gj->st_ptkp == "TK0") {
+            if ($gj->st_ptkp == 'TK0') {
                 $stPTKP = 54000000;
-            } elseif ($gj->st_ptkp == "TK1") {
+            } elseif ($gj->st_ptkp == 'TK1') {
                 $stPTKP = 58500000;
-            } elseif ($gj->st_ptkp == "TK2") {
+            } elseif ($gj->st_ptkp == 'TK2') {
                 $stPTKP = 63000000;
-            } elseif ($gj->st_ptkp == "TK3") {
+            } elseif ($gj->st_ptkp == 'TK3') {
                 $stPTKP = 67500000;
-            } elseif ($gj->st_ptkp == "K0") {
+            } elseif ($gj->st_ptkp == 'K0') {
                 $stPTKP = 58500000;
-            } elseif ($gj->st_ptkp == "K1") {
+            } elseif ($gj->st_ptkp == 'K1') {
                 $stPTKP = 63000000;
-            } elseif ($gj->st_ptkp == "K2") {
+            } elseif ($gj->st_ptkp == 'K2') {
                 $stPTKP = 67500000;
-            } elseif ($gj->st_ptkp == "K3") {
+            } elseif ($gj->st_ptkp == 'K3') {
                 $stPTKP = 72000000;
             }
 
@@ -165,12 +161,11 @@ class GajiController extends Controller
 
                 $iuranPensiun = $gj->pot_dapen ?? 0;
 
-                $potongan = $gj->pot_sostek + $gj->pot_kes  + $gj->pot_swk;
+                $potongan = $gj->pot_sostek + $gj->pot_kes + $gj->pot_swk;
 
                 $totalPotongan = $biayaJabatan + $iuranPensiun + $potongan;
 
                 $netoSebulan = $bruto - $totalPotongan;
-
 
                 $netoSetahun = $netoSebulan * 12;
 
@@ -178,7 +173,7 @@ class GajiController extends Controller
 
                 $pkp = $netoSetahun - $stPTKP > 0 ? $netoSetahun - $stPTKP : 0;
 
-                $pph21Setahun =  $this->pph21_setahun($pkp);
+                $pph21Setahun = $this->pph21_setahun($pkp);
                 $pph21Sebulan = $pph21Setahun / 12 > 0 ? $pph21Setahun / 12 : 0;
                 $request->session()->put("pph21_$gj->npp", $pph21Sebulan);
 
@@ -203,31 +198,33 @@ class GajiController extends Controller
                 'pkp' => $pkp,
                 'pph21_setahun' => $pph21Setahun,
                 'pph21_sebulan' => round($pph21Sebulan),
-                'tgl_pph21' => $gj->tgl_gaji
+                'tgl_pph21' => $gj->tgl_gaji,
             ];
 
             PPH21::updateOrCreate(['id_gaji' => $gj->id], $dataPPH21);
         }
 
         if (count($gaji) < 1) {
-            return redirect()->back()->with('toast_error', 'pilih bulan & tahun terlebih dahulu untuk menghitung');
+            return back()->with('toast_error', 'pilih bulan & tahun terlebih dahulu untuk menghitung');
         }
 
-        return redirect()->route('pph21')->withToastSuccess('berhasil menghitung pph21');
+        return redirect()
+            ->route('pph21')
+            ->withToastSuccess('berhasil menghitung pph21');
     }
 
     private function pph21_setahun($pkp)
     {
         if ($pkp <= 60000000) {
-            $pph21Setahun =  $pkp * 0.05;
+            $pph21Setahun = $pkp * 0.05;
         } elseif ($pkp > 60000000 && $pkp <= 250000000) {
-            $pph21Setahun =  60000000 * 0.05 + ($pkp - 60000000) * 0.15;
+            $pph21Setahun = 60000000 * 0.05 + ($pkp - 60000000) * 0.15;
         } elseif ($pkp > 250000000 && $pkp <= 500000000) {
-            $pph21Setahun =  60000000 * 0.05 + ($pkp - 60000000) * 0.25;
+            $pph21Setahun = 60000000 * 0.05 + 250000000 * 0.15 + ($pkp - 60000000) * 0.25;
         } elseif ($pkp > 500000000 && $pkp <= 5000000000) {
-            $pph21Setahun =  60000000 * 0.05 + 250000000 * 0.15 + 5000000000 * 0.25 + $pkp * 0.3;
+            $pph21Setahun = 60000000 * 0.05 + 250000000 * 0.15 + 5000000000 * 0.25 + ($pkp - 500000000) * 0.3;
         } elseif ($pkp > 5000000000 && $pkp <= 9999990000) {
-            $pph21Setahun =  $pkp * 0.35;
+            $pph21Setahun = 60000000 * 0.05 + 250000000 * 0.15 + 500000000 * 0.25 + 5000000000 * 0.3 + ($pkp - 5000000000) * 0.35;
         } else {
             $pph21Setahun = 0;
         }
