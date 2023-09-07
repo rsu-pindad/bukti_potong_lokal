@@ -22,15 +22,14 @@ class GajiExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $gaji = Gaji::whereRaw("MONTH(tgl_gaji) = $this->month AND YEAR(tgl_gaji) = $this->year")->get();
-
+        $gaji = Gaji::with('pegawai')->whereRaw("MONTH(tgl_gaji) = $this->month AND YEAR(tgl_gaji) = $this->year")->get();
         return $gaji->map(function ($item) {
             return [
                 'tgl_gaji' => $item->tgl_gaji,
-                'npp' => $item->npp,
-                'nama' => $item->nama,
-                'st_peg' => $item->st_peg,
-                'st_ptkp' => $item->st_ptkp,
+                'npp' => $item->pegawai->npp ?? $item->npp,
+                'nama' => $item->pegawai->nama ?? $item->nama,
+                'st_peg' => $item->pegawai->st_peg ?? $item->st_peg,
+                'st_ptkp' => $item->pegawai->st_ptkp ?? $item->st_ptkp,
                 'gapok' => $item->gapok,
                 'tj_kelu' => $item->tj_kelu,
                 'tj_pend' => $item->tj_pend,
