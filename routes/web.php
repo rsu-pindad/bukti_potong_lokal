@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('pegawai/import', 'import')->name('pegawai/import');
 
         Route::get('pegawai/export', 'export')->name('pegawai/export');
+
+        Route::delete('pegawai/delete/{id}', 'destroy')->name('pegawai/delete');
     });
 
     Route::controller(GajiController::class)->group(function () {

@@ -25,8 +25,8 @@ class PegawaiController extends Controller
             'npp' => 'required',
             'nama' => 'required',
             'npwp' => 'required',
-            'st_ptkp'=>'required',
-            'st_peg'=>'required',
+            'st_ptkp' => 'required',
+            'st_peg' => 'required',
         ]);
         Pegawai::updateOrCreate(['npp' => $validated['npp']], $validated);
 
@@ -50,5 +50,11 @@ class PegawaiController extends Controller
     {
         $fileName = Carbon::now() . '_' . 'pegawai.xlsx';
         return Excel::download(new PegawaiExport, $fileName, \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function destroy($id)
+    {
+        Pegawai::find($id)->delete();
+        return redirect()->back()->withToastSuccess('berhasil menghapus data pegawai');
     }
 }

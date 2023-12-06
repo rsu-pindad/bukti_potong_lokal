@@ -37,6 +37,7 @@
                             <th>Status PTKP</th>
                             <th>NPWP</th>
                             <th>Status Pegawai</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,16 @@
                                 <td>{{ $p->st_ptkp }}</td>
                                 <td>{{ $p->npwp }}</td>
                                 <td>{{ $p->st_peg }}</td>
+                                <td>
+                                    <form action="{{ route('pegawai/delete', $p->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" name="" id=""
+                                            class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('Yakin akan menghapus data ini?')"><i
+                                                class="fa-solid fa-trash-alt fa-fw"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
