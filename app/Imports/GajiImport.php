@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Gaji;
+use App\Models\Pegawai;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -37,6 +38,15 @@ class GajiImport implements ToCollection, WithHeadingRow
             $jmHasil = $nlBruto1 + $row['tj_jbt'] + $row['tj_alih'] + $row['tj_kesja'] + $row['tj_beras'] + $row['tj_rayon'] + $row['tj_makan'] + $row['tj_sostek'] + $row['tj_kes'] + $row['tj_dapen'] + $row['tj_hadir_18'] + $row['tj_bhy'] + $row['thr'] + $row['bonus'] + $row['lembur'] + $row['kurang'];
             $jmPotongan = $row['pot_dapen'] + $row['pot_sostek'] + $row['pot_kes'] + $row['pot_swk'];
 
+            Pegawai::updateOrCreate(
+                ['npp' => $row['npp']],
+                [
+                    'npp'  => $row['npp'],
+                    'nama'  => $row['nama'],
+                    'st_peg'  => $row['st_peg'],
+                    'st_ptkp'  => $row['st_ptkp'],
+                ]
+            );
 
             Gaji::updateOrCreate(
                 ['npp' => $row['npp'], 'tgl_gaji' => $tglGaji],

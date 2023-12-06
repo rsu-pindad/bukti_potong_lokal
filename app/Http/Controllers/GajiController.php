@@ -111,7 +111,7 @@ class GajiController extends Controller
         try {
             Excel::import(new GajiImport(), $validated['fileGaji']);
         } catch (\Throwable $th) {
-            return back()->with('toast_error', 'Impor file yg benar');
+            dd($th);
         }
 
         return back()->withToastSuccess('berhasil mengimpor file gaji');
