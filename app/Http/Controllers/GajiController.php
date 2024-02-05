@@ -38,6 +38,7 @@ class GajiController extends Controller
             'getYear' => $getYear,
             'pegawai' => $pegawai,
         ];
+        // dump($data);
         return view('gaji.index', $data);
     }
 

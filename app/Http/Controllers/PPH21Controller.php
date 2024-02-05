@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PPH21Export;
+use App\Exports\PPH21DetailExport;
 use App\Models\Gaji;
 use App\Models\PPH21;
 use Carbon\Carbon;
@@ -15,8 +16,17 @@ class PPH21Controller extends Controller
 
     public function index()
     {
-        $month = PPH21::selectRaw('MONTH(tgl_pph21) as bulan')->groupBy(DB::raw('bulan'))->get();
-        $year = PPH21::selectRaw('YEAR(tgl_pph21) as tahun')->groupBy(DB::raw('tahun'))->get();
+        // $month = PPH21::selectRaw('MONTH(tgl_pph21) as bulan')->groupBy(DB::raw('bulan'))->get();
+        // $year = PPH21::selectRaw('YEAR(tgl_pph21) as tahun')->groupBy(DB::raw('tahun'))->get();
+        // $year = PPH21::selectRaw('YEAR(tgl_pph21) as tahun')->groupBy(DB::raw('tahun'))->toSql();
+        // dump($year);
+
+        for ($i = 1; $i <= 12; $i++) {
+            $month[] = ['bulan' => $i];
+        }
+        for ($i = 2023; $i <= Carbon::now()->year + 1; $i++) {
+            $year[] = ['tahun' => $i];
+        }
 
         $getPajak = request()->input('pajak') ?? "all";
         $getMonth = request()->input('month') ?? Carbon::now()->month;
@@ -40,7 +50,7 @@ class PPH21Controller extends Controller
             'getYear' => $getYear,
             'getPajak' => $getPajak
         ];
-
+        
         return view('pph21.index', $data);
     }
 
@@ -57,6 +67,7 @@ class PPH21Controller extends Controller
 
         $data = ['title' => 'Detil Gaji', 'pph21' => $pph21, 'tooltip' => $tooltip];
         return view('pph21.detail', $data);
+        // dd(PPH21::with('tbl_gaji')->first());
     }
 
     public function export(Request $request)
@@ -75,6 +86,19 @@ class PPH21Controller extends Controller
         $fileName = $year . '_' . $month . '_' . 'pph21.xlsx';
 
         return Excel::download(new PPH21Export($month, $year, $pph21), $fileName, \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function detailExport(Request $request){
+
+        $now = Carbon::now('Asia/Jakarta');
+        $files = $now . '_pph21.xlsx';
+
+        $id = $request->id;
+
+    //     return Excel::download(new PPH21DetailExport($id), $files, \Maatwebsite\Excel\Excel::CSV, [
+    //         'Content-Type' => 'text/csv',
+    //   ]);
+        return Excel::download(new PPH21DetailExport($id), $files);
     }
 
     public function destroy(Request $request)

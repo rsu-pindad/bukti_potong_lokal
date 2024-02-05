@@ -2,6 +2,10 @@
 @section('content')
     <div class="alert alert-light" role="alert">
         <strong>{{ $pph21->gaji->npp }}</strong> - {{ $pph21->gaji->nama }}
+        <a class="btn btn-success btn-sm float-right" href="{{ route('pph21/export-detail',request()->segment(3)) }}">
+            <i class="fa-solid fa-file-download fa-fw"></i>
+            Export Excel
+        </a>
     </div>
     <div class="row mb-4">
         <div class="col-md-6">
