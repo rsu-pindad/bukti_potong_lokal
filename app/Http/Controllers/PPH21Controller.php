@@ -61,7 +61,8 @@ class PPH21Controller extends Controller
             'neto_setahun' => "neto sebulan * 12",
             'pkp' => "neto setahun - ptkp",
             'pph21_setahun' => "pkp < 60jt = pkp * 5% || pkp > 60jt & pkp < 250jt = 60jt*5% + (pkp-60jt)*15% || pkp > 250jt & pkp < 500jt = 60jt*5% + 250jt*15% + pkp * 25% || pkp > 500jt & pkp < 9999990000 = pkp * 35%",
-            'pph21_sebulan' => "pph21 setahun / 12"
+            // 'pph21_sebulan' => "pph21 setahun / 12"
+            'pph21_sebulan' => "Bruto bulan ini * TER Bulanan"
         ]);
 
 

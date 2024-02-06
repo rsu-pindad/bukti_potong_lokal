@@ -56,6 +56,14 @@
                                             class="fa-solid fa-calculator fa-fw text-warning"></i> Hitung
                                         PPH21</button>
                                 </form>
+                                <form action="{{ route('gaji/pph21new') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="month" value="{{ $getMonth }}">
+                                    <input type="hidden" name="year" value="{{ $getYear }}">
+                                    <button type="submit" class="dropdown-item"><i
+                                            class="fa-solid fa-calculator fa-fw text-warning"></i> Hitung
+                                        PPH21 (2024)</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
