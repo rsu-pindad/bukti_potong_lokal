@@ -18,8 +18,6 @@ class PPH21Controller extends Controller
     {
         // $month = PPH21::selectRaw('MONTH(tgl_pph21) as bulan')->groupBy(DB::raw('bulan'))->get();
         // $year = PPH21::selectRaw('YEAR(tgl_pph21) as tahun')->groupBy(DB::raw('tahun'))->get();
-        // $year = PPH21::selectRaw('YEAR(tgl_pph21) as tahun')->groupBy(DB::raw('tahun'))->toSql();
-        // dump($year);
 
         for ($i = 1; $i <= 12; $i++) {
             $month[] = ['bulan' => $i];
@@ -68,7 +66,7 @@ class PPH21Controller extends Controller
 
         $data = ['title' => 'Detil Gaji', 'pph21' => $pph21, 'tooltip' => $tooltip];
         return view('pph21.detail', $data);
-        // dd(PPH21::with('tbl_gaji')->first());
+        // dd($pph21->gaji);
     }
 
     public function export(Request $request)
@@ -96,9 +94,6 @@ class PPH21Controller extends Controller
 
         $id = $request->id;
 
-    //     return Excel::download(new PPH21DetailExport($id), $files, \Maatwebsite\Excel\Excel::CSV, [
-    //         'Content-Type' => 'text/csv',
-    //   ]);
         return Excel::download(new PPH21DetailExport($id), $files);
     }
 

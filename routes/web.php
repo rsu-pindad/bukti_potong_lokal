@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('pph21/detail/{pph21}', 'show')->name('pph21/detail');
 
         Route::get('pph21/export', 'export')->name('pph21/export');
+        
+        Route::get('pph21/export-detail/{id}', 'detailExport')->name('pph21/export-detail');
 
         Route::get('pph21/export-detail/{id}', 'detailExport')->name('pph21/export-detail');
 

@@ -9,15 +9,10 @@
 
     <div class="alert alert-light" role="alert">
         <strong>{{ $pph21->gaji->npp }}</strong> - {{ $pph21->gaji->nama }}
-        <div class="d-flex flex-column">
-            <a class="btn btn-success btn-sm float-end" href="{{ route('pph21/export-detail',request()->segment(3)) }}">
-                <i class="fa-solid fa-file-download fa-fw"></i>
-                Export Excel
-            </a>
-        </div>
-        <div class="d-flex flex-row">
-            {{ $set_month }}
-        </div>
+        <a class="btn btn-success btn-sm float-right" href="{{ route('pph21/export-detail',request()->segment(3)) }}">
+            <i class="fa-solid fa-file-download fa-fw"></i>
+            Export Excel
+        </a>
     </div>
     <div class="row mb-4">
         <div class="col-md-6">
@@ -179,11 +174,11 @@
                             <div class="fw-bold">PKP</div>
                             <span class="fw-normal">@currency($pph21->pkp)</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center"
+                        <!-- <li class="list-group-item d-flex justify-content-between align-items-center"
                             data-bs-toggle="tooltip" data-bs-title="{{ $tooltip['pph21_setahun'] }}">
                             <div class="fw-bold">PPH21 Setahun</div>
                             <span class="fw-normal">@currency($pph21->pph21_setahun)</span>
-                        </li>
+                        </li> -->
                         <li class="list-group-item d-flex justify-content-between align-items-center"
                             data-bs-toggle="tooltip" data-bs-title="{{ $tooltip['pph21_sebulan'] }}">
                             
