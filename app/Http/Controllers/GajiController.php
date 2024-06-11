@@ -38,6 +38,7 @@ class GajiController extends Controller
             'getYear' => $getYear,
             'pegawai' => $pegawai,
         ];
+        // dump($data);
         return view('gaji.index', $data);
     }
 
@@ -217,13 +218,13 @@ class GajiController extends Controller
     {
         if ($pkp <= 60000000) {
             $pph21Setahun = $pkp * 0.05;
-        } elseif ($pkp > 60000000 && $pkp <= 250000000) {
+        } elseif ($pkp > 60000000&& $pkp <= 250000000) {
             $pph21Setahun = 60000000 * 0.05 + ($pkp - 60000000) * 0.15;
-        } elseif ($pkp > 250000000 && $pkp <= 500000000) {
+        } elseif ($pkp > 250000000&& $pkp <= 500000000) {
             $pph21Setahun = 60000000 * 0.05 + 190000000 * 0.15 + ($pkp - 250000000) * 0.25;
-        } elseif ($pkp > 500000000 && $pkp <= 5000000000) {
+        } elseif ($pkp > 500000000&& $pkp <= 5000000000) {
             $pph21Setahun = 60000000 * 0.05 + 190000000 * 0.15 + 250000000 * 0.25 + ($pkp - 500000000) * 0.3;
-        } elseif ($pkp > 5000000000 && $pkp <= 9999990000) {
+        } elseif ($pkp > 5000000000&& $pkp <= 9999990000) {
             $pph21Setahun = 60000000 * 0.05 + 190000000 * 0.15 + 250000000 * 0.25 + 5000000000 * 0.3 + ($pkp - 5000000000) * 0.35;
         } else {
             $pph21Setahun = 0;
@@ -537,6 +538,7 @@ class GajiController extends Controller
                     {
                         $tarifpph21 = ($total_bruto * 0.025);
                         $gross_up = ($total_bruto + $tarifpph21) * 0.025;
+
                     } 
                     elseif ($total_bruto > 11600000 && $total_bruto <= 12600000) 
                     {
@@ -572,6 +574,7 @@ class GajiController extends Controller
                     {
                         $tarifpph21 = ($total_bruto * 0.09);
                         $gross_up = ($total_bruto + $tarifpph21) * 0.09;
+
                     } 
                     elseif ($total_bruto > 26000000 && $total_bruto <= 27700000) 
                     {
