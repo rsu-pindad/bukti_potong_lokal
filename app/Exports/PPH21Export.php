@@ -36,7 +36,7 @@ class PPH21Export implements FromCollection, WithHeadings
             $pph21 = PPH21::with('gaji.pegawai')->whereRaw("MONTH(tgl_pph21) = $this->month AND YEAR(tgl_pph21) = $this->year")->get();
         }
 
-       return $pph21->map(function ($item) {
+        return $pph21->map(function ($item) {
             return [
                 'masa_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_pph21)->format('m'),
                 'tahun_pajak' => Carbon::createFromFormat('Y-m-d', $item->tgl_pph21)->format('Y'),
@@ -44,8 +44,25 @@ class PPH21Export implements FromCollection, WithHeadings
                 'npwp' => $item->gaji->pegawai->npwp ?? 0,
                 'nama' => $item->gaji->nama,
                 'kode_pajak' => "21-100-01",
-                'jumlah_bruto' => $item->bruto,
-                'jumlah_pph' => $item->pph21_sebulan,
+                'gapok' => $item->gaji->gapok,
+                'tunjangan' => $item->tunjangan, 
+                'premi_as' => $item->premi_as, 
+                'thr' => $item->gaji->thr, 
+                'bonus' => $item->gaji->bonus, 
+                'tj_pajak' => $item->tj_pajak, 
+                'bruto' => $item->bruto,
+                'biaya_jabatan' => $item->biaya_jabatan, 
+                'iuran_pensiun' => $item->iuran_pensiun, 
+                'pot_sostek' => $item->gaji->pot_sostek,
+                'pot_kes' => $item->gaji->pot_kes,
+                'pot_swk' => $item->gaji->pot_swk,
+                'total_potongan' => $item->total_potongan, 
+                'neto_sebulan' => $item->neto_sebulan, 
+                'neto_setahun' => $item->neto_setahun, 
+                'ptkp' => $item->ptkp, 
+                'pkp' => $item->pkp, 
+                'pph21_setahun' => $item->pph21_setahun, 
+                'pph21_sebulan' => $item->pph21_sebulan, 
             ];
         });
     }
@@ -59,8 +76,25 @@ class PPH21Export implements FromCollection, WithHeadings
             'NPWP',
             'Nama',
             'Kode Pajak',
-            'Jumlah Bruto',
-            'Jumlah PPH',
+            'Gaji Pokok',
+            'Tunjangan',
+            'Premi AS',
+            'THR',
+            'Bonus',
+            'Tunjangan Pajak',
+            'Bruto',
+            'Biaya Jabatan',
+            'Iuran Pensiun',
+            'Potongan Ketenagakerjaan',
+            'Potongan Kesehatan',
+            'Potongan SWK',
+            'Total Potongan',
+            'Neto Bulanan',
+            'Neto Setahun',
+            'PTKP',
+            'PKP',
+            'PPH21 Setahun',
+            'PPH21 Sebulan',
         ];
     }
 }
