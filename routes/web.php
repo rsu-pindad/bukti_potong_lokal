@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('gaji/pph21', 'calculatePPH21')->name('gaji/pph21');
 
+        Route::post('gaji/pph21new', 'calculatePPH21New')->name('gaji/pph21new');
+
         Route::get('gaji/export', 'export')->name('gaji/export');
     });
 
@@ -60,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('pph21/detail/{pph21}', 'show')->name('pph21/detail');
 
         Route::get('pph21/export', 'export')->name('pph21/export');
+        
+        Route::get('pph21/export-detail/{id}', 'detailExport')->name('pph21/export-detail');
 
         Route::delete('pph21/delete', 'destroy')->name('pph21/delete');
     });
