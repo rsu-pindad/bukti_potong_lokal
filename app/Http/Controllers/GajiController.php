@@ -927,7 +927,7 @@ class GajiController extends Controller
                 $tj_dapen = $gj->tj_dapen;
                 $tj_hadir = $gj->tj_hadir;
 
-                $totalTunjangan = $gj->tj_kelu + $gj->tj_kesja + $gj->tj_makan + $gj->tj_sostek + $gj->tj_kes + $gj->tj_dapen + $gj->tj_hadir;
+                $totalTunjangan = $gj->tj_kelu + $gj->tj_kesja + $gj->tj_makan + $gj->tj_sostek + $gj->tj_kes + $gj->tj_dapen + $gj->tj_hadir + $gj->tj_lainnya;
                 $premiAS = 0;
 
                 $tjPajak = $request->session()->get("pph21_$gj->npp");
