@@ -62,7 +62,6 @@
                 </div>
             </div>
         </nav>
-
     </header>
     <div id="loader" class="row">
         <div class="col-auto m-auto ">
