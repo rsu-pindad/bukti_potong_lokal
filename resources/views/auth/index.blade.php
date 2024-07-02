@@ -16,7 +16,7 @@
 
 <body>
     <main class="row" style="height: 100vh;">
-        <div class="col-4 m-auto">
+        <div class="col-8 m-auto">
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-center m-0">PPH21</h3>
@@ -26,26 +26,22 @@
                         @csrf
                         <label for="" class="form-label">Username</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                name="username" id="username" placeholder="Username" value="{{ old('username') }}">
-                            <span class="input-group-text" id="basic-addon1"><i
-                                    class="fa-solid fa-user fa-fw text-secondary"></i></span>
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Username" value="{{ old('username') }}">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user fa-fw text-secondary"></i></span>
                             @error('username')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </div>
                         <label for="" class="form-label">Password</label>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                name="password" id="password" placeholder="Password">
-                            <span class="input-group-text" id="basic-addon2"><i
-                                    class="fa-solid fa-lock fa-fw text-secondary"></i></span>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Password">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-lock fa-fw text-secondary"></i></span>
                             @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </div>
                         <div class="d-grid">
