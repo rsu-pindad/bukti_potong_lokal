@@ -3,13 +3,16 @@
 'rootId' => 'exampleModal',
 'rootLabel' => 'exampleModalLabel',
 'rootTabIndex' => '-1',
-'rootAriaHidden' => 'true'
+'rootAriaHidden' => 'true',
+'class' => 'modal-fullscreen'
 ])
 <x-modal.default
     :rootId="$rootId"
     :rootLabel="$rootLabel"
 >
-    <div class="modal-dialog modal-fullscreen">
+    <div {{ $attributes->merge([
+        'class' => 'modal-dialog '.$class
+    ]) }}>
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="{{$rootId}}">{{$rootLabel}}</h1>
