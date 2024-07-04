@@ -85,6 +85,7 @@
 
 
     <script src="{{ basset(base_path('vendor/twbs/bootstrap/dist/js/bootstrap.min.js')) }}"></script>
+    @stack('scripts')
     @include('sweetalert::alert')
 
 </body>
