@@ -34,84 +34,90 @@
                                         </p>
                                     </div>
                                 </div>
-                                <h6 class="d-flex justify-content-between">
-                                    Identitas Pribadi
-                                    <x-inputs.button 
-                                        type="button" 
-                                        class="btn btn-outline-secondary btn-sm"
-                                        data-bs-toggle="modal"
-                                        :data-bs-target="$bsTargetIdentitas"
-                                        rootId="$bsTargetIdentitas"
-                                        rootLabel="Identitas Pribadi"
-                                        >
-                                        <i class="bi bi-pencil"></i>
-                                    </x-inputs.button>
-                                </h6>
-                                <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
-                                    <div class="col-12 mb-3">
-                                        <h6>Nama Lengkap</h6>
-                                        <p class="text-muted">
-                                            {{$nama_karyawan}}
-                                        </p>
+                                <div id="judulIdentitasPribadi" class="mb-2">
+                                    <h6 class="d-flex justify-content-between">
+                                        Identitas Pribadi
+                                        <x-inputs.button 
+                                            type="button" 
+                                            class="btn btn-outline-secondary btn-sm editPribadi"
+                                            data-bs-toggle="modal"
+                                            :data-bs-target="$bsTargetIdentitas"
+                                            rootId="$bsTargetIdentitas"
+                                            rootLabel="Identitas Pribadi"
+                                            >
+                                            <i class="bi bi-pencil"></i>
+                                        </x-inputs.button>
+                                    </h6>
+                                    <hr class="mt-0 mb-3">
+                                    <div class="row pt-1">
+                                        <div class="col-12 mb-3 nama_lengkap">
+                                            <h6>Nama Lengkap</h6>
+                                            <p class="text-muted">
+                                                {{$nama_karyawan}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mb-3 email">
+                                            <h6>Email</h6>
+                                            <p class="text-muted">{{$email_karyawan}}</p>
+                                        </div>
+                                        <div class="col-6 mb-3 notel">
+                                            <h6>No Telepon</h6>
+                                            <p class="text-muted">{{$notel_karyawan}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-6 mb-3">
-                                        <h6>Email</h6>
-                                        <p class="text-muted">{{$email_karyawan}}</p>
+                                <div id="judulIdentitasKepegawaian" class="mb-2">
+                                    <h6 class="d-flex justify-content-between">
+                                        Informasi Kepegawaian
+                                        @if(Auth::user()->karyawan->user_edited === false)
+                                        <x-inputs.button 
+                                            type="button" 
+                                            class="btn btn-outline-secondary btn-sm editKepegawaian"
+                                            data-bs-toggle="modal"
+                                            :data-bs-target="$bsTargetPegawai"
+                                            >
+                                            <i class="bi bi-pencil"></i>
+                                        </x-inputs.button>
+                                        @endif
+                                    </h6>
+                                    <hr class="mt-0 mb-3">
+                                    <div class="row pt-1">
+                                        <div class="col-12 mb-3 karyawan_npp">
+                                            <h6>NPP</h6>
+                                            <p class="text-muted">{{$npp_karyawan}}</p>
+                                        </div>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>No Telepon</h6>
-                                        <p class="text-muted">{{$notel_karyawan}}</p>
+                                    <div class="row pt-1">
+                                        <div class="col-12 mb-3 karyawan_npwp">
+                                            <h6>NPWP</h6>
+                                            <p class="text-muted">{{$npwp_karyawan}}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <h6 class="d-flex justify-content-between">
-                                    Informasi Kepegawaian
-                                    @if(Auth::user()->karyawan->user_edited === false)
-                                    <x-inputs.button 
-                                        type="button" 
-                                        class="btn btn-outline-secondary btn-sm"
-                                        data-bs-toggle="modal"
-                                        :data-bs-target="$bsTargetPegawai"
-                                        >
-                                        <i class="bi bi-pencil"></i>
-                                    </x-inputs.button>
-                                    @endif
-                                </h6>
-                                <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
-                                    <div class="col-12 mb-3">
-                                        <h6>NPP</h6>
-                                        <p class="text-muted">{{$npp_karyawan}}</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-1">
-                                    <div class="col-12 mb-3">
-                                        <h6>NPWP</h6>
-                                        <p class="text-muted">{{$npwp_karyawan}}</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>PTKP</h6>
-                                        <p class="text-muted">{{$st_ptkp_karyawan}}</p>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>Status Pegawai</h6>
-                                        <p class="text-muted">{{$st_peg_karyawan}}</p>
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3 karyawan_ptkp">
+                                            <h6>PTKP</h6>
+                                            <p class="text-muted">{{$st_ptkp_karyawan}}</p>
+                                        </div>
+                                        <div class="col-6 mb-3 karyawan_status">
+                                            <h6>Status Pegawai</h6>
+                                            <p class="text-muted">{{$st_peg_karyawan}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <h6>Faktur Pajak</h6>
-                                <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>Status</h6>
-                                        <p class="text-muted">Belum tersedia</p>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>Dokumen</h6>
-                                        <p class="text-muted">Belum tersedia</p>
+                                <div id="fakturPajak">
+                                    <h6 class="d-flex justify-content-between">Faktur Pajak</h6>
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>Status</h6>
+                                            <p class="text-muted">Belum tersedia</p>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <h6>Dokumen</h6>
+                                            <p class="text-muted">Belum tersedia</p>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- <div class="d-flex justify-content-start">
