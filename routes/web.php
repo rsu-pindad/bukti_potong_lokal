@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AksesController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Daftar\CariController;
@@ -47,10 +50,32 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::controller(EmployeeController::class)->group(function () {
-        Route::get('employee', 'index')->name('employee');
-        Route::patch('employee', 'edit')->name('employee-edit');
-        Route::patch('employee/pribadi', 'editPribadi')->name('employee-edit-pribadi');
+    Route::controller(AksesController::class)->group(function () {
+        Route::get('akses', 'index')->name('akses');
+        Route::prefix('akses/role')->group(function(){
+            Route::get('/{id}', 'showRole')->name('akses-role-show');
+            Route::post('/{id}', 'assignRole')->name('akses-role-assign');
+        });
+    });
+
+    Route::controller(PermissionController::class)->group(function () {
+        Route::get('permission', 'index')->name('permission');
+        Route::post('permission', 'store')->name('permission-store');
+        Route::delete('permission', 'destroy')->name('permission-destroy');
+        Route::get('permission/edit/{id}', 'edit')->name('permission-edit');
+        Route::patch('permission/edit/{id}', 'update')->name('permission-update');
+    });
+
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('role', 'index')->name('role');
+        Route::post('role', 'store')->name('role-store');
+        Route::delete('role', 'destroy')->name('role-destroy');
+        Route::get('role/edit/{id}', 'edit')->name('role-edit');
+        Route::patch('role/edit/{id}', 'update')->name('role-update');
+        Route::prefix('role/assign')->group(function(){
+            Route::get('/{id}', 'showPermission')->name('role-show-permission');
+            Route::post('/{id}', 'assignPermission')->name('role-assign-permission');
+        });
     });
 
     Route::controller(PegawaiController::class)->group(function () {
@@ -97,5 +122,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('pph21/delete', 'destroy')->name('pph21/delete');
     });
 
-    Route::get('auth/logout', [LogoutController::class, 'logout'])->name('auth/logout');
+    Route::controller(EmployeeController::class)->group(function () {
+        Route::get('employee', 'index')->name('employee');
+        Route::patch('employee', 'edit')->name('employee-edit');
+        Route::patch('employee/pribadi', 'editPribadi')->name('employee-edit-pribadi');
+    });
+
+    Route::get('auth/logout', [LogoutController::class, 'logout'])->name('logout');
 });
