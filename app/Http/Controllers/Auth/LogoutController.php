@@ -17,6 +17,10 @@ class LogoutController extends Controller
 
         $request->session()->regenerateToken();
 
+        toastr()
+                ->preventDuplicates(true)
+                ->addSuccess('selamat tinggal');
+
         return redirect('/');
     }
 }
