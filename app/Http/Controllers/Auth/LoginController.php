@@ -26,7 +26,16 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('gaji');
+            $user = Auth::user();
+
+            toastr()
+                ->preventDuplicates(true)
+                ->addSuccess('selamat datang '.Auth::user()->username);
+
+            if($user->hasRole('pajak')){
+                return redirect()->intended('gaji');   
+            }
+            return redirect()->intended('employee');
         }
 
         return back()->withErrors([
