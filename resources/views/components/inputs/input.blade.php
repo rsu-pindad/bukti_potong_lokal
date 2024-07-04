@@ -6,6 +6,7 @@
 'placeholder' => '',
 'value' => old($name,''),
 'readonly' => false,
+'checked' => ''
 ])
 
 <input {{$attributes->merge([
@@ -15,5 +16,6 @@
     'class' => $class,
     'placeholder' => $placeholder,
     'value' => $value, 
-    'readonly' => $readonly
+    'readonly' => $readonly,
+    'checked' => $checked
 ])}}>
