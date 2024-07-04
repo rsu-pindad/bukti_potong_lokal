@@ -61,6 +61,7 @@ class User extends Authenticatable
             $karyawan      = new Karyawan;
             $karyawan->npp = session()->pull('npp', null);
             $model->karyawan()->save($karyawan);
+            $model->syncRoles('employee');
         });
     }
 }
