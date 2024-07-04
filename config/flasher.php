@@ -29,7 +29,7 @@ return array(
     | "sweetalert" : composer require php-flasher/flasher-sweetalert-laravel
     | "pnotify"    : composer require php-flasher/flasher-pnotify-laravel
     */
-    'default' => 'toastr',
+    'default' => 'flasher',
 
     /*
     |---------------------------------------------------------------------------
@@ -105,7 +105,7 @@ return array(
     | set this option to 'false'. In this case, PHPFlasher will use the messages
     | as-is, without attempting to translate them.
     */
-    'auto_translate' => true,
+    'auto_translate' => false,
 
     /*
     |---------------------------------------------------------------------------
