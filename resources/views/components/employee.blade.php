@@ -7,7 +7,7 @@
     <title>Pegawai</title>
 
     <link rel="stylesheet" href="{{ basset(base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')) }}">
-    <link rel="stylesheet" href="{{ basset(base_path('vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css')) }}">
+    <link rel="stylesheet" href="{{ basset(base_path('vendor/fortawesome/font-awesome/css/all.min.css')) }}">
     
     <style>
         .bi {
@@ -73,18 +73,22 @@
 
         <div class="row">
             <x-employee.sidebar />
-            
+
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 {{$slot}}
             </main>
         </div>
 
     </div>
-    
+
     @stack('modals')
 
-
     <script src="{{ basset(base_path('vendor/twbs/bootstrap/dist/js/bootstrap.min.js')) }}"></script>
+    @basset('https://code.jquery.com/jquery-3.7.1.min.js')
+    <script src="{{ basset(base_path('vendor/robinherbots/jquery.inputmask/dist/jquery.inputmask.min.js')) }}"></script>
+    <script src="{{ basset(base_path('vendor/robinherbots/jquery.inputmask/dist/bindings/inputmask.binding.js')) }}"></script>
+    <script src="{{ basset(base_path('vendor/fortawesome/font-awesome/js/all.min.js')) }}"></script>
+
     @stack('scripts')
     @include('sweetalert::alert')
 
