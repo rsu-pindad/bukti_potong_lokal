@@ -7,6 +7,7 @@ use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use App\Models\Karyawan;
 
 class CariController extends Controller
 {
@@ -34,6 +35,9 @@ class CariController extends Controller
         try {
             $pegawai = Pegawai::where('npp', $validator->safe()->npp)->first();
             if (!$pegawai) {
+
+                
+
                 toastr()
                     ->closeOnHover(true)
                     ->closeDuration(10)
@@ -41,6 +45,18 @@ class CariController extends Controller
 
                 return redirect('cari');
             }
+            $karyawan = Karyawan::where('npp', $pegawai->npp)->get();
+                // dd(count($karyawan));
+            if(count($karyawan) > 0)
+            {
+                toastr()
+                    ->closeOnHover(true)
+                    ->closeDuration(10)
+                    ->addError('npp sudah digunakan');
+
+                return redirect('cari');
+            }
+                
             toastr()
                 ->closeOnHover(true)
                 ->closeDuration(10)
