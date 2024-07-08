@@ -8,11 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="{{ basset(base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')) }}">
-    <link rel="stylesheet" href="{{ basset(base_path('vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css')) }}">
 
-    <link href="/vendor/DataTables-1.13.6/datatables.min.css" rel="stylesheet">
+    @basset(base_path('vendor/fortawesome/font-awesome/css/all.css'))
+    @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-brands-400.ttf'))
+    @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-brands-400.woff2'))
+    @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-regular-400.ttf'))
+    @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-regular-400.woff2'))
+    @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-solid-900.ttf'))
+    @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-solid-900.woff2'))
 
-    <link rel="stylesheet" href="/vendor/fontawesome-free-6.4.2-web/css/all.min.css" />
+    @bassetDirectory(base_path('vendor/datatables.net/'), 'datatables.net')
+    @basset('datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css')
+    @basset('datatables.net/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')
+    @basset('datatables.net/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')
+    @basset('datatables.net/datatables.net-rowgroup-bs5/css/rowGroup.bootstrap5.min.css')
+    @basset('datatables.net/datatables.net-scroller-bs5/css/scroller.bootstrap5.min.css')
 
     @stack('styles')
 
@@ -43,21 +53,31 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteName() == 'pegawai' ? 'active' : '' }}" href="{{ route('pegawai') }}" aria-current="page">Pegawai
+                        @hasexactroles('pajak')
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link {{ Route::currentRouteName() == 'pegawai' ? 'active' : '' }}" 
+                                href="{{ route('pegawai') }}" 
+                                aria-current="page">
+                                <i class="fa-solid fa-users"></i> Pegawai
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteName() == 'gaji' ? 'active' : '' }}" href="{{ route('gaji') }}">Gaji
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link {{ Route::currentRouteName() == 'gaji' ? 'active' : '' }}" 
+                                href="{{ route('gaji') }}">
+                                <i class="fa-solid fa-file-invoice-dollar"></i> Gaji
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteName() == 'pph21' ? 'active' : '' }}" href="{{ route('pph21') }}">PPH21
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link {{ Route::currentRouteName() == 'pph21' ? 'active' : '' }}" 
+                                href="{{ route('pph21') }}">
+                                <i class="fa-solid fa-file-invoice-dollar"></i> PPH21
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @endhasexactroles
+                        @hasexactroles('super-admin')
+                        <li class="nav-item dropdown border-top border-dark mx-2">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Akses
+                                <i class="fa-solid fa-user-lock"></i> Akses
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ route('permission') }}">Permission</a></li>
@@ -68,10 +88,29 @@
                                 <li><a class="dropdown-item" href="{{ route('akses') }}">List Akses</a></li>
                             </ul>
                         </li>
+                        @endhasexactroles
+                        @hasanyrole('super-admin|pajak')
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link" 
+                                href="/pajak_manager"
+                                >
+                                <i class="fa-solid fa-folder-tree"></i> File Manager
+                            </a>
+                        </li>
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link {{ Route::currentRouteName() == 'pajak-file' ? 'active' : '' }}" 
+                                href="{{route('pajak-index')}}">
+                                <i class="fa-solid fa-bullhorn"></i> Publish File
+                            </a>
+                        </li>
+                        @endhasanyrole
                     </ul>
                     <ul class="navbar-nav mt-2 mt-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link" 
+                                href="{{ route('logout') }}">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -91,11 +130,18 @@
         </div>
     </main>
 
-    @stack('scripts')
+    @basset(base_path('vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js'))
+    @basset('https://code.jquery.com/jquery-3.7.1.min.js')
+    @basset(base_path('vendor/fortawesome/font-awesome/js/all.js'))
+    @bassetDirectory(base_path('vendor/datatables.net/'), 'datatables.net')
+    @basset('datatables.net/datatables.net/js/dataTables.js')
+    @basset('datatables.net/datatables.net-bs5/js/dataTables.bootstrap5.min.js')
+    @basset('datatables.net/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js')
+    @basset('datatables.net/datatables.net-fixedheader-bs5/js/fixedHeader.bootstrap5.min.js')
+    @basset('datatables.net/datatables.net-rowgroup-bs5/js/rowGroup.bootstrap5.min.js')
+    @basset('datatables.net/datatables.net-scroller-bs5/js/scroller.bootstrap5.min.js')
 
-    <script src="{{ basset(base_path('vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js')) }}"></script>
-    <script src="/vendor/DataTables-1.13.6/datatables.min.js"></script>
-    <script src="/vendor/fontawesome-free-6.4.2/js/all.min.js"></script>
+    @stack('scripts')
 
     <script>
         $(document).ready(function() {
@@ -105,14 +151,18 @@
             const selectMonth = document.getElementById('selectMonth')
             const selectYear = document.getElementById('selectYear')
 
-            console.log(selectMonth);
-            selectMonth.addEventListener('change', function(event) {
-                formGet.submit()
-            })
+            // console.log(selectMonth);
+            if (selectMonth != null) {
+                selectMonth.addEventListener('change', function(event) {
+                    formGet.submit()
+                })
+            }
 
-            selectYear.addEventListener('change', function(event) {
-                formGet.submit()
-            })
+            if (selectYear != null) {
+                selectYear.addEventListener('change', function(event) {
+                    formGet.submit()
+                })
+            }
 
             $("#selectPPH21").on("change", function() {
                 formGet.submit()
