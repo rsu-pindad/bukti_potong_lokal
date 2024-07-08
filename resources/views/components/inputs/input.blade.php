@@ -17,5 +17,4 @@
     'placeholder' => $placeholder,
     'value' => $value, 
     'readonly' => $readonly,
-    'checked' => $checked
 ])}}>
