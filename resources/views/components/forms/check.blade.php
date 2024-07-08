@@ -12,6 +12,8 @@
         'class' => 'form-check-label'.$labelClass,
         'for' => $labelId
         ])}}>
-        {{$caption}}
+        <span>
+            {{$caption}}
+        </span>
     </label>
 </div>
