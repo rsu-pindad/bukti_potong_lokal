@@ -24,7 +24,7 @@
                                     class="btn btn-md btn-outline-success"
                                     role="button"
                                     >
-                                    <i class="bi bi-key-fill"></i>
+                                    <i class="fa-solid fa-key"></i>
                                 </a>
                             </td>
                         </tr>

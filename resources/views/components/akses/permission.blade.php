@@ -5,7 +5,7 @@
     <div class="d-flex flex-column p-4 m-2">
         <h2>List Permisi
             <x-inputs.button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addPermission">
-                <i class="bi bi-plus-circle-fill"></i>
+                <i class="fa-solid fa-circle-plus"></i>
             </x-inputs.button>
         </h2>
         <table class="table table-sm">
@@ -21,20 +21,24 @@
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$item->name}}</td>
-                    <td>
-                        <form action="{{route('permission-destroy', ['id'=>$item->id])}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <x-inputs.button type="submit" class="btn btn-md btn-outline-danger">
-                                <i class="bi bi-trash-fill"></i>
-                            </x-inputs.button>
-                        </form>
-                        <a href="{{route('permission-edit', ['id' => $item->id])}}"
-                            class="btn btn-md btn-outline-primary"
-                            role="button"
-                            >
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
+                    <td class="d-flex">
+                        <div class="px-2">
+                            <form action="{{route('permission-destroy', ['id'=>$item->id])}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <x-inputs.button type="submit" class="btn btn-md btn-outline-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </x-inputs.button>
+                            </form>
+                        </div>
+                        <div class="px-2">
+                            <a href="{{route('permission-edit', ['id' => $item->id])}}"
+                                class="btn btn-md btn-outline-primary"
+                                role="button"
+                                >
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
