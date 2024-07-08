@@ -5,10 +5,23 @@
             <a href="#">Beranda</a>
         </li>
     </x-employee.breadcrumb>
-    <x-employee.personal-profile username_karyawan="{{Auth::user()->username}}" npp_karyawan="{{Auth::user()->karyawan->npp}}" nama_karyawan="{{Auth::user()->karyawan->nama}}" npwp_karyawan="{{Auth::user()->karyawan->npwp}}" email_karyawan="{{Auth::user()->karyawan->email}}" notel_karyawan="{{Auth::user()->karyawan->no_tel}}" st_ptkp_karyawan="{{Auth::user()->karyawan->st_ptkp ?? ''}}" st_peg_karyawan="{{Auth::user()->karyawan->st_peg ?? ''}}" bsTargetPegawai="#informasiKepegawaian" bsTargetIdentitas="#informasiIdentitas" />
+    <x-employee.personal-profile 
+        username_karyawan="{{Auth::user()->username}}" 
+        npp_karyawan="{{Auth::user()->karyawan->npp}}" 
+        nama_karyawan="{{Auth::user()->karyawan->nama}}" 
+        npwp_karyawan="{{Auth::user()->karyawan->npwp}}" 
+        email_karyawan="{{Auth::user()->karyawan->email}}" 
+        notel_karyawan="{{Auth::user()->karyawan->no_tel}}" 
+        st_ptkp_karyawan="{{Auth::user()->karyawan->st_ptkp ?? ''}}" 
+        st_peg_karyawan="{{Auth::user()->karyawan->st_peg ?? ''}}"
+        bsTargetPegawai="#informasiKepegawaian" 
+        bsTargetIdentitas="#informasiIdentitas" />
 
     @pushOnce('modals')
     <x-modal.default-inner rootId="informasiIdentitas" rootLabel="Informasi Identitas">
+        <x-slot:header>
+            <i class="fa-solid fa-user px-2"></i>
+        </x-slot:header>
         <form action="{{ route('employee-edit-pribadi')}}" method="post">
             @method('patch')
             @csrf
@@ -45,6 +58,9 @@
 
     @if(Auth::user()->karyawan->user_edited === false)
     <x-modal.default-inner rootId="informasiKepegawaian" rootLabel="Informasi Kepegawaian">
+        <x-slot:header>
+            <i class="fa-solid fa-id-card px-2"></i>
+        </x-slot:header>
         <form action="{{ route('employee-edit')}}" method="POST">
             @method('patch')
             @csrf
@@ -63,7 +79,7 @@
                     <x-forms.floating-labels name="ptkp" label="PTKP" required>
                         <x-inputs.select id="ptkp" name="ptkp">
                             <option hidden>Pilih Status PTKP</option>
-                            <option value="{{Auth::user()->karyawan->st_ptkp ?? ''}}" selected readonly>{{Auth::user()->karyawan->st_ptkp ?? 'Belum Diisi'}}</option>
+                            <option hidden value="{{Auth::user()->karyawan->st_ptkp ?? ''}}" selected readonly>{{Auth::user()->karyawan->st_ptkp ?? 'Belum Diisi'}}</option>
                             <option value="TK0">TK0</option>
                             <option value="TK1">TK1</option>
                             <option value="TK2">TK2</option>
@@ -84,6 +100,23 @@
                             <option value="TETAP">TETAP</option>
                         </x-inputs.select>
                     </x-forms.floating-labels>
+                </div>
+                <div class="col-12 mb-3">      
+                    <x-forms.check id="persetujuan" labelId="persetujuan">
+                        <x-inputs.input 
+                            type="checkbox" 
+                            id="persetujuan" 
+                            name="persetujuan"
+                            class="form-check-input"
+                            value="true"
+                        />    
+                        <x-slot:caption>
+                            Dengan ini saya, 
+                            menyatakan telah mengisi data kepegawaian dengan benar,
+                            sesuai dengan aturan yang ditetapkan perusahaan
+                            saya siap bertanggung jawab atas data kepegaiawan yang saya isi.
+                        </x-slot:caption>   
+                    </x-forms.check>   
                 </div>
                 <div class="col">
                     <x-inputs.button type="submit" class="btn btn-primary">
@@ -195,6 +228,12 @@
             localStorage.setItem('tours', 'viewed');
         }
 
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#notel').inputmask({"mask": "08999999[9999]"});
+            $('#npwp').inputmask({"mask": "99.999.999.9-999.999"});
+        });
     </script>
     @endpushOnce
 
