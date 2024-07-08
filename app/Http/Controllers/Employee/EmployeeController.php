@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use ZanySoft\Zip\ZipManager;
+use Zip;
 
 class EmployeeController extends Controller
 {
@@ -19,21 +21,24 @@ class EmployeeController extends Controller
 
     public function edit(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'npwp' => [
                 // 'required|numeric|unique:karyawan,npwp,except,id',
                 'required',
-                'numeric',
+                'string',
                 Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
             ],
             'ptkp' => 'required',
             'st_peg' => 'required',
+            'persetujuan' => 'accepted'
         ]);
 
         $request->session()->reflash();
 
         if ($validator->fails()) {
+            flash()
+                ->error('terjadi kesalahan validasi, mohon cek kembali')
+                ->flash();
             return redirect()
                        ->back()
                        ->withErrors($validator)
@@ -73,7 +78,7 @@ class EmployeeController extends Controller
             'notel' => [
                 'required',
                 'numeric',
-                Rule::unique('karyawan','no_tel')->ignore(Auth::user()->karyawan->id),
+                Rule::unique('karyawan', 'no_tel')->ignore(Auth::user()->karyawan->id),
             ],
         ]);
 
@@ -104,5 +109,27 @@ class EmployeeController extends Controller
 
             return redirect()->back()->withInput();
         }
+    }
+
+    public function lihatDokumen(Request $request)
+    {
+        if (!$request->hasValidSignature()) {
+            return abort(401);
+        }
+
+        // return view('employee.dokumen');
+        // $locationZip = storage_path('app/public/files/shares/pajak/template_penilaian.zip');
+        // $is_valid = Zip::open($locationZip);
+        // $manager = new ZipManager;
+        // $manager->addZip(Zip::open(storage_path('app/public/files/shares/pajak/template_penilaian.zip')));
+        // $extract = $manager->extract(storage_path('app/public/files/shares/pajak/extrack'), true);
+        // $manager->close();
+
+        // try {
+        //     $file = response()->file(storage_path('app/public/files/shares/pajak/extrack/template_penilaian.pdf', 200));
+        //     return $file;
+        // } catch (\Throwable $th) {
+        //     return abort(404);
+        // }
     }
 }
