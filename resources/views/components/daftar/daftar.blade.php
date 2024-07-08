@@ -23,6 +23,13 @@
                 </div>
             </form>
         </div>
+        <div class="card-footer">
+            <ul class="list-group list-group-horizontal d-flex justify-content-between">
+                <li class="list-group-item">
+                    <a href="/">login</a>
+                </li>
+            </ul>
+        </div>
     </div>
     @endif
     @if($route === 'daftar' && $showSelf === true)
@@ -61,6 +68,16 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="card-footer">
+            <ul class="list-group list-group-horizontal d-flex justify-content-between">
+                <li class="list-group-item">
+                    <a href="{{route('cari-index')}}">kembali</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/">login</a>
+                </li>
+            </ul>
         </div>
     </div>
     @endif
