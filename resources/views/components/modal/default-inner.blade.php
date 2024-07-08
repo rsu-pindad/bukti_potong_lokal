@@ -15,6 +15,7 @@
     ]) }}>
         <div class="modal-content">
             <div class="modal-header">
+                {{$header ?? ''}}
                 <h1 class="modal-title fs-5" id="{{$rootId}}">{{$rootLabel}}</h1>
             </div>
             <div class="modal-body">
