@@ -16,11 +16,12 @@
             <div class="col col-lg-6 mb-4 mb-lg-0">
                 <div class="card" style="border-radius: .5rem;">
                     <div class="row g-0">
-                        <div class="col-md-4 gradient-custom text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp" alt="Avatar" class="img-fluid my-3" style="width: 80px;" />
+                        <div class="col-md-4 gradient-custom text-center text-dark" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <div class="img-fluid my-3">
+                                {!! Avatar::create($username_karyawan)->toSvg() !!}
+                            </div>
                             <h5>{{$nama_karyawan}}</h5>
                             <p>{{$st_ptkp_karyawan}}</p>
-                            <i class="far fa-edit mb-5"></i>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">
@@ -45,7 +46,7 @@
                                             rootId="$bsTargetIdentitas"
                                             rootLabel="Identitas Pribadi"
                                             >
-                                            <i class="bi bi-pencil"></i>
+                                            <i class="fa-solid fa-pencil"></i>
                                         </x-inputs.button>
                                     </h6>
                                     <hr class="mt-0 mb-3">
@@ -78,7 +79,7 @@
                                             data-bs-toggle="modal"
                                             :data-bs-target="$bsTargetPegawai"
                                             >
-                                            <i class="bi bi-pencil"></i>
+                                            <i class="fa-solid fa-pen"></i>
                                         </x-inputs.button>
                                         @endif
                                     </h6>
@@ -110,21 +111,87 @@
                                     <h6 class="d-flex justify-content-between">Faktur Pajak</h6>
                                     <hr class="mt-0 mb-4">
                                     <div class="row pt-1">
-                                        <div class="col-6 mb-3">
+                                        <div class="col-12 mb-3">
                                             <h6>Status</h6>
-                                            <p class="text-muted">Belum tersedia</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Dokumen</h6>
-                                            <p class="text-muted">Belum tersedia</p>
+                                            <p class="text-muted">
+                                                @if(Auth::user()->karyawan->user_edited === true)
+                                                <a href="{{ URL::signedRoute('pajak-parser') }}" target="_blank">Lihat</a>
+                                                @else
+                                                Belum Siap
+                                                @endif
+                                            </p>
                                         </div>
                                     </div>
+                                    <div class="row pt-1">
+                                        <div class="col-12 mb-3">
+                                            <h6>Status Bulan Lain</h6>
+                                            <p class="text-muted">
+                                                @if(Auth::user()->karyawan->user_edited === true)
+                                                <form action="{{ URL::signedRoute('pajak-parser-search') }}" method="post">
+                                                    @csrf
+                                                    <div class="row mb-2">
+                                                        <div class="col">
+                                                            <x-forms.floating-labels name="bulan" label="Bulan" required>
+                                                                <x-inputs.select id="bulan" name="bulan">
+                                                                    <option hidden>Pilih Bulan</option>
+                                                                    <option value="01">Januari</option>
+                                                                    <option value="02">Februari</option>
+                                                                    <option value="03">Maret</option>
+                                                                    <option value="04">April</option>
+                                                                    <option value="05">Mei</option>
+                                                                    <option value="06">Juni</option>
+                                                                    <option value="07">Juli</option>
+                                                                    <option value="08">Agustus</option>
+                                                                    <option value="09">September</option>
+                                                                    <option value="10">Oktober</option>
+                                                                    <option value="11">November</option>
+                                                                    <option value="12">Desember</option>
+                                                                </x-inputs.select>
+                                                            </x-forms.floating-labels>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col">
+                                                            <x-forms.floating-labels name="tahun" label="Tahun" required>
+                                                                <x-inputs.select id="tahun" name="tahun">
+                                                                    <option hidden>Pilih Tahun</option>
+                                                                    <option value="2023">2023</option>
+                                                                    <option value="2024">2024</option>
+                                                                    <option value="2025">2025</option>
+                                                                    <option value="2026">2026</option>
+                                                                </x-inputs.select>
+                                                            </x-forms.floating-labels>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <x-inputs.button type="submit" class="btn btn-primary">
+                                                                Cari
+                                                            </x-inputs.button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                @else
+                                                Belum Siap
+                                                @endif
+                                            </p>
+                                        </div>
+                                        {{-- <div class="col-12 mb-3">
+                                            <h6>Dokumen</h6>
+                                            if(Auth::user()->karyawan->user_edited === true)
+                                            <div class="text-muted container-fluid" id="dokumenPajak">
+                                                php
+                                                $filesPath = storage_path('app/public/files/shares/pajak/template_penilaian.zip');
+                                                endphp
+                                                bassetArchive($filesPath, 'pajak')
+                                                basset('pajak/template_penilaian.pdf')
+                                            </div>
+                                            else
+                                            Mohon Isi Data diri
+                                            endif
+                                        </div> --}}
+                                    </div>
                                 </div>
-                                {{-- <div class="d-flex justify-content-start">
-                                    <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                    <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                    <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -149,3 +216,39 @@
 
 </style>
 @endPushOnce
+
+@pushOnce('scripts')
+<script>
+    // let dokumen = document.getElementById('dokumenPajak'); x
+    // let dokumenObject = dokumen.querySelector('object'); x
+    // let dokumenObjectLink = dokumenObject.querySelector('p > a'); x
+    // let dokumentObjectAtribute = dokumenObject.getAttribute("data"); x
+    // let signedUrl = `{! URL::signedRoute('pajak', ['user' => Auth::user()->username], absolute: false) !!}`;
+    // let dokumenLink = dokumen.querySelector('link');
+    // let dokumentLinkAtribute = dokumenLink.getAttribute("href");
+    
+    // let newElement = document.createElement('a');
+
+    // newElement.textContent = `Lihat`;
+    // newElement.setAttribute('href',dokumentLinkAtribute);
+    // newElement.setAttribute('target','_blank');
+    // newElement.setAttribute('id','lihatDokumen');
+    // let newElement = document.createElement('a');
+
+    // dokumenObject.setAttribute('class', 'object-fit-fill');
+
+    // dokumen.removeChild(dokumenLink);
+    // dokumen.appendChild(newElement);
+
+    // let dokumenLink = dokumen.querySelector('link'),index;
+    // // let dokumentLinkAtribute = dokumenLink.getAttribute("href");
+    // for (index = dokumenLink.length - 1; index >= 0; index--) {
+    //     dokumenLink[index].parentNode.removeChild(dokumenLink[index]);
+    // }
+
+    // let text_link = dokumentLinkAtribute;
+
+    // console.log(signedUrl); x
+
+</script>
+@endpushOnce
