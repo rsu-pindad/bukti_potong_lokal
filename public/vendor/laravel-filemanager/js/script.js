@@ -39,11 +39,11 @@ $(document).ready(function () {
         label: lang['nav-upload'],
         attrs: {id: 'upload'}
       },
-      // {
-      //   icon: 'fas fa-folder',
-      //   label: lang['nav-new'],
-      //   attrs: {id: 'add-folder'}
-      // }
+      {
+        icon: 'fas fa-folder',
+        label: lang['nav-new'],
+        attrs: {id: 'add-folder'}
+      }
     ]
   });
 
