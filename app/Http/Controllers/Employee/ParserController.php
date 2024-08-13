@@ -41,7 +41,8 @@ class ParserController extends Controller
                 $result[] = File::basename($file);
             }
         }
-        if($result < 1){
+        $hasil = count($result);
+        if($hasil < 1){
             flash()
                 ->warning('Faktur Pajak Anda belum ada')
                 ->flash();
@@ -112,7 +113,8 @@ class ParserController extends Controller
                 $result[] = File::basename($file);
             }
         }
-        if($result < 1){
+        $hasil = count($result);
+        if($hasil < 1){
             flash()
                 ->warning('Faktur Pajak Anda belum ada')
                 ->flash();
