@@ -15,7 +15,7 @@ class PajakController extends Controller
     {
         // Production VPS
         // $zip_files = Storage::files('files/shares/pajak');
-        // $location = 'files/shares/pajak';
+        $location = 'files/shares/pajak';
         
         // VPS
         $zip_files = Storage::files($location);
