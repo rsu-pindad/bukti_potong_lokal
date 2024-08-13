@@ -58,7 +58,14 @@
                             <a class="nav-link {{ Route::currentRouteName() == 'pegawai' ? 'active' : '' }}" 
                                 href="{{ route('pegawai') }}" 
                                 aria-current="page">
-                                <i class="fa-solid fa-users"></i> Pegawai
+                                <i class="fa-solid fa-users"></i> Pegawai </br>(Data Lama)
+                            </a>
+                        </li>
+                        <li class="nav-item border-top border-dark mx-2">
+                            <a class="nav-link {{ Route::currentRouteName() == 'karyawan' ? 'active' : '' }}" 
+                                href="{{ route('karyawan') }}" 
+                                aria-current="page">
+                                <i class="fa-solid fa-users"></i> Pegawai </br>(Data Baru)
                             </a>
                         </li>
                         <li class="nav-item border-top border-dark mx-2">
@@ -89,7 +96,7 @@
                             </ul>
                         </li>
                         @endhasexactroles
-                        @hasanyrole('super-admin|pajak')
+                        @hasanyrole('pajak')
                         <li class="nav-item border-top border-dark mx-2">
                             <a class="nav-link" 
                                 href="/pajak_manager"

@@ -35,6 +35,14 @@
                             <p>
                                 dipublish
                             </p>
+                            <p>
+                                <form action="{{route('pajak-unpublish')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="nama_file" value="{{$itemName['4']}}">
+                                    <input type="hidden" name="folder_target" value="{{$folderTanggal}}">
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </p>
                         </td>
                         @else
                         <td>-</td>

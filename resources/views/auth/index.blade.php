@@ -14,7 +14,7 @@
 
 <body>
     <main class="row" style="height: 100vh;">
-        <div class="col-lg-3 col-md-5 col-sm-8 col-xs-12 m-auto p-5">
+        <div class="col-lg-4 col-md-6 col-sm-10 col-xs-12 m-auto p-5">
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-center m-0"><i class="fa-solid fa-file-invoice-dollar px-2"></i> PPH21</h3>

@@ -13,6 +13,9 @@ class PajakController extends Controller
 {
     public function index()
     {
+        // Production VPS
+        // $zip_files = Storage::files('files/shares/pajak');
+        
         $zip_files = Storage::files('public/files/shares/pajak');
 
         return view('pajak.pajak-file')->with([
@@ -89,4 +92,26 @@ class PajakController extends Controller
             return redirect()->back();
         }
     }
+
+    public function unPublish(Request $request)
+    {
+        // dd($request->nama_file);
+        $folder = $request->nama_file;
+        $folder_path = Storage::disk('public')->directories('files/shares/pajak/publish/'.$folder);
+        $published_file = $request->folder_target;
+        // files/shares/pajak/extrack
+        // File::deleteDirectory($path);
+        // $x = Storage::disk('public')->allDirectories();
+        // dd($x);
+        // dd($published_file);
+        // dd($folder_path);
+        try {
+            Storage::disk('public')->deleteDirectory('files/shares/pajak/publish/'.$folder);
+            Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/'.$published_file);
+            return redirect()->back()->withToastSuccess('folder berhasil di unpublished');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withToastError($th->getMessage());
+        }
+    }
+
 }

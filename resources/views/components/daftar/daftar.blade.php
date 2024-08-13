@@ -44,13 +44,13 @@
                     </x-forms.floating-labels>
                 </div>
                 <div class="row">
-                    <x-forms.floating-labels name="username" label="Username">
+                    <x-forms.floating-labels name="username" label="Username (Min:5,Max:15)">
                         <x-inputs.input id="username" name="username" placeholder="username...." />
                     </x-forms.floating-labels>
                 </div>
                 <hr class="border border-secondary border-2 opacity-25">
                 <div class="row">
-                    <x-forms.floating-labels name="password" label="Password">
+                    <x-forms.floating-labels name="password" label="Password (Min:6)">
                         <x-inputs.input type="password" id="password" name="password" placeholder="password...." />
                     </x-forms.floating-labels>
                 </div>
