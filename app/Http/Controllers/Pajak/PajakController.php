@@ -13,15 +13,7 @@ class PajakController extends Controller
 {
     public function index()
     {
-        // Production VPS
-        // $zip_files = Storage::files('files/shares/pajak');
-        $location = 'files/shares/pajak';
-        
-        // VPS
-        $zip_files = Storage::files($location);
-
-        // Local
-        // $zip_files = Storage::files('public/files/shares/pajak');
+        $zip_files = Storage::disk('public')->files('files/shares/pajak');
 
         return view('pajak.pajak-file')->with([
             'title'     => 'Publish Pajak',
@@ -57,16 +49,10 @@ class PajakController extends Controller
                        ->withInput();
         }
 
-        $locationZip          = storage_path('app/public/files/shares/pajak/' . $validator->safe()->namaFile);
-        // VPS
-        $newDirectory         = Storage::makeDirectory('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        $markDirectoryPublish = Storage::makeDirectory('files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        $emptyFolder          = Storage::allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        // local
-        // $newDirectory         = Storage::makeDirectory('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        // $markDirectoryPublish = Storage::makeDirectory('public/files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        // $emptyFolder          = Storage::allFiles('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-
+        $locationZip          = Storage::disk('public')->path('files/shares/pajak/' . $validator->safe()->namaFile);
+        $newDirectory         = Storage::disk('public')->makeDirectory('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $markDirectoryPublish = Storage::disk('public')->makeDirectory('files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $emptyFolder          = Storage::disk('public')->files('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         if (count($emptyFolder) > 0) {
             flash()
                 ->error('folder tidak kosong, mohon kosongkan folder di file manager')
@@ -74,7 +60,7 @@ class PajakController extends Controller
 
             return redirect()->back();
         }
-        $getTargetExtrack = storage_path('app/public/files/shares/pajak/extrack/') . $validator->safe()->bulan . $validator->safe()->tahun;
+        $getTargetExtrack = Storage::disk('public')->path('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         $is_valid         = Zip::check($locationZip);
         if (!$is_valid) {
             flash()
@@ -105,23 +91,16 @@ class PajakController extends Controller
 
     public function unPublish(Request $request)
     {
-        // dd($request->nama_file);
-        $folder = $request->nama_file;
-        $folder_path = Storage::disk('public')->directories('files/shares/pajak/publish/'.$folder);
+        $folder         = $request->nama_file;
+        $folder_path    = Storage::disk('public')->directories('files/shares/pajak/publish/' . $folder);
         $published_file = $request->folder_target;
-        // files/shares/pajak/extrack
-        // File::deleteDirectory($path);
-        // $x = Storage::disk('public')->allDirectories();
-        // dd($x);
-        // dd($published_file);
-        // dd($folder_path);
         try {
-            Storage::disk('public')->deleteDirectory('files/shares/pajak/publish/'.$folder);
-            Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/'.$published_file);
+            Storage::disk('public')->deleteDirectory('files/shares/pajak/publish/' . $folder);
+            Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/' . $published_file);
+
             return redirect()->back()->withToastSuccess('folder berhasil di unpublished');
         } catch (\Throwable $th) {
             return redirect()->back()->withToastError($th->getMessage());
         }
     }
-
 }

@@ -112,10 +112,20 @@
                                     <hr class="mt-0 mb-4">
                                     <div class="row pt-1">
                                         <div class="col-12 mb-3">
-                                            <h6>Status</h6>
+                                            @php
+                                            \Carbon\Carbon::setLocale('id');
+                                            $bulan_ini = \Carbon\Carbon::now()->isoFormat('MMMM Y');
+                                            $bulan_ini_signed = \Carbon\Carbon::now()->isoFormat('MMY');
+                                            @endphp
+                                            <h6>Status Bulan {{ $bulan_ini }}</h6>
                                             <p class="text-muted">
                                                 @if(Auth::user()->karyawan->user_edited === true)
-                                                <a href="{{ URL::signedRoute('pajak-parser') }}" target="_blank">Lihat</a>
+                                                <form action="{{ URL::signedRoute('pajak-parser') }}" method="post" target="_blank">
+                                                    @csrf
+                                                    <input type="hidden" name="bulan_ini" value="{{$bulan_ini_signed}}" readonly>
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm">Lihat</button>
+                                                </form>
+                                                {{-- <a href="{ URL::signedRoute('pajak-parser') }" target="_blank">Lihat</a> --}}
                                                 @else
                                                 Belum Siap
                                                 @endif
@@ -127,7 +137,7 @@
                                             <h6>Status Bulan Lain</h6>
                                             <p class="text-muted">
                                                 @if(Auth::user()->karyawan->user_edited === true)
-                                                <form action="{{ URL::signedRoute('pajak-parser-search') }}" method="post">
+                                                <form action="{{ URL::signedRoute('pajak-parser-search') }}" method="post" target="_blank">
                                                     @csrf
                                                     <div class="row mb-2">
                                                         <div class="col">
@@ -159,6 +169,7 @@
                                                                     <option value="2024">2024</option>
                                                                     <option value="2025">2025</option>
                                                                     <option value="2026">2026</option>
+                                                                    <option value="2027">2027</option>
                                                                 </x-inputs.select>
                                                             </x-forms.floating-labels>
                                                         </div>

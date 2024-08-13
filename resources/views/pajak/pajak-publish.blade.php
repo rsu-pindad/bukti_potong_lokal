@@ -42,9 +42,11 @@
                     <label for="tahun">Pilih Tahun</label>
                     <select name="tahun" id="tahun" class="form-select">
                         <option selected hidden>Pilih Tahun</option>
-                        <option value="2023">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
                         <option value="2025">2025</option>
                         <option value="2026">2026</option>
+                        <option value="2027">2027</option>
                     </select>
                     @error('tahun')
                     <div class="invalid-feedback">

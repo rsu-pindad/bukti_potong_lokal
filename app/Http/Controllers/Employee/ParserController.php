@@ -15,16 +15,22 @@ class ParserController extends Controller
     public function pdfParser(Request $request)
     {
         if (!$request->hasValidSignature()) {
-            return abort(401);
+            flash()
+                ->warning('Signature Invalid')
+                ->flash();
         }
 
-        $files = Storage::allFiles('public/files/shares/pajak/extrack/012024');
+        $target_bulan = $request->bulan_ini;
+
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $target_bulan);
         if ($files < 1) {
-            return abort(404);
+            flash()
+                ->warning('Faktor bulan ini belum di unggah')
+                ->flash();
         }
         $result = [];
         foreach ($files as $file) {
-            $getFile = Storage::path($file);
+            $getFile = Storage::disk('public')->path($file);
             // dd(File::basename($file));
             // $fileName = $file->getClientOriginalName();
             $pdfParser = new Parser();
@@ -36,11 +42,24 @@ class ParserController extends Controller
             }
         }
         try {
-            $dokumenPajak = response()->file(storage_path('app/public/files/shares/pajak/extrack/012024/bupot_final_tidakfinal/' . $result[0], 200));
+            $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $target_bulan . '/bupot_final_tidakfinal/' . $result[0]);
+            $dokumenPajak = '';
+            if ($filesExist != true) {
+                $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $target_bulan . '/bupot_bulanan/' . $result[0]);
+                $dokumenPajak = response()->file(Storage::disk('public')->path('files/shares/pajak/extrack/' . $target_bulan . '/bupot_bulanan/' . $result[0], 200));
+            } else {
+                $dokumenPajak = response()->file(Storage::disk('public')->path('files/shares/pajak/extrack/' . $target_bulan . '/bupot_final_tidakfinal/' . $result[0], 200));
+            }
 
             return $dokumenPajak;
         } catch (\Throwable $th) {
-            return abort(404);
+            // return abort(404);
+            flash()
+                ->warning($th->getMessage())
+                ->flash();
+
+            return redirect()
+                ->back();
         }
     }
 
@@ -49,8 +68,6 @@ class ParserController extends Controller
         if (!$request->hasValidSignature()) {
             return abort(401);
         }
-
-        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'bulan' => 'required|numeric',
@@ -68,8 +85,7 @@ class ParserController extends Controller
                        ->withInput();
         }
 
-        $files = Storage::allFiles('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        // dd($files);
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         if (count($files) < 1) {
             flash()
                 ->warning('Faktur Pajak tidak ditemukan')
@@ -80,7 +96,7 @@ class ParserController extends Controller
         }
         $result = [];
         foreach ($files as $file) {
-            $getFile   = Storage::path($file);
+            $getFile   = Storage::disk('public')->path($file);
             $pdfParser = new Parser();
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
@@ -90,7 +106,14 @@ class ParserController extends Controller
             }
         }
         try {
-            $dokumenPajak = response()->file(storage_path('app/public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0], 200));
+            $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0]);
+            $dokumenPajak = '';
+            if ($filesExist != true) {
+                $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_bulanan/' . $result[0]);
+                $dokumenPajak = response()->file(Storage::disk('public')->path('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_bulanan/' . $result[0], 200));
+            } else {
+                $dokumenPajak = response()->file(Storage::disk('public')->path('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0], 200));
+            }
 
             return $dokumenPajak;
         } catch (\Throwable $th) {
