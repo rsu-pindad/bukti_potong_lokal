@@ -86,6 +86,11 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => 'role:pajak'], function () {
+
+        Route::get('/versi', function(){
+            return phpinfo();
+        });
+
         Route::controller(PegawaiController::class)->group(function () {
             Route::get('pegawai', 'index')->name('pegawai');
 
@@ -160,7 +165,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(ParserController::class)->group(function () {
             Route::group(['prefix' => 'employee/pajak/parser'], function () {
-                Route::get('/', 'pdfParser')->name('pajak-parser')->middleware('signed');
+                Route::post('/bulan', 'pdfParser')->name('pajak-parser')->middleware('signed');
                 Route::post('/', 'pdfParserSearch')->name('pajak-parser-search')->middleware('signed');
             });
         });
