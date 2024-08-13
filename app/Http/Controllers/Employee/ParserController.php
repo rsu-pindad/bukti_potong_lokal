@@ -41,6 +41,13 @@ class ParserController extends Controller
                 $result[] = File::basename($file);
             }
         }
+        if($count($result < 1)){
+            flash()
+                ->warning('Faktur Pajak Anda belum ada')
+                ->flash();
+            return redirect()
+                ->back();
+        }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $target_bulan . '/bupot_final_tidakfinal/' . $result[0]);
             $dokumenPajak = '';
@@ -88,7 +95,7 @@ class ParserController extends Controller
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         if (count($files) < 1) {
             flash()
-                ->warning('Faktur Pajak tidak ditemukan')
+                ->warning('Faktur Pajak bulan ini belum di unggah')
                 ->flash();
 
             return redirect()
@@ -104,6 +111,13 @@ class ParserController extends Controller
             if (str_contains($content, Auth::user()->karyawan->npwp)) {
                 $result[] = File::basename($file);
             }
+        }
+        if($count($result < 1)){
+            flash()
+                ->warning('Faktur Pajak Anda belum ada')
+                ->flash();
+            return redirect()
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0]);
