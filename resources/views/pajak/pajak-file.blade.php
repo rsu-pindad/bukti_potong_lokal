@@ -20,15 +20,15 @@
                     @foreach ($zip_files as $item)
                     @php
                     $itemName = explode('/',$item);
-                    {{-- // Local --}}
-                    {{-- // $folder = Storage::directories('public/files/shares/pajak/publish/' . $itemName['4']); --}}
-                    {{-- // VPS --}}
+                    // Local
+                    // $folder = Storage::directories('public/files/shares/pajak/publish/' . $itemName['4']);
+                    // VPS
                     $folder = Storage::directories('files/shares/pajak/publish/' . $itemName['3']);
                     if(count($folder) > 0){
                     $folderExplode = explode('/', $folder['0']);
-                    {{-- Local --}}
-                    {{-- $folderTanggal = $folderExplode['6']; --}}
-                    {{-- VPS --}}
+                    // Local
+                    // $folderTanggal = $folderExplode['6'];
+                    // VPS
                     $folderTanggal = $folderExplode['5'];
                     }
                     @endphp
