@@ -49,7 +49,7 @@ return [
         'file'  => [
             'folder_name'  => 'files',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 120000, // size in KB
             'thumb' => false,
             'thumb_width' => 80,
             'thumb_height' => 80,
@@ -182,6 +182,6 @@ return [
     | directives are not supported.
      */
     'php_ini_overrides'        => [
-        'memory_limit' => '64M',
+        'memory_limit' => '128M',
     ],
 ];
