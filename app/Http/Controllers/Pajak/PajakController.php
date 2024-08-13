@@ -15,8 +15,13 @@ class PajakController extends Controller
     {
         // Production VPS
         // $zip_files = Storage::files('files/shares/pajak');
+        // $location = 'files/shares/pajak';
         
-        $zip_files = Storage::files('public/files/shares/pajak');
+        // VPS
+        $zip_files = Storage::files($location);
+
+        // Local
+        // $zip_files = Storage::files('public/files/shares/pajak');
 
         return view('pajak.pajak-file')->with([
             'title'     => 'Publish Pajak',
@@ -53,9 +58,14 @@ class PajakController extends Controller
         }
 
         $locationZip          = storage_path('app/public/files/shares/pajak/' . $validator->safe()->namaFile);
-        $newDirectory         = Storage::makeDirectory('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        $markDirectoryPublish = Storage::makeDirectory('public/files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        $emptyFolder          = Storage::allFiles('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        // VPS
+        $newDirectory         = Storage::makeDirectory('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $markDirectoryPublish = Storage::makeDirectory('files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $emptyFolder          = Storage::allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        // local
+        // $newDirectory         = Storage::makeDirectory('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        // $markDirectoryPublish = Storage::makeDirectory('public/files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        // $emptyFolder          = Storage::allFiles('public/files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
 
         if (count($emptyFolder) > 0) {
             flash()
