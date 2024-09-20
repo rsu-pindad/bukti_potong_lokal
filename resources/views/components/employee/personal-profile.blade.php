@@ -136,7 +136,7 @@
                                             <h6>Status Bulan {{ $bulan_ini }}</h6>
                                             <p class="text-muted">
                                                 @if(Auth::user()->karyawan->user_edited === true)
-                                                <form action="{{ URL::signedRoute('pajak-parser') }}" method="post" target="_blank">
+                                                <form action="{{ URL::signedRoute('pajak-parser') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="bulan_ini" value="{{$bulan_ini_signed}}" readonly>
                                                     <button type="submit" class="btn btn-outline-primary btn-sm">Lihat</button>
@@ -153,7 +153,7 @@
                                             <h6>Status Bulan Lain</h6>
                                             <p class="text-muted">
                                                 @if(Auth::user()->karyawan->user_edited === true)
-                                                <form action="{{ URL::signedRoute('pajak-parser-search') }}" method="post" target="_blank">
+                                                <form action="{{ URL::signedRoute('pajak-parser-search') }}" method="post">
                                                     @csrf
                                                     <div class="row mb-2">
                                                         <div class="col">
