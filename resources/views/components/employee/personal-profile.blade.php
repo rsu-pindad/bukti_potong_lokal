@@ -53,7 +53,7 @@
                                     </h6>
                                     <hr class="mt-0 mb-3">
                                     <div class="row pt-1">
-                                        <div class="col-12 mb-3 nama_lengkap">
+                                        <div class="col-12 mb-3 nik_pegawai">
                                             <h6>NIK</h6>
                                             <p class="text-muted">
                                                 {{$nik_karyawan}}
@@ -95,7 +95,7 @@
                                     </h6>
                                     <hr class="mt-0 mb-3">
                                     <div class="row pt-1">
-                                        <div class="col-12 mb-3 karyawan_npp">
+                                        <div class="col-12 mb-3 karyawan_epin">
                                             <h6>EPIN</h6>
                                             <p class="text-muted">{{$epin_karyawan}}</p>
                                         </div>
@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                                 <div id="fakturPajak">
-                                    <h6 class="d-flex justify-content-between">Faktur Pajak</h6>
+                                    <h6 class="d-flex justify-content-between">Bukti Potong</h6>
                                     <hr class="mt-0 mb-4">
                                     <div class="row pt-1">
                                         <div class="col-12 mb-3">

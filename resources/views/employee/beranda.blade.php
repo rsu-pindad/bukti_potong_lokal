@@ -188,6 +188,13 @@
                     }
                 }
                 , {
+                    element: '.karyawan_epin'
+                    , popover: {
+                        title: 'EPIN'
+                        , description: 'Epin Akan diisi oleh pajak'
+                    }
+                }
+                , {
                     element: '.karyawan_npwp'
                     , popover: {
                         title: 'NPWP'
