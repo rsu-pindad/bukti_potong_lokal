@@ -38,9 +38,10 @@ class LoginController extends Controller
             if($user->hasRole('super-admin')){
                 return redirect()->intended('akses');   
             }
-            // if($user->hasRole('admin')){
-            //     return redirect()->intended('akses');   
-            // }
+            if($user->hasRole('personalia')){
+                return redirect()->intended('karyawan');   
+            }
+            // dd($user);
             return redirect()->intended('employee');
         }
 

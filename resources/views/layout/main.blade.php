@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en">
 
-<head>
+  <head>
     <title>{{ $title }}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="{{ basset(base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')) }}">
+    <link rel="stylesheet"
+          href="{{ basset(base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')) }}">
 
     @basset(base_path('vendor/fortawesome/font-awesome/css/all.css'))
     @basset(base_path('vendor/fortawesome/font-awesome/webfonts/fa-brands-400.ttf'))
@@ -27,114 +29,139 @@
     @stack('styles')
 
     <style>
-        #loader {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 99999;
-        }
-
+      #loader {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 99999;
+      }
     </style>
 
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="border-bottom py-2">
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('gaji') }}">PMU</a>
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                        @hasexactroles('pajak')
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link {{ Route::currentRouteName() == 'pegawai' ? 'active' : '' }}" 
-                                href="{{ route('pegawai') }}" 
-                                aria-current="page">
-                                <i class="fa-solid fa-users"></i> Pegawai </br>(Data Lama)
-                            </a>
-                        </li>
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link {{ Route::currentRouteName() == 'karyawan' ? 'active' : '' }}" 
-                                href="{{ route('karyawan') }}" 
-                                aria-current="page">
-                                <i class="fa-solid fa-users"></i> Pegawai </br>(Data Baru)
-                            </a>
-                        </li>
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link {{ Route::currentRouteName() == 'gaji' ? 'active' : '' }}" 
-                                href="{{ route('gaji') }}">
-                                <i class="fa-solid fa-file-invoice-dollar"></i> Gaji
-                            </a>
-                        </li>
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link {{ Route::currentRouteName() == 'pph21' ? 'active' : '' }}" 
-                                href="{{ route('pph21') }}">
-                                <i class="fa-solid fa-file-invoice-dollar"></i> PPH21
-                            </a>
-                        </li>
-                        @endhasexactroles
-                        @hasexactroles('super-admin')
-                        <li class="nav-item dropdown border-top border-dark mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user-lock"></i> Akses
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('permission') }}">Permission</a></li>
-                                <li><a class="dropdown-item" href="{{ route('role') }}">Role</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('akses') }}">List Akses</a></li>
-                            </ul>
-                        </li>
-                        @endhasexactroles
-                        @hasanyrole('pajak')
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link" 
-                                href="/pajak_manager"
-                                >
-                                <i class="fa-solid fa-folder-tree"></i> File Manager
-                            </a>
-                        </li>
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link {{ Route::currentRouteName() == 'pajak-file' ? 'active' : '' }}" 
-                                href="{{route('pajak-index')}}">
-                                <i class="fa-solid fa-bullhorn"></i> Publish File
-                            </a>
-                        </li>
-                        @endhasanyrole
-                    </ul>
-                    <ul class="navbar-nav mt-2 mt-lg-0">
-                        <li class="nav-item border-top border-dark mx-2">
-                            <a class="nav-link" 
-                                href="{{ route('logout') }}">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand"
+             href="{{ route('gaji') }}">PMU</a>
+          <button class="navbar-toggler d-lg-none"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapsibleNavId"
+                  aria-controls="collapsibleNavId"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div id="collapsibleNavId"
+               class="navbar-collapse collapse">
+            <ul class="navbar-nav mt-lg-0 me-auto mt-2">
+              @hasanyrole(['admin', 'pajak'])
+                @hasexactroles('pajak')
+                  {{-- <li class="nav-item border-top border-dark mx-2">
+                    <a class="nav-link {{ Route::currentRouteName() == 'karyawan' ? 'active' : '' }}"
+                       href="{{ route('karyawan') }}"
+                       aria-current="page">
+                      <i class="fa-solid fa-users"></i> Pegawai </br>(Data Baru)
+                    </a>
+                  </li> --}}
+                  <li class="nav-item border-top border-dark mx-2">
+                    <a class="nav-link {{ Route::currentRouteName() == 'pegawai' ? 'active' : '' }}"
+                       href="{{ route('pegawai') }}"
+                       aria-current="page">
+                      <i class="fa-solid fa-users"></i> Pegawai </br>(Data Lama)
+                    </a>
+                  </li>
+                  <li class="nav-item border-top border-dark mx-2">
+                    <a class="nav-link {{ Route::currentRouteName() == 'gaji' ? 'active' : '' }}"
+                       href="{{ route('gaji') }}">
+                      <i class="fa-solid fa-file-invoice-dollar"></i> Gaji
+                    </a>
+                  </li>
+                  <li class="nav-item border-top border-dark mx-2">
+                    <a class="nav-link {{ Route::currentRouteName() == 'pph21' ? 'active' : '' }}"
+                       href="{{ route('pph21') }}">
+                      <i class="fa-solid fa-file-invoice-dollar"></i> PPH21
+                    </a>
+                  </li>
+                @endhasexactroles
+              @endhasanyrole
+              @hasexactroles('super-admin')
+                <li class="nav-item dropdown border-top border-dark mx-2">
+                  <a class="nav-link dropdown-toggle"
+                     href="#"
+                     role="button"
+                     data-bs-toggle="dropdown"
+                     aria-expanded="false">
+                    <i class="fa-solid fa-user-lock"></i> Akses
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item"
+                         href="{{ route('permission') }}">Permission</a></li>
+                    <li><a class="dropdown-item"
+                         href="{{ route('role') }}">Role</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item"
+                         href="{{ route('akses') }}">List Akses</a></li>
+                  </ul>
+                </li>
+              @endhasexactroles
+              @hasanyrole('pajak')
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link"
+                     href="/pajak_manager">
+                    <i class="fa-solid fa-folder-tree"></i> File Manager
+                  </a>
+                </li>
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-file' ? 'active' : '' }}"
+                     href="{{ route('pajak-index') }}">
+                    <i class="fa-solid fa-bullhorn"></i> Publish File
+                  </a>
+                </li>
+              @endhasanyrole
+              @hasanyrole('personalia')
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link {{ Route::currentRouteName() == 'karyawan' ? 'active' : '' }}"
+                     href="{{ route('karyawan') }}"
+                     aria-current="page">
+                    <i class="fa-solid fa-users"></i> Pegawai </br>(Data Baru)
+                  </a>
+                </li>
+              @endhasanyrole
+            </ul>
+            <ul class="navbar-nav mt-lg-0 mt-2">
+              <li class="nav-item border-top border-dark mx-2">
+                <a class="nav-link"
+                   href="{{ route('logout') }}">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
-    <div id="loader" class="row">
-        <div class="col-auto m-auto">
-            <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl text-white"></i>
-        </div>
+    <div id="loader"
+         class="row">
+      <div class="col-auto m-auto">
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl text-white"></i>
+      </div>
     </div>
 
     <main class="mt-4">
-        <div class="container">
-            @yield('content')
-        </div>
+      <div class="container">
+        @yield('content')
+      </div>
     </main>
 
     @basset(base_path('vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js'))
@@ -151,43 +178,41 @@
     @stack('scripts')
 
     <script>
-        $(document).ready(function() {
-            new DataTable('#dataTable');
+      $(document).ready(function() {
+        new DataTable('#dataTable');
 
-            const formGet = document.getElementById('formGet')
-            const selectMonth = document.getElementById('selectMonth')
-            const selectYear = document.getElementById('selectYear')
+        const formGet = document.getElementById('formGet')
+        const selectMonth = document.getElementById('selectMonth')
+        const selectYear = document.getElementById('selectYear')
 
-            // console.log(selectMonth);
-            if (selectMonth != null) {
-                selectMonth.addEventListener('change', function(event) {
-                    formGet.submit()
-                })
-            }
+        // console.log(selectMonth);
+        if (selectMonth != null) {
+          selectMonth.addEventListener('change', function(event) {
+            formGet.submit()
+          })
+        }
 
-            if (selectYear != null) {
-                selectYear.addEventListener('change', function(event) {
-                    formGet.submit()
-                })
-            }
+        if (selectYear != null) {
+          selectYear.addEventListener('change', function(event) {
+            formGet.submit()
+          })
+        }
 
-            $("#selectPPH21").on("change", function() {
-                formGet.submit()
-            })
-        });
-
+        $("#selectPPH21").on("change", function() {
+          formGet.submit()
+        })
+      });
     </script>
 
     <script>
-        $(function() {
-            $("form").submit(function() {
-                $('#loader').css('display', 'flex');
-            });
+      $(function() {
+        $("form").submit(function() {
+          $('#loader').css('display', 'flex');
         });
+      });
 
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
 
     @include('sweetalert::alert')
@@ -197,6 +222,6 @@
 
     @stack('modals')
 
-</body>
+  </body>
 
 </html>

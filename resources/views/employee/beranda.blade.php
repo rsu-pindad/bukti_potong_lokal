@@ -7,11 +7,11 @@
     </x-employee.breadcrumb>
     <x-employee.personal-profile 
         username_karyawan="{{Auth::user()->username}}" 
-        npp_karyawan="{{Auth::user()->karyawan->npp}}" 
-        nama_karyawan="{{Auth::user()->karyawan->nama}}" 
-        npwp_karyawan="{{Auth::user()->karyawan->npwp}}" 
-        email_karyawan="{{Auth::user()->karyawan->email}}" 
-        notel_karyawan="{{Auth::user()->karyawan->no_tel}}" 
+        npp_karyawan="{{Auth::user()->karyawan->npp ?? ''}}" 
+        nama_karyawan="{{Auth::user()->karyawan->nama ?? ''}}" 
+        npwp_karyawan="{{Auth::user()->karyawan->npwp ?? ''}}" 
+        email_karyawan="{{Auth::user()->karyawan->email ?? ''}}" 
+        notel_karyawan="{{Auth::user()->karyawan->no_tel ?? ''}}" 
         st_ptkp_karyawan="{{Auth::user()->karyawan->st_ptkp ?? ''}}" 
         st_peg_karyawan="{{Auth::user()->karyawan->st_peg ?? ''}}"
         bsTargetPegawai="#informasiKepegawaian" 

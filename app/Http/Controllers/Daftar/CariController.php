@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\Daftar;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Karyawan;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
-use App\Models\Karyawan;
 
 class CariController extends Controller
 {
     public function index(): View
     {
         return view('guest.daftar')->with([
-            'route' => 'cari',
+            'route'    => 'cari',
             'showSelf' => false,
         ]);
     }
@@ -33,11 +34,8 @@ class CariController extends Controller
                        ->withInput();
         }
         try {
-            $pegawai = Pegawai::where('npp', $validator->safe()->npp)->first();
+            $pegawai = Employee::where('npp', $validator->safe()->npp)->first();
             if (!$pegawai) {
-
-                
-
                 toastr()
                     ->closeOnHover(true)
                     ->closeDuration(10)
@@ -46,9 +44,8 @@ class CariController extends Controller
                 return redirect('cari');
             }
             $karyawan = Karyawan::where('npp', $pegawai->npp)->get();
-                // dd(count($karyawan));
-            if(count($karyawan) > 0)
-            {
+            // dd(count($karyawan));
+            if (count($karyawan) > 0) {
                 toastr()
                     ->closeOnHover(true)
                     ->closeDuration(10)
@@ -56,7 +53,7 @@ class CariController extends Controller
 
                 return redirect('cari');
             }
-                
+
             toastr()
                 ->closeOnHover(true)
                 ->closeDuration(10)
@@ -65,6 +62,11 @@ class CariController extends Controller
             // return redirect('daftar')->onlyInput('npp');
             // dd($validator->safe()->npp);
             $request->session()->put('npp', $validator->safe()->npp);
+            $request->session()->put('nik', $pegawai->nik);
+            $request->session()->put('npwp', $pegawai->npwp);
+            $request->session()->put('email', $pegawai->email);
+            $request->session()->put('no_hp', $pegawai->no_hp);
+            $request->session()->put('status_ptkp', $pegawai->status_ptkp);
 
             // return redirect('daftar');
             return redirect('daftar')->withInput($request->input());

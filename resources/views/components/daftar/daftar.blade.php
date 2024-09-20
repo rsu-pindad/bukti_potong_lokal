@@ -44,6 +44,31 @@
                     </x-forms.floating-labels>
                 </div>
                 <div class="row">
+                    <x-forms.floating-labels name="nik" label="NIK">
+                        <x-inputs.input id="nik" name="nik" class="form-control-plaintext" value="{{session()->get('nik')}}" readonly="true" />
+                    </x-forms.floating-labels>
+                </div>
+                <div class="row">
+                    <x-forms.floating-labels name="npwp" label="NPWP">
+                        <x-inputs.input id="npwp" name="npwp" class="form-control-plaintext" value="{{session()->get('npwp')}}" readonly="true" />
+                    </x-forms.floating-labels>
+                </div>
+                <div class="row">
+                    <x-forms.floating-labels name="email" label="Email">
+                        <x-inputs.input id="email" name="email" class="form-control-plaintext" value="{{session()->get('email')}}" readonly="true" />
+                    </x-forms.floating-labels>
+                </div>
+                <div class="row">
+                    <x-forms.floating-labels name="no_hp" label="No NP">
+                        <x-inputs.input id="np_hp" name="np_hp" class="form-control-plaintext" value="{{session()->get('no_hp')}}" readonly="true" />
+                    </x-forms.floating-labels>
+                </div>
+                <div class="row">
+                    <x-forms.floating-labels name="status_ptkp" label="PTKP">
+                        <x-inputs.input id="status_ptkp" name="status_ptkp" class="form-control-plaintext" value="{{session()->get('status_ptkp')}}" readonly="true" />
+                    </x-forms.floating-labels>
+                </div>
+                <div class="row">
                     <x-forms.floating-labels name="username" label="Username (Min:5,Max:15)">
                         <x-inputs.input id="username" name="username" placeholder="username...." />
                     </x-forms.floating-labels>

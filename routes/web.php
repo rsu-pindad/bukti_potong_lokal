@@ -9,15 +9,15 @@ use App\Http\Controllers\Daftar\CariController;
 use App\Http\Controllers\Daftar\DaftarController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\ParserController;
+use App\Http\Controllers\Pajak\KaryawanController;
+use App\Http\Controllers\Pajak\PajakController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PPH21Controller;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Http\Controllers\Pajak\PajakController;
-use App\Http\Controllers\Pajak\KaryawanController;
-use Illuminate\Support\Facades\Cache;
 
 /*
  * |--------------------------------------------------------------------------
@@ -56,12 +56,12 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'role:super-admin'], function () {
-    Route::controller(AksesController::class)->group(function () {
-        Route::get('akses', 'index')->name('akses');
-        Route::prefix('akses/role')->group(function () {
-            Route::get('/{id}', 'showRole')->name('akses-role-show');
-            Route::post('/{id}', 'assignRole')->name('akses-role-assign');
-        });
+        Route::controller(AksesController::class)->group(function () {
+            Route::get('akses', 'index')->name('akses');
+            Route::prefix('akses/role')->group(function () {
+                Route::get('/{id}', 'showRole')->name('akses-role-show');
+                Route::post('/{id}', 'assignRole')->name('akses-role-assign');
+            });
         });
 
         Route::controller(PermissionController::class)->group(function () {
@@ -85,9 +85,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::group(['middleware' => 'role:pajak'], function () {
-
-        Route::get('/versi', function(){
+    Route::group(['middleware' => 'role:pajak|personalia'], function () {
+        Route::get('/versi', function () {
             return phpinfo();
         });
 
@@ -97,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('pegawai/store', 'store')->name('pegawai/store');
 
             Route::post('pegawai/import', 'import')->name('pegawai/import');
+            Route::post('pegawai/import-baru', 'importBaru')->name('pegawai/import-baru');
 
             Route::get('pegawai/export', 'export')->name('pegawai/export');
 
@@ -140,8 +140,8 @@ Route::middleware(['auth'])->group(function () {
             \UniSharp\LaravelFilemanager\Lfm::routes();
         });
 
-        Route::group(['prefix' => 'pajak_file'], function(){
-            Route::controller(PajakController::class)->group(function(){
+        Route::group(['prefix' => 'pajak_file'], function () {
+            Route::controller(PajakController::class)->group(function () {
                 Route::get('/', 'index')->name('pajak-index');
                 Route::get('/target/{filename}', 'publish')->name('pajak-publish');
                 Route::post('/target', 'published')->name('pajak-published');
@@ -149,6 +149,10 @@ Route::middleware(['auth'])->group(function () {
             });
         });
 
+        
+    });
+
+    Route::group(['middleware' => 'role:personalia'], function () {
         Route::controller(KaryawanController::class)->group(function () {
             Route::get('karyawan', 'index')->name('karyawan');
             // Route::patch('pegawai', 'edit')->name('pegawai-edit');

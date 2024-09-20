@@ -60,6 +60,11 @@ class User extends Authenticatable
         self::created(function ($model) {
             $karyawan      = new Karyawan;
             $karyawan->npp = session()->pull('npp', null);
+            $karyawan->nik = session()->pull('nik', null);
+            $karyawan->npwp = session()->pull('npwp', null);
+            $karyawan->email = session()->pull('email', null);
+            $karyawan->no_tel = session()->pull('no_hp', null);
+            $karyawan->st_ptkp = session()->pull('status_ptkp', null);
             $model->karyawan()->save($karyawan);
             $model->syncRoles('employee');
         });

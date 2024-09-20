@@ -22,6 +22,7 @@ class Karyawan extends Model
         'st_ptkp',
         'npwp',
         'st_peg',
+        'epin',
         'user_edited'
     ];
 

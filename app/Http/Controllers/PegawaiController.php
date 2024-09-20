@@ -8,6 +8,7 @@ use App\Models\Pegawai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PegawaiBaruImport;
 
 class PegawaiController extends Controller
 {
@@ -40,6 +41,19 @@ class PegawaiController extends Controller
         ]);
         try {
             Excel::import(new PegawaiImport, $request->file('filePegawai'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('toast_error', 'upload file yang benar!');
+        }
+        return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
+    }
+
+    public function importBaru(Request $request)
+    {
+        $request->validate([
+            'filePegawai' => 'required'
+        ]);
+        try {
+            Excel::import(new PegawaiBaruImport, $request->file('filePegawai'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('toast_error', 'upload file yang benar!');
         }
