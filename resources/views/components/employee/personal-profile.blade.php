@@ -2,6 +2,8 @@
 'username_karyawan' => '',
 'npp_karyawan' => '',
 'nama_karyawan' => '',
+'nik_karyawan' => '',
+'epin_karyawan' => '',
 'npwp_karyawan' => '',
 'email_karyawan' => '',
 'notel_karyawan' => '',
@@ -52,6 +54,14 @@
                                     <hr class="mt-0 mb-3">
                                     <div class="row pt-1">
                                         <div class="col-12 mb-3 nama_lengkap">
+                                            <h6>NIK</h6>
+                                            <p class="text-muted">
+                                                {{$nik_karyawan}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-1">
+                                        <div class="col-12 mb-3 nama_lengkap">
                                             <h6>Nama Lengkap</h6>
                                             <p class="text-muted">
                                                 {{$nama_karyawan}}
@@ -84,6 +94,12 @@
                                         @endif
                                     </h6>
                                     <hr class="mt-0 mb-3">
+                                    <div class="row pt-1">
+                                        <div class="col-12 mb-3 karyawan_npp">
+                                            <h6>EPIN</h6>
+                                            <p class="text-muted">{{$epin_karyawan}}</p>
+                                        </div>
+                                    </div>
                                     <div class="row pt-1">
                                         <div class="col-12 mb-3 karyawan_npp">
                                             <h6>NPP</h6>

@@ -10,6 +10,8 @@
         npp_karyawan="{{Auth::user()->karyawan->npp ?? ''}}" 
         nama_karyawan="{{Auth::user()->karyawan->nama ?? ''}}" 
         npwp_karyawan="{{Auth::user()->karyawan->npwp ?? ''}}" 
+        nik_karyawan="{{Auth::user()->karyawan->nik ?? ''}}" 
+        epin_karyawan="{{Auth::user()->karyawan->epin ?? '-'}}" 
         email_karyawan="{{Auth::user()->karyawan->email ?? ''}}" 
         notel_karyawan="{{Auth::user()->karyawan->no_tel ?? ''}}" 
         st_ptkp_karyawan="{{Auth::user()->karyawan->st_ptkp ?? ''}}" 
