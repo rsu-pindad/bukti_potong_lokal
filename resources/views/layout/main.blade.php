@@ -114,7 +114,7 @@
                   </ul>
                 </li>
               @endhasexactroles
-              @hasanyrole('pajak')
+              @hasexactroles('pajak')
                 <li class="nav-item border-top border-dark mx-2">
                   <a class="nav-link"
                      href="/pajak_manager">
@@ -122,12 +122,18 @@
                   </a>
                 </li>
                 <li class="nav-item border-top border-dark mx-2">
-                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-file' ? 'active' : '' }}"
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-index' ? 'active' : '' }}"
                      href="{{ route('pajak-index') }}">
                     <i class="fa-solid fa-bullhorn"></i> Publish File
                   </a>
                 </li>
-              @endhasanyrole
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-published-index' ? 'active' : '' }}"
+                     href="{{ route('pajak-published-index') }}">
+                    <i class="fa-solid fa-bullhorn"></i> Published File
+                  </a>
+                </li>
+              @endhasexactroles
               @hasanyrole('personalia')
                 <li class="nav-item border-top border-dark mx-2">
                   <a class="nav-link {{ Route::currentRouteName() == 'karyawan' ? 'active' : '' }}"

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Pajak;
 
 use App\Http\Controllers\Controller;
+use App\Models\PublishFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
+use ZanySoft\Zip\Facades\Zip;
 use ZanySoft\Zip\ZipManager;
-use Zip;
 
 class PajakController extends Controller
 {
@@ -75,6 +78,15 @@ class PajakController extends Controller
             $manager->addZip(Zip::open($locationZip));
             $extrack = $manager->extract($getTargetExtrack, true);
             $manager->close();
+
+            $publishedFile = PublishFile::create([
+                'folder_uniq'    => Str::random(25),
+                'folder_path'    => $getTargetExtrack,
+                'folder_publish' => $validator->safe()->namaFile,
+                'folder_name'    => $validator->safe()->bulan . $validator->safe()->tahun,
+                'folder_status'  => false,
+            ]);
+
             flash()
                 ->success('file berhasil di publish')
                 ->flash();
@@ -97,10 +109,83 @@ class PajakController extends Controller
         try {
             Storage::disk('public')->deleteDirectory('files/shares/pajak/publish/' . $folder);
             Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/' . $published_file);
+            PublishFile::where('folder_name', $request->folder_target)->delete();
+            flash()
+                ->success('folder berhasil di unpublished')
+                ->flash();
 
-            return redirect()->back()->withToastSuccess('folder berhasil di unpublished');
+            return redirect()->route('pajak-index');
         } catch (\Throwable $th) {
-            return redirect()->back()->withToastError($th->getMessage());
+            flash()
+                ->error($th->getMessage())
+                ->flash();
+
+            return redirect()->back();
+        }
+    }
+
+    public function uploadBuktiPotong(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'buktiPotong' => 'required|max:120000|mimes:zip,x-zip-compressed'
+        ]);
+        if ($validator->fails()) {
+            flash()
+                ->error($validator->errors()->first())
+                ->flash();
+
+            return redirect()
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
+        }
+        $files = $request->file('buktiPotong');
+
+        try {
+            $request->buktiPotong->move(public_path('storage/files/shares/pajak/'), time() . '_' . $files->getClientOriginalName());
+            flash()
+                ->success('file berhasil di publish')
+                ->flash();
+
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            flash()
+                ->error($th->getMessage())
+                ->flash();
+
+            return redirect()->back();
+        }
+    }
+
+    public function removeBuktiPotong(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'filename' => 'required'
+        ]);
+        if ($validator->fails()) {
+            flash()
+                ->error('validasi error')
+                ->flash();
+
+            return redirect()
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
+        }
+        // dd($request->input('filename'));
+        try {
+            Storage::disk('public')->delete('files/shares/pajak/' . $request->input('filename'));
+            flash()
+                ->success('folder berhasil di unpublished')
+                ->flash();
+
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            flash()
+                ->error($th->getMessage())
+                ->flash();
+
+            return redirect()->back();
         }
     }
 }

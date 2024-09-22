@@ -11,6 +11,7 @@ use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\ParserController;
 use App\Http\Controllers\Pajak\KaryawanController;
 use App\Http\Controllers\Pajak\PajakController;
+use App\Http\Controllers\Pajak\PajakPublishedController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PPH21Controller;
@@ -146,10 +147,19 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/target/{filename}', 'publish')->name('pajak-publish');
                 Route::post('/target', 'published')->name('pajak-published');
                 Route::post('/unpublish', 'unPublish')->name('pajak-unpublish');
+                Route::post('/upload-bukti-potong', 'uploadBuktiPotong')->name('upload-bukti-potong');
+                Route::post('/remove-bukti-potong', 'removeBuktiPotong')->name('remove-bukti-potong');
             });
         });
 
-        
+        Route::group(['prefix' => 'pajak_publised_file'], function () {
+            Route::controller(PajakPublishedController::class)->group(function () {
+                Route::get('/', 'index')->name('pajak-published-index');
+                Route::post('/cari-data-pajak', 'cariDataPajak')->name('cari-data-pajak');
+                Route::get('/file-data-pajak/{file?}{cari?}', 'fileDataPajak')->name('published-file-data-pajak');
+                Route::get('/published-cari-file-pajak/{folder}/{filename}', 'publishedCariFilePajak')->name('published-cari-file-pajak');
+            });
+        });
     });
 
     Route::group(['middleware' => 'role:personalia'], function () {
