@@ -3,22 +3,16 @@
 namespace App\Http\Controllers\Daftar;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\Karyawan;
 
 class DaftarController extends Controller
 {
-    // protected $redirectRoute = '';
-
-    public function index(Request $request): View
+    public function index(): View
     {
-        // dd($request->old('npp'));
         return view('guest.daftar')->with([
             'route'    => 'daftar',
             'showSelf' => true,

@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -34,15 +33,12 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete personalia']);
         Permission::create(['name' => 'publish personalia']);
         Permission::create(['name' => 'upload personalia']);
-        // Permission::create(['name' => 'pdf payroll_kehadiran']);
 
         User::flushEventListeners();
-        // create roles and assign created permissions
-        // $pass = config('app.seeder_default');
-        $pass = 12345;
+        $pass = config('app.seeder_default');
 
         $role1 = Role::create(['name' => 'pajak']);
-        $role1->givePermissionTo(['view bukti_potong', 'edit bukti_potong', 'create bukti_potong', 'delete bukti_potong', 'publish bukti_potong']);
+        $role1->givePermissionTo(['view personalia', 'view bukti_potong', 'edit bukti_potong', 'create bukti_potong', 'delete bukti_potong', 'publish bukti_potong']);
 
         $role2 = Role::create(['name' => 'personalia']);
         $role2->givePermissionTo(['view personalia', 'edit personalia', 'create personalia', 'delete personalia', 'publish personalia', 'upload personalia']);
@@ -53,20 +49,20 @@ class PermissionsSeeder extends Seeder
 
         $role4->givePermissionTo(Permission::all());
         $user4 = User::create([
-            'username'       => 'it',
-            'password'       => Hash::make($pass),
+            'username' => 'it',
+            'password' => Hash::make($pass),
         ]);
         $user4->assignRole($role4);
 
         $user1 = User::create([
-            'username'       => 'pajak',
-            'password'       => Hash::make($pass), 
+            'username' => 'pajak',
+            'password' => Hash::make($pass),
         ]);
         $user1->assignRole($role1);
 
         $user2 = User::create([
-            'username'       => 'personalia',
-            'password'       => Hash::make($pass),
+            'username' => 'personalia',
+            'password' => Hash::make($pass),
         ]);
         $user2->assignRole($role2);
 

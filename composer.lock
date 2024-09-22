@@ -4,82 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9c02032ca801f4ea1e903505073df9a",
+    "content-hash": "b98cee278ab1aa4afc7f2e758e8bfcbd",
     "packages": [
-        {
-            "name": "backpack/basset",
-            "version": "1.3.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/basset.git",
-                "reference": "2c20d233d58c42b8c826688e9c613cab82bf62e1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/basset/zipball/2c20d233d58c42b8c826688e9c613cab82bf62e1",
-                "reference": "2c20d233d58c42b8c826688e9c613cab82bf62e1",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.5",
-                "laravel/framework": "^10.15|^11"
-            },
-            "require-dev": {
-                "nunomaduro/collision": "^6.0|^7.2",
-                "orchestra/testbench": "^7.22|^8.5",
-                "pestphp/pest": "^1.22|^2.5",
-                "pestphp/pest-plugin-laravel": "^1.4|^2.0",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "~9.0|~10.0"
-            },
-            "suggest": {
-                "ext-zip": "Required to use @bassetArchive with .zip archives."
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Backpack\\Basset\\BassetServiceProvider"
-                    ],
-                    "aliases": {
-                        "Basset": "Backpack\\Basset\\Facades\\Basset"
-                    }
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Helpers/functions.php"
-                ],
-                "psr-4": {
-                    "Backpack\\Basset\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "hello@tabacitu.ro",
-                    "homepage": "https://tabacitu.ro"
-                }
-            ],
-            "description": "Dead-simple way to load CSS or JS assets only once per page, when using Laravel 10+.",
-            "homepage": "https://github.com/laravel-backpack/basset",
-            "keywords": [
-                "Load CSS once",
-                "Load JS once",
-                "assets",
-                "basset",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/basset/issues",
-                "source": "https://github.com/Laravel-Backpack/basset/tree/1.3.6"
-            },
-            "time": "2024-08-28T10:12:55+00:00"
-        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v2.2.0",
@@ -287,55 +213,6 @@
             "time": "2023-12-11T17:09:12+00:00"
         },
         {
-            "name": "components/jquery",
-            "version": "v3.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/components/jquery.git",
-                "reference": "8edc7785239bb8c2ad2b83302b856a1d61de60e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/8edc7785239bb8c2ad2b83302b856a1d61de60e7",
-                "reference": "8edc7785239bb8c2ad2b83302b856a1d61de60e7",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "jquery.js"
-                    ],
-                    "files": [
-                        "jquery.min.js",
-                        "jquery.min.map",
-                        "jquery.slim.js",
-                        "jquery.slim.min.js",
-                        "jquery.slim.min.map"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "JS Foundation and other contributors"
-                }
-            ],
-            "description": "jQuery JavaScript Library",
-            "homepage": "http://jquery.com",
-            "support": {
-                "forum": "http://forum.jquery.com",
-                "irc": "irc://irc.freenode.org/jquery",
-                "issues": "https://github.com/jquery/jquery/issues",
-                "source": "https://github.com/jquery/jquery",
-                "wiki": "http://docs.jquery.com/"
-            },
-            "time": "2023-09-22T01:43:46+00:00"
-        },
-        {
             "name": "composer/semver",
             "version": "3.4.3",
             "source": {
@@ -415,915 +292,6 @@
                 }
             ],
             "time": "2024-09-19T14:15:21+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net",
-            "version": "2.1.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables.git",
-                "reference": "24e77e70770c02042010f4f35aad7e68f046c169"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/24e77e70770c02042010f4f35aad7e68f046c169",
-                "reference": "24e77e70770c02042010f4f35aad7e68f046c169",
-                "shasum": ""
-            },
-            "require": {
-                "components/jquery": ">=1.7"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table. This is jQuery DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "datatables",
-                "jquery",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables"
-            },
-            "time": "2024-09-06T14:35:23+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-bs5",
-            "version": "2.1.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Bootstrap5.git",
-                "reference": "1bf2e518974b9d8774ff0e761895f10c4183728c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Bootstrap5/zipball/1bf2e518974b9d8774ff0e761895f10c4183728c",
-                "reference": "1bf2e518974b9d8774ff0e761895f10c4183728c",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1",
-                "twbs/bootstrap": "5.*"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table. This is DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "jquery",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-Bootstrap5"
-            },
-            "time": "2024-09-06T14:36:44+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-buttons",
-            "version": "3.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Buttons.git",
-                "reference": "c92939fe0b630dd0177294c470688bc6854631d7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Buttons/zipball/c92939fe0b630dd0177294c470688bc6854631d7",
-                "reference": "c92939fe0b630dd0177294c470688bc6854631d7",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. It also provides plug-ins for file export (HTML5 and Flash), print view and column visibility. Other libraries, such as Editor and Select also provide buttons specific to their use cases. This is Buttons for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Column Visibility",
-                "buttons",
-                "csv",
-                "datatables",
-                "excel",
-                "jquery",
-                "pdf",
-                "print",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-Buttons"
-            },
-            "time": "2024-08-30T13:15:18+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-buttons-bs5",
-            "version": "3.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Buttons-Bootstrap5.git",
-                "reference": "588d9808d92b5b50ee00cd4f3504964d1c67f5db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Buttons-Bootstrap5/zipball/588d9808d92b5b50ee00cd4f3504964d1c67f5db",
-                "reference": "588d9808d92b5b50ee00cd4f3504964d1c67f5db",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-buttons": ">=2.2.3"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. It also provides plug-ins for file export (HTML5 and Flash), print view and column visibility. Other libraries, such as Editor and Select also provide buttons specific to their use cases. This is Buttons for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Column Visibility",
-                "bootstrap",
-                "bootstrap5",
-                "buttons",
-                "csv",
-                "datatables",
-                "excel",
-                "jquery",
-                "pdf",
-                "print",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-Buttons-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-Buttons-Bootstrap5"
-            },
-            "time": "2024-08-30T13:16:00+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-fixedcolumns",
-            "version": "5.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-FixedColumns.git",
-                "reference": "f08c182378061c9f3c2ced684eafc261bbe60747"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-FixedColumns/zipball/f08c182378061c9f3c2ced684eafc261bbe60747",
-                "reference": "f08c182378061c9f3c2ced684eafc261bbe60747",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "FixedColumns provides the ability to fix one or more columns to the left and / or right hand side of a DataTable that scrolls along the x-axis. This can be used if the columns show grouping, index or similar information. This is FixedColumns for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "datatables",
-                "fixedcolumns",
-                "jquery",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-FixedColumns"
-            },
-            "time": "2024-05-28T15:20:15+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-fixedcolumns-bs5",
-            "version": "5.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-FixedColumns-Bootstrap5.git",
-                "reference": "00981fa0e83cf1450b581e499a32e55224b0ad99"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-FixedColumns-Bootstrap5/zipball/00981fa0e83cf1450b581e499a32e55224b0ad99",
-                "reference": "00981fa0e83cf1450b581e499a32e55224b0ad99",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-fixedcolumns": ">=4.1.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "FixedColumns provides the ability to fix one or more columns to the left and / or right hand side of a DataTable that scrolls along the x-axis. This can be used if the columns show grouping, index or similar information. This is FixedColumns for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "fixedcolumns",
-                "jquery",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-FixedColumns-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-FixedColumns-Bootstrap5"
-            },
-            "time": "2024-05-28T15:20:55+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-fixedheader",
-            "version": "4.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-FixedHeader.git",
-                "reference": "cd5de8d584e38c35fff8e87704d30725ba2a36da"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-FixedHeader/zipball/cd5de8d584e38c35fff8e87704d30725ba2a36da",
-                "reference": "cd5de8d584e38c35fff8e87704d30725ba2a36da",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "When displaying large amounts of data in a table, it can often be useful for the end user to have the column titles always visible. This is particularly true if using DataTables with pagination disabled, or the display length is set to a high value. The FixedHeader extension provides this ability. This is FixedHeader for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Fixed Headers",
-                "datatables",
-                "fixedHeader",
-                "jquery",
-                "sticky",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-FixedHeader"
-            },
-            "time": "2024-03-07T10:10:14+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-fixedheader-bs5",
-            "version": "4.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-FixedHeader-Bootstrap5.git",
-                "reference": "896b5e8d1f677f2c1b57dfbcd517b2cc21bac634"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-FixedHeader-Bootstrap5/zipball/896b5e8d1f677f2c1b57dfbcd517b2cc21bac634",
-                "reference": "896b5e8d1f677f2c1b57dfbcd517b2cc21bac634",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-fixedheader": ">=3.2.4"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "When displaying large amounts of data in a table, it can often be useful for the end user to have the column titles always visible. This is particularly true if using DataTables with pagination disabled, or the display length is set to a high value. The FixedHeader extension provides this ability. This is FixedHeader for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Fixed Headers",
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "fixedHeader",
-                "jquery",
-                "sticky",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-FixedHeader-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-FixedHeader-Bootstrap5"
-            },
-            "time": "2024-03-07T10:10:50+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-responsive",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Responsive.git",
-                "reference": "c4b82ed4b42696dd0b0f0f0f778dc4d49fcfb717"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Responsive/zipball/c4b82ed4b42696dd0b0f0f0f778dc4d49fcfb717",
-                "reference": "c4b82ed4b42696dd0b0f0f0f778dc4d49fcfb717",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "In the modern world of responsive web design tables can often cause a particular problem for designers due to their row based layout. Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table. This is Responsive for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "datatables",
-                "jquery",
-                "responsive",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-Responsive"
-            },
-            "time": "2024-08-27T11:55:14+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-responsive-bs5",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap5.git",
-                "reference": "7ca4bcdbdcf24e0faf70551072a9b9504322c04c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Responsive-Bootstrap5/zipball/7ca4bcdbdcf24e0faf70551072a9b9504322c04c",
-                "reference": "7ca4bcdbdcf24e0faf70551072a9b9504322c04c",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-responsive": ">=2.3.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "In the modern world of responsive web design tables can often cause a particular problem for designers due to their row based layout. Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table. This is Responsive for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "jquery",
-                "responsive",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap5"
-            },
-            "time": "2024-08-27T11:55:54+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-rowgroup",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-RowGroup.git",
-                "reference": "76fb2b5ab4ed3228e01fdff7c9eeba8269be157b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-RowGroup/zipball/76fb2b5ab4ed3228e01fdff7c9eeba8269be157b",
-                "reference": "76fb2b5ab4ed3228e01fdff7c9eeba8269be157b",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "RowGroup adds the ability to easily group rows in a DataTable by a given data point. The grouping is shown as an inserted row either before or after the group. This is RowGroup for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Row Grouping",
-                "datatables",
-                "jquery",
-                "rowgroup",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-RowGroup"
-            },
-            "time": "2024-02-14T12:03:11+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-rowgroup-bs5",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-RowGroup-Bootstrap5.git",
-                "reference": "79b169fcc5a3e7a00d3a939ff04fd60aaa8bf787"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-RowGroup-Bootstrap5/zipball/79b169fcc5a3e7a00d3a939ff04fd60aaa8bf787",
-                "reference": "79b169fcc5a3e7a00d3a939ff04fd60aaa8bf787",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-rowgroup": ">=1.2.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "RowGroup adds the ability to easily group rows in a DataTable by a given data point. The grouping is shown as an inserted row either before or after the group. This is RowGroup for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Row Grouping",
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "jquery",
-                "rowgroup",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-RowGroup-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-RowGroup-Bootstrap5"
-            },
-            "time": "2024-02-14T12:03:48+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-scroller",
-            "version": "2.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Scroller.git",
-                "reference": "994dbdb9bbc7823e469c60bf05dbeefd2f3df8a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Scroller/zipball/994dbdb9bbc7823e469c60bf05dbeefd2f3df8a5",
-                "reference": "994dbdb9bbc7823e469c60bf05dbeefd2f3df8a5",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very quickly. Virtual rendering means is that only the visible portion of the table is drawn, while the scrolling container gives the visual impression that the whole table is visible, allowing excellent browser performance. This is Scroller for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Virtual Scrolling",
-                "datatables",
-                "jquery",
-                "scroller",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-Scroller"
-            },
-            "time": "2024-05-17T10:40:13+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-scroller-bs5",
-            "version": "2.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Scroller-Bootstrap5.git",
-                "reference": "e4870d0069cfee5df1d3dd09eb34d65bebe91a41"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Scroller-Bootstrap5/zipball/e4870d0069cfee5df1d3dd09eb34d65bebe91a41",
-                "reference": "e4870d0069cfee5df1d3dd09eb34d65bebe91a41",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-scroller": ">=2.0.7"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very quickly. Virtual rendering means is that only the visible portion of the table is drawn, while the scrolling container gives the visual impression that the whole table is visible, allowing excellent browser performance. This is Scroller for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "Virtual Scrolling",
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "jquery",
-                "scroller",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-Scroller-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-Scroller-Bootstrap5"
-            },
-            "time": "2024-05-17T10:40:52+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-searchpanes",
-            "version": "2.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-SearchPanes.git",
-                "reference": "daa8d22fe051b0d260032294bc05ff113647c1cf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-SearchPanes/zipball/daa8d22fe051b0d260032294bc05ff113647c1cf",
-                "reference": "daa8d22fe051b0d260032294bc05ff113647c1cf",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "The SearchPanes extension for DataTables provides improved Searching functionality allowing users to select options from a Pane which will then in turn search the DataTable and return the relevant results. There are multiple configuration options available to enhance SearchPanes. This is SearchPanes for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "datatables",
-                "filtering",
-                "jquery",
-                "search",
-                "searchpanes",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-SearchPanes"
-            },
-            "time": "2024-07-16T08:31:16+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-searchpanes-bs5",
-            "version": "2.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-SearchPanes-Bootstrap5.git",
-                "reference": "5c6b445d0be877dc89bccd702b514c4f4592deb8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-SearchPanes-Bootstrap5/zipball/5c6b445d0be877dc89bccd702b514c4f4592deb8",
-                "reference": "5c6b445d0be877dc89bccd702b514c4f4592deb8",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-searchpanes": ">=2.0.2"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "The SearchPanes extension for DataTables provides improved Searching functionality allowing users to select options from a Pane which will then in turn search the DataTable and return the relevant results. There are multiple configuration options available to enhance SearchPanes. This is SearchPanes for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "filtering",
-                "jquery",
-                "search",
-                "searchpanes",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-SearchPanes-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-SearchPanes-Bootstrap5"
-            },
-            "time": "2024-07-16T08:31:53+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-select",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Select.git",
-                "reference": "764857bfa52250bb0d297e4ce7d21b4b402b7ad7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Select/zipball/764857bfa52250bb0d297e4ce7d21b4b402b7ad7",
-                "reference": "764857bfa52250bb0d297e4ce7d21b4b402b7ad7",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "Select provides table item selection capabilities - rows, columns and cells can be selected individually or collectively. Complex selection operations such as operating system style selection (ctrl/cmd and shift click) for multiple rows can be enabled with a single option for a DataTable. This is Select for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "datatables",
-                "jquery",
-                "select",
-                "selection",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/Dist-DataTables-Select"
-            },
-            "time": "2024-09-12T13:00:14+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-select-bs5",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-Select-Bootstrap5.git",
-                "reference": "903779d20ad8ca363da42c732c3c452885b83626"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Select-Bootstrap5/zipball/903779d20ad8ca363da42c732c3c452885b83626",
-                "reference": "903779d20ad8ca363da42c732c3c452885b83626",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-select": ">=1.4.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "Select provides table item selection capabilities - rows, columns and cells can be selected individually or collectively. Complex selection operations such as operating system style selection (ctrl/cmd and shift click) for multiple rows can be enabled with a single option for a DataTable. This is Select for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "jquery",
-                "select",
-                "selection",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-Select-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-Select-Bootstrap5"
-            },
-            "time": "2024-09-12T13:00:52+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-staterestore",
-            "version": "1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-StateRestore.git",
-                "reference": "4e174ae3bcd2a9bc75a62df0f1b6973ee0dc521d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-StateRestore/zipball/4e174ae3bcd2a9bc75a62df0f1b6973ee0dc521d",
-                "reference": "4e174ae3bcd2a9bc75a62df0f1b6973ee0dc521d",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net": ">=1.12.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "The StateRestore extension for DataTables builds on the `stateSave` option within DataTable's core. This allows users to save multiple different states and reload them at any time, not just at initialisation. This is StateRestore for DataTables",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "StateRestore",
-                "datatables",
-                "jquery",
-                "reload",
-                "state",
-                "stateSave",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-StateRestore/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-StateRestore"
-            },
-            "time": "2024-04-10T15:50:16+00:00"
-        },
-        {
-            "name": "datatables.net/datatables.net-staterestore-bs5",
-            "version": "1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/Dist-DataTables-StateRestore-Bootstrap5.git",
-                "reference": "d8f7b64abf6bd6621d04618532f09ec2de5d3ca2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-StateRestore-Bootstrap5/zipball/d8f7b64abf6bd6621d04618532f09ec2de5d3ca2",
-                "reference": "d8f7b64abf6bd6621d04618532f09ec2de5d3ca2",
-                "shasum": ""
-            },
-            "require": {
-                "datatables.net/datatables.net-bs5": ">=1.12.1",
-                "datatables.net/datatables.net-staterestore": ">=1.1.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "SpryMedia",
-                    "homepage": "https://datatables.net"
-                }
-            ],
-            "description": "The StateRestore extension for DataTables builds on the `stateSave` option within DataTable's core. This allows users to save multiple different states and reload them at any time, not just at initialisation. This is StateRestore for DataTables with styling for [Bootstrap5](https://getbootstrap.com/)",
-            "homepage": "http://www.datatables.net/",
-            "keywords": [
-                "StateRestore",
-                "bootstrap",
-                "bootstrap5",
-                "datatables",
-                "jquery",
-                "reload",
-                "state",
-                "stateSave",
-                "table"
-            ],
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "issues": "https://github.com/DataTables/Dist-DataTables-StateRestore-Bootstrap5/issues",
-                "source": "https://github.com/DataTables/Dist-DataTables-StateRestore-Bootstrap5"
-            },
-            "time": "2024-04-10T15:50:56+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1818,51 +786,6 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.17.0"
             },
             "time": "2023-11-17T15:01:25+00:00"
-        },
-        {
-            "name": "fortawesome/font-awesome",
-            "version": "6.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "37eff7fa00de26db41183a3ad8ed0e9119fbc44b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/37eff7fa00de26db41183a3ad8ed0e9119fbc44b",
-                "reference": "37eff7fa00de26db41183a3ad8ed0e9119fbc44b",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "CC-BY-4.0",
-                "OFL-1.1",
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "The Font Awesome Team",
-                    "homepage": "https://github.com/orgs/FortAwesome/people"
-                }
-            ],
-            "description": "The iconic font, CSS, and SVG framework",
-            "homepage": "https://fontawesome.com",
-            "keywords": [
-                "FontAwesome",
-                "awesome",
-                "bootstrap",
-                "font",
-                "icon",
-                "svg"
-            ],
-            "support": {
-                "docs": "http://fontawesome.com/docs",
-                "email": "hello@fontawesome.com",
-                "issues": "https://github.com/FortAwesome/Font-Awesome/issues",
-                "source": "https://github.com/FortAwesome/Font-Awesome"
-            },
-            "time": "2024-07-16T17:13:31+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3357,16 +2280,16 @@
         },
         {
             "name": "league/mime-type-detection",
-            "version": "1.15.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/mime-type-detection.git",
-                "reference": "ce0f4d1e8a6f4eb0ddff33f57c69c50fd09f4301"
+                "reference": "2d6702ff215bf922936ccc1ad31007edc76451b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/ce0f4d1e8a6f4eb0ddff33f57c69c50fd09f4301",
-                "reference": "ce0f4d1e8a6f4eb0ddff33f57c69c50fd09f4301",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/2d6702ff215bf922936ccc1ad31007edc76451b9",
+                "reference": "2d6702ff215bf922936ccc1ad31007edc76451b9",
                 "shasum": ""
             },
             "require": {
@@ -3397,7 +2320,7 @@
             "description": "Mime-type detection for Flysystem",
             "support": {
                 "issues": "https://github.com/thephpleague/mime-type-detection/issues",
-                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.15.0"
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.16.0"
             },
             "funding": [
                 {
@@ -3409,7 +2332,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-28T23:22:08+00:00"
+            "time": "2024-09-21T08:32:55+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -5613,142 +4536,6 @@
             "time": "2024-04-27T21:32:50+00:00"
         },
         {
-            "name": "realrashid/sweet-alert",
-            "version": "v7.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "7890f3d3a0f45ea65b90300a823681a99a1d2dd6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/7890f3d3a0f45ea65b90300a823681a99a1d2dd6",
-                "reference": "7890f3d3a0f45ea65b90300a823681a99a1d2dd6",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*|^10.0|^11.0",
-                "php": "^7.2|^8.0|^8.1|^8.2|^8.3"
-            },
-            "require-dev": {
-                "symfony/thanks": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
-                    ],
-                    "aliases": {
-                        "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
-                    }
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/functions.php"
-                ],
-                "psr-4": {
-                    "RealRashid\\SweetAlert\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rashid Ali",
-                    "email": "realrashid05@gmail.com",
-                    "homepage": "https://realrashid.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel Sweet Alert Is A Package For Laravel Provides An Easy Way To Display Alert Messages Using The SweetAlert2 Library.",
-            "homepage": "https://github.com/realrashid/sweet-alert",
-            "keywords": [
-                "alert",
-                "laravel",
-                "laravel-package",
-                "notifier",
-                "noty",
-                "sweet-alert",
-                "sweet-alert2",
-                "toast"
-            ],
-            "support": {
-                "docs": "https://realrashid.github.io/sweet-alert/",
-                "email": "realrashid05@gmail.com",
-                "issues": "https://github.com/realrashid/sweet-alert/issues",
-                "source": "https://github.com/realrashid/sweet-alert"
-            },
-            "funding": [
-                {
-                    "url": "https://ko-fi.com/realrashid",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.buymeacoffee.com/realrashid",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://issuehunt.io/r/realrashid",
-                    "type": "issuehunt"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/realrashid/sweet-alert",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-06-15T16:17:23+00:00"
-        },
-        {
-            "name": "robinherbots/jquery.inputmask",
-            "version": "5.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
-                "reference": "310a33557e2944daf86d5946a5e8c82b9118f8f7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/310a33557e2944daf86d5946a5e8c82b9118f8f7",
-                "reference": "310a33557e2944daf86d5946a5e8c82b9118f8f7",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Robin Herbots"
-                }
-            ],
-            "description": "Inputmask is a javascript library which creates an input mask.  Inputmask can run against vanilla javascript, jQuery and jqlite.",
-            "homepage": "http://robinherbots.github.io/Inputmask",
-            "keywords": [
-                "form",
-                "input",
-                "inputmask",
-                "jquery",
-                "mask",
-                "plugins"
-            ],
-            "support": {
-                "issues": "https://github.com/RobinHerbots/Inputmask/issues",
-                "source": "https://github.com/RobinHerbots/Inputmask/tree/5.0.9"
-            },
-            "funding": [
-                {
-                    "url": "https://PayPal.Me/robinherbots",
-                    "type": "custom"
-                }
-            ],
-            "time": "2024-05-31T09:17:28+00:00"
-        },
-        {
             "name": "sabberworm/php-css-parser",
             "version": "v8.6.0",
             "source": {
@@ -5948,16 +4735,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.11",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "42686880adaacdad1835ee8fc2a9ec5b7bd63998"
+                "reference": "72d080eb9edf80e36c19be61f72c98ed8273b765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/42686880adaacdad1835ee8fc2a9ec5b7bd63998",
-                "reference": "42686880adaacdad1835ee8fc2a9ec5b7bd63998",
+                "url": "https://api.github.com/repos/symfony/console/zipball/72d080eb9edf80e36c19be61f72c98ed8273b765",
+                "reference": "72d080eb9edf80e36c19be61f72c98ed8273b765",
                 "shasum": ""
             },
             "require": {
@@ -6022,7 +4809,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.11"
+                "source": "https://github.com/symfony/console/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -6038,7 +4825,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-15T22:48:29+00:00"
+            "time": "2024-09-20T08:15:52+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -6469,16 +5256,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v6.4.10",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "117f1f20a7ade7bcea28b861fb79160a21a1e37b"
+                "reference": "133ac043875f59c26c55e79cf074562127cce4d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/117f1f20a7ade7bcea28b861fb79160a21a1e37b",
-                "reference": "117f1f20a7ade7bcea28b861fb79160a21a1e37b",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/133ac043875f59c26c55e79cf074562127cce4d2",
+                "reference": "133ac043875f59c26c55e79cf074562127cce4d2",
                 "shasum": ""
             },
             "require": {
@@ -6526,7 +5313,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v6.4.10"
+                "source": "https://github.com/symfony/http-foundation/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -6542,20 +5329,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-26T12:36:27+00:00"
+            "time": "2024-09-20T08:18:25+00:00"
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v6.4.11",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "1ba6b89d781cb47448155cc70dd2e0f1b0584c79"
+                "reference": "96df83d51b5f78804f70c093b97310794fd6257b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/1ba6b89d781cb47448155cc70dd2e0f1b0584c79",
-                "reference": "1ba6b89d781cb47448155cc70dd2e0f1b0584c79",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/96df83d51b5f78804f70c093b97310794fd6257b",
+                "reference": "96df83d51b5f78804f70c093b97310794fd6257b",
                 "shasum": ""
             },
             "require": {
@@ -6640,7 +5427,7 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-kernel/tree/v6.4.11"
+                "source": "https://github.com/symfony/http-kernel/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -6656,20 +5443,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-30T16:57:20+00:00"
+            "time": "2024-09-21T06:02:57+00:00"
         },
         {
             "name": "symfony/mailer",
-            "version": "v6.4.9",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "e2d56f180f5b8c5e7c0fbea872bb1f529b6d6d45"
+                "reference": "b6a25408c569ae2366b3f663a4edad19420a9c26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/e2d56f180f5b8c5e7c0fbea872bb1f529b6d6d45",
-                "reference": "e2d56f180f5b8c5e7c0fbea872bb1f529b6d6d45",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/b6a25408c569ae2366b3f663a4edad19420a9c26",
+                "reference": "b6a25408c569ae2366b3f663a4edad19420a9c26",
                 "shasum": ""
             },
             "require": {
@@ -6720,7 +5507,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v6.4.9"
+                "source": "https://github.com/symfony/mailer/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -6736,20 +5523,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-28T07:59:05+00:00"
+            "time": "2024-09-08T12:30:05+00:00"
         },
         {
             "name": "symfony/mime",
-            "version": "v6.4.11",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "dba5d5f6073baf7a3576b580cc4a208b4ca00553"
+                "reference": "abe16ee7790b16aa525877419deb0f113953f0e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/dba5d5f6073baf7a3576b580cc4a208b4ca00553",
-                "reference": "dba5d5f6073baf7a3576b580cc4a208b4ca00553",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/abe16ee7790b16aa525877419deb0f113953f0e1",
+                "reference": "abe16ee7790b16aa525877419deb0f113953f0e1",
                 "shasum": ""
             },
             "require": {
@@ -6805,7 +5592,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v6.4.11"
+                "source": "https://github.com/symfony/mime/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -6821,7 +5608,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-13T12:15:02+00:00"
+            "time": "2024-09-20T08:18:25+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -7461,16 +6248,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v6.4.8",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "8d92dd79149f29e89ee0f480254db595f6a6a2c5"
+                "reference": "3f94e5f13ff58df371a7ead461b6e8068900fbb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/8d92dd79149f29e89ee0f480254db595f6a6a2c5",
-                "reference": "8d92dd79149f29e89ee0f480254db595f6a6a2c5",
+                "url": "https://api.github.com/repos/symfony/process/zipball/3f94e5f13ff58df371a7ead461b6e8068900fbb3",
+                "reference": "3f94e5f13ff58df371a7ead461b6e8068900fbb3",
                 "shasum": ""
             },
             "require": {
@@ -7502,7 +6289,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v6.4.8"
+                "source": "https://github.com/symfony/process/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -7518,20 +6305,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-31T14:49:08+00:00"
+            "time": "2024-09-17T12:47:12+00:00"
         },
         {
             "name": "symfony/routing",
-            "version": "v6.4.11",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "8ee0c24c1bf61c263a26f1b9b6d19e83b1121f2a"
+                "reference": "a7c8036bd159486228dc9be3e846a00a0dda9f9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/8ee0c24c1bf61c263a26f1b9b6d19e83b1121f2a",
-                "reference": "8ee0c24c1bf61c263a26f1b9b6d19e83b1121f2a",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/a7c8036bd159486228dc9be3e846a00a0dda9f9f",
+                "reference": "a7c8036bd159486228dc9be3e846a00a0dda9f9f",
                 "shasum": ""
             },
             "require": {
@@ -7585,7 +6372,7 @@
                 "url"
             ],
             "support": {
-                "source": "https://github.com/symfony/routing/tree/v6.4.11"
+                "source": "https://github.com/symfony/routing/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -7601,7 +6388,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-29T08:15:38+00:00"
+            "time": "2024-09-20T08:32:26+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -7688,16 +6475,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.1.4",
+            "version": "v7.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "6cd670a6d968eaeb1c77c2e76091c45c56bc367b"
+                "reference": "d66f9c343fa894ec2037cc928381df90a7ad4306"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/6cd670a6d968eaeb1c77c2e76091c45c56bc367b",
-                "reference": "6cd670a6d968eaeb1c77c2e76091c45c56bc367b",
+                "url": "https://api.github.com/repos/symfony/string/zipball/d66f9c343fa894ec2037cc928381df90a7ad4306",
+                "reference": "d66f9c343fa894ec2037cc928381df90a7ad4306",
                 "shasum": ""
             },
             "require": {
@@ -7755,7 +6542,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.1.4"
+                "source": "https://github.com/symfony/string/tree/v7.1.5"
             },
             "funding": [
                 {
@@ -7771,20 +6558,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-12T09:59:40+00:00"
+            "time": "2024-09-20T08:28:38+00:00"
         },
         {
             "name": "symfony/translation",
-            "version": "v6.4.10",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "94041203f8ac200ae9e7c6a18fa6137814ccecc9"
+                "reference": "cf8360b8352b086be620fae8342c4d96e391a489"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/94041203f8ac200ae9e7c6a18fa6137814ccecc9",
-                "reference": "94041203f8ac200ae9e7c6a18fa6137814ccecc9",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/cf8360b8352b086be620fae8342c4d96e391a489",
+                "reference": "cf8360b8352b086be620fae8342c4d96e391a489",
                 "shasum": ""
             },
             "require": {
@@ -7850,7 +6637,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v6.4.10"
+                "source": "https://github.com/symfony/translation/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -7866,7 +6653,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-26T12:30:32+00:00"
+            "time": "2024-09-16T06:02:54+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -7948,16 +6735,16 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v6.4.11",
+            "version": "v6.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
-                "reference": "6a0394ad707de386547223948fac1e0f2805bc0b"
+                "reference": "2f16054e0a9b194b8ca581d4a64eee3f7d4a9d4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/6a0394ad707de386547223948fac1e0f2805bc0b",
-                "reference": "6a0394ad707de386547223948fac1e0f2805bc0b",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/2f16054e0a9b194b8ca581d4a64eee3f7d4a9d4d",
+                "reference": "2f16054e0a9b194b8ca581d4a64eee3f7d4a9d4d",
                 "shasum": ""
             },
             "require": {
@@ -8002,7 +6789,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v6.4.11"
+                "source": "https://github.com/symfony/uid/tree/v6.4.12"
             },
             "funding": [
                 {
@@ -8018,7 +6805,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-12T09:55:28+00:00"
+            "time": "2024-09-20T08:32:26+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -8157,56 +6944,6 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.2.7"
             },
             "time": "2023-12-08T13:03:43+00:00"
-        },
-        {
-            "name": "twbs/bootstrap",
-            "version": "v5.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "6e1f75f420f68e1d52733b8e407fc7c3766c9dba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6e1f75f420f68e1d52733b8e407fc7c3766c9dba",
-                "reference": "6e1f75f420f68e1d52733b8e407fc7c3766c9dba",
-                "shasum": ""
-            },
-            "replace": {
-                "twitter/bootstrap": "self.version"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                },
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                }
-            ],
-            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "https://getbootstrap.com/",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "mobile-first",
-                "responsive",
-                "sass",
-                "web"
-            ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v5.3.3"
-            },
-            "time": "2024-02-20T15:14:29+00:00"
         },
         {
             "name": "unisharp/laravel-filemanager",
@@ -8580,23 +7317,23 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.13.5",
+            "version": "v3.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "92d86be45ee54edff735e46856f64f14b6a8bb07"
+                "reference": "16a13cc5221aee90ae20aa59083ced2211e714eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/92d86be45ee54edff735e46856f64f14b6a8bb07",
-                "reference": "92d86be45ee54edff735e46856f64f14b6a8bb07",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/16a13cc5221aee90ae20aa59083ced2211e714eb",
+                "reference": "16a13cc5221aee90ae20aa59083ced2211e714eb",
                 "shasum": ""
             },
             "require": {
                 "illuminate/routing": "^9|^10|^11",
                 "illuminate/session": "^9|^10|^11",
                 "illuminate/support": "^9|^10|^11",
-                "maximebf/debugbar": "~1.22.0",
+                "maximebf/debugbar": "~1.23.0",
                 "php": "^8.0",
                 "symfony/finder": "^6|^7"
             },
@@ -8609,7 +7346,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.13-dev"
+                    "dev-master": "3.14-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -8648,7 +7385,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.13.5"
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.14.0"
             },
             "funding": [
                 {
@@ -8660,7 +7397,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-12T11:20:37+00:00"
+            "time": "2024-09-20T12:16:37+00:00"
         },
         {
             "name": "fakerphp/faker",
@@ -8978,16 +7715,16 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.22.6",
+            "version": "v1.23.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "d7881b498f9e649610bf6ae91cdd6353859f75d2"
+                "reference": "689720d724c771ac4add859056744b7b3f2406da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/d7881b498f9e649610bf6ae91cdd6353859f75d2",
-                "reference": "d7881b498f9e649610bf6ae91cdd6353859f75d2",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/689720d724c771ac4add859056744b7b3f2406da",
+                "reference": "689720d724c771ac4add859056744b7b3f2406da",
                 "shasum": ""
             },
             "require": {
@@ -9009,7 +7746,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.22-dev"
+                    "dev-master": "1.23-dev"
                 }
             },
             "autoload": {
@@ -9040,9 +7777,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maximebf/php-debugbar/issues",
-                "source": "https://github.com/maximebf/php-debugbar/tree/v1.22.6"
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.23.2"
             },
-            "time": "2024-09-16T11:47:59+00:00"
+            "time": "2024-09-16T11:23:09+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -11121,16 +9858,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v7.1.4",
+            "version": "v7.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "92e080b851c1c655c786a2da77f188f2dccd0f4b"
+                "reference": "4e561c316e135e053bd758bf3b3eb291d9919de4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/92e080b851c1c655c786a2da77f188f2dccd0f4b",
-                "reference": "92e080b851c1c655c786a2da77f188f2dccd0f4b",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/4e561c316e135e053bd758bf3b3eb291d9919de4",
+                "reference": "4e561c316e135e053bd758bf3b3eb291d9919de4",
                 "shasum": ""
             },
             "require": {
@@ -11172,7 +9909,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v7.1.4"
+                "source": "https://github.com/symfony/yaml/tree/v7.1.5"
             },
             "funding": [
                 {
@@ -11188,7 +9925,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-12T09:59:40+00:00"
+            "time": "2024-09-17T12:49:58+00:00"
         },
         {
             "name": "theseer/tokenizer",

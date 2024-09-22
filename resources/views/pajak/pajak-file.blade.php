@@ -2,7 +2,7 @@
 @section('content')
   <div class="card">
     <div class="card-header">
-      <h3>Data File Pajak</h3>
+      <h4>Publish File</h4>
     </div>
     <div class="card-body">
       <form action="{{ route('upload-bukti-potong') }}"
@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($zip_files as $item)
+            @forelse ($zip_files as $item)
               @php
                 $itemName = explode('/', $item);
                 $folder = Storage::disk('public')->directories('files/shares/pajak/publish/' . $itemName['3']);
@@ -98,7 +98,11 @@
                   </td>
                 @endif
               </tr>
-            @endforeach
+            @empty
+            <tr>
+              <td class="text-center" colspan="4">Belum ada data file pajak</td>
+            </tr>
+            @endforelse
           </tbody>
         </table>
       </div>
