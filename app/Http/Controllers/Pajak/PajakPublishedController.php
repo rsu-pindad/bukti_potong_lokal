@@ -138,6 +138,7 @@ class PajakPublishedController extends Controller
                 if (Str::of($squishContent)->isMatch('/' . $employee->npwp . '/')) {
                     $filtered[] = [
                         'publish_file_id'     => $formulir['publish_file_id'],
+                        'employee_id'         => $employee->id,
                         'file_path'           => $publishedFile->folder_name,
                         'file_name'           => $formulir['lokasi_formulir'],
                         'file_identitas_npwp' => $employee->npwp,
@@ -159,8 +160,11 @@ class PajakPublishedController extends Controller
                 // foreach ($filtered as $key => $filter) {
                 $final = PublishFileNpwp::upsert(
                     [array_filter($filtered)],
-                    ['publish_file_id', 'file_identitas_npwp', 'file_identitas_npwp'],
-                    ['file_path',       'file_path',           'file_identitas_nama', 'file_identitas_alamat']
+                    [
+                        'employee_id',
+                        'publish_file_id',
+                    ],
+                    ['file_path', 'file_path', 'file_identitas_npwp', 'file_identitas_nik', 'file_identitas_nama', 'file_identitas_alamat']
                 );
                 // }
             } else {

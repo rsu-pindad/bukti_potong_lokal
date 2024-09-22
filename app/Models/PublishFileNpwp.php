@@ -14,6 +14,7 @@ class PublishFileNpwp extends Model
 
     protected $fillable = [
         'publish_file_id',
+        'employee_id',
         'file_path',
         'file_name',
         'file_identitas_npwp',
