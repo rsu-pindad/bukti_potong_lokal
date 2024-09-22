@@ -138,7 +138,6 @@ class PajakPublishedController extends Controller
                 if (Str::of($squishContent)->isMatch('/' . $employee->npwp . '/')) {
                     $filtered[] = [
                         'publish_file_id'     => $formulir['publish_file_id'],
-                        'employee_id'         => $employee->id,
                         'file_path'           => $publishedFile->folder_name,
                         'file_name'           => $formulir['lokasi_formulir'],
                         'file_identitas_npwp' => $employee->npwp,
@@ -154,21 +153,22 @@ class PajakPublishedController extends Controller
         $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1]));
         $publishedFile->folder_status             = true;
         $publishedFile->save();
-
+        // dd($filtered);
         try {
             if ($isReset) {
                 // foreach ($filtered as $key => $filter) {
-                $final = PublishFileNpwp::upsert(
-                    [array_filter($filtered)],
-                    [
-                        'employee_id',
-                        'publish_file_id',
-                    ],
-                    ['file_path', 'file_path', 'file_identitas_npwp', 'file_identitas_nik', 'file_identitas_nama', 'file_identitas_alamat']
-                );
+                // $final = PublishFileNpwp::upsert(
+                //     [array_filter($filtered)],
+                //     ['file_identitas_npwp'],
+                //     ['publish_file_id','file_path', 'file_name', 'file_identitas_npwp', 'file_identitas_nik', 'file_identitas_nama']
+                // );
                 // }
+                // $final = PublishFileNpwp::updateOrCreate(array_filter($filtered));
+                PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
+                $final = PublishFileNpwp::insert(array_filter($filtered));
             } else {
                 $final = PublishFileNpwp::insert(array_filter($filtered));
+                // dd($final);
             }
         } catch (\Throwable $th) {
             return $th->getMessage();

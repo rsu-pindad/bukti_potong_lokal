@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('publish_file_npwp', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('publish_file_id');
-            $table->unsignedBigInteger('employee_id');
             $table->string('file_path')->nullable();
             $table->string('file_name')->nullable();
             $table->string('file_identitas_npwp')->nullable();
@@ -25,13 +24,6 @@ return new class extends Migration
                 ->foreign('publish_file_id')
                 ->references('id')
                 ->on('publish_file')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table
-                ->foreign('employee_id')
-                ->references('id')
-                ->on('employees')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
