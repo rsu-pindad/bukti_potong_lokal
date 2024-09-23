@@ -70,7 +70,7 @@
               <th>Status PTKP</th>
               <th>Email</th>
               <th>No Hp</th>
-              <th>TMT Kerja</th>
+              <th>TMT Masuk</th>
               <th>TMT Keluar</th>
               <th>EPin</th>
             </tr>
@@ -87,9 +87,9 @@
                 <td>{{ $p->status_ptkp }}</td>
                 <td>{{ $p->email }}</td>
                 <td>{{ $p->no_hp }}</td>
-                <td>{{ $p->epin }}</td>
                 <td>{{ $p->tmt_masuk }}</td>
                 <td>{{ $p->tmt_keluar }}</td>
+                <td>{{ $p->epin }}</td>
               </tr>
             @empty
               <tr>
