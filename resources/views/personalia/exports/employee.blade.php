@@ -3,6 +3,7 @@
     <tr>
       <th>npp</th>
       <th>npp_baru</th>
+      <th>nama</th>
       <th>status_kepegawaian</th>
       <th>nik</th>
       <th>npwp</th>
@@ -18,6 +19,7 @@
       <tr>
         <td>{{ $employee->npp }}</td>
         <td>{{ $employee->npp_baru }}</td>
+        <td>{{ $employee->nama }}</td>
         <td>{{ $employee->status_kepegawaian }}</td>
         <td>{{ $employee->nik }}</td>
         <td>{{ $employee->npwp }}</td>
