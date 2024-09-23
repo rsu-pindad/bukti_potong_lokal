@@ -94,6 +94,8 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(KaryawanController::class)->group(function () {
             Route::get('karyawan', 'index')->name('karyawan');
             Route::post('karyawan/import', 'import')->name('karyawan-import');
+            Route::get('karyawan/export', 'export')->name('karyawan-export');
+            Route::get('karyawan/template', 'template')->name('karyawan-template');
         });
 
         Route::group(['middleware' => 'role:pajak'], function () {

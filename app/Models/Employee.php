@@ -14,13 +14,19 @@ class Employee extends Model
 
     protected $fillable = [
         'npp',
+        'npp_baru',
         'nama',
+        'status_kepegawaian',
         'nik',
         'npwp',
         'status_ptkp',
-        'status_pegawai',
         'email',
         'no_hp',
-        'epin'
+        'epin',
+        'tmt_masuk',
+        'tmt_keluar',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 }

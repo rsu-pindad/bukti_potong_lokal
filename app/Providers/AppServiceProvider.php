@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Number;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +33,11 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo number_format($expression,2,',','.'); ?>";
         });
         Paginator::useBootstrapFive();
+        setlocale(LC_ALL, 'id_ID', 'id_ID.UTF-8');
+        Cache::flush();
+        Session::flush();
+        config(['app.locale' => 'id']);
+        Number::useLocale('id');
+        Carbon::setLocale('id');
     }
 }

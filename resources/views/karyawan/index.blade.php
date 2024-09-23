@@ -26,21 +26,31 @@
                    class="dropdown-item"
                    data-bs-toggle="modal"
                    data-bs-target="#modalImportEmployee">
-                  Impor Data Pegawai
+                  Import (Upload) <br>Data Pegawai
                   <i class="fa-solid fa-file-import text-success ml-4"></i>
                 </a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
+              <li>
+                <a class="dropdown-item"
+                   href="{{ route('karyawan-export') }}">
+                  Eksport (Download) <br>Data Pegawai
+                  <i class="fa-solid fa-file-export text-success ml-4"></i>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <a class="dropdown-item"
+                   href="{{ route('karyawan-template') }}">
+                  Download <br>Template Import
+                  <i class="fa-solid fa-table-cells text-danger ml-4"></i>
+                </a>
+              </li>
             @endhasexactroles
-            <li>
-              <a class="dropdown-item"
-                 href="{{ route('pegawai/export') }}">
-                Ekspor Data Pegawai
-                <i class="fa-solid fa-file-export text-success ml-4"></i>
-              </a>
-            </li>
           </ul>
         </div>
       </div>
@@ -53,27 +63,33 @@
             <tr>
               <th>No</th>
               <th>NPP</th>
+              <th>Nama</th>
+              <th>Status Pegawai</th>
               <th>NIK</th>
               <th>NPWP</th>
-              {{-- <th>Nama</th> --}}
               <th>Status PTKP</th>
               <th>Email</th>
               <th>No Hp</th>
+              <th>TMT Kerja</th>
+              <th>TMT Keluar</th>
               <th>EPin</th>
-              {{-- <th>Status Pegawai</th> --}}
             </tr>
           </thead>
           <tbody>
             @forelse ($pegawai as $p)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $p->npp }}</td>
+                <td>{{ $p->npp_baru == null ? $p->npp : $p->npp_baru}}</td>
+                <td>{{ $p->nama }}</td>
+                <td>{{ $p->status_kepegawaian }}</td>
                 <td>{{ $p->nik }}</td>
                 <td>{{ $p->npwp }}</td>
                 <td>{{ $p->status_ptkp }}</td>
                 <td>{{ $p->email }}</td>
                 <td>{{ $p->no_hp }}</td>
                 <td>{{ $p->epin }}</td>
+                <td>{{ $p->tmt_masuk }}</td>
+                <td>{{ $p->tmt_keluar }}</td>
               </tr>
             @empty
               <tr>
