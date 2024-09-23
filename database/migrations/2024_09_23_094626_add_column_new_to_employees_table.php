@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->string('nik')->nullable(false)->change();
-            $table->string('npp_baru')->after('npp');
+            $table->string('npp_baru')->nullable()->after('npp');
             $table->renameColumn('status_pegawai', 'status_kepegawaian');
             $table->string('tmt_masuk')->nullable()->after('no_hp');
             $table->string('tmt_keluar')->nullable()->after('tmt_masuk');
