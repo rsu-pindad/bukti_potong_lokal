@@ -55,7 +55,7 @@ class PegawaiBaruImport implements OnEachRow, WithHeadingRow, WithUpserts, WithC
             'email'              => $row['email'],
             'no_hp'              => $row['no_hp'],
             'tmt_masuk'          => $row['tmt_masuk'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_masuk']))->format('d/m/Y'),
-            'tmt_keluar'         => $row['tmt_masuk'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_keluar']))->format('d/m/Y'),
+            'tmt_keluar'         => $row['tmt_keluar'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_keluar']))->format('d/m/Y'),
             'created_at'         => Carbon::now(),
         ]);
     }
