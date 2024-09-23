@@ -15,8 +15,8 @@ class Pegawai extends Model
 
     protected $guarded = ['id'];
 
-    public function gajis(): HasMany
-    {
-        return $this->hasMany(Gaji::class, 'npp');
-    }
+    // public function gajis(): HasMany
+    // {
+    //     return $this->hasMany(Gaji::class, 'npp');
+    // }
 }

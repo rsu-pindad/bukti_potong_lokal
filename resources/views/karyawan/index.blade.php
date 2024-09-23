@@ -1,16 +1,18 @@
 @extends('layout.main')
 @section('content')
   <div class="card">
-    <div class="card-header d-flex align-items-center justify-content-between">
-      <span>Data Pegawai Baru</span>
+    <div class="card-header d-flex justify-content-between flex-row">
+      <h4>Data Pegawai</h4>
       <div class="my-auto">
         <div class="dropdown">
-          <button class="btn"
+          <button class="btn btn-outline-secondary"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false">
+            Menu
             <i class="fa-solid fa-ellipsis"></i>
           </button>
+
           <ul class="dropdown-menu">
             {{-- <li><a type="button"
                  class="dropdown-item"
@@ -18,24 +20,27 @@
                  data-bs-target="#modalCreateEmployee">
                 <i class="fa-regular fa-pen-to-square fa-fw text-primary"></i>
                 Tambah / Perbarui Data Pegawai</a></li> --}}
+            @hasexactroles('personalia')
+              <li>
+                <a type="button"
+                   class="dropdown-item"
+                   data-bs-toggle="modal"
+                   data-bs-target="#modalImportEmployee">
+                  Impor Data Pegawai
+                  <i class="fa-solid fa-file-import text-success ml-4"></i>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+            @endhasexactroles
             <li>
-              <a type="button"
-                 class="dropdown-item"
-                 data-bs-toggle="modal"
-                 data-bs-target="#modalImportEmployee">
-                <i class="fa-regular fa-file-excel fa-fw text-success"></i>
-                Impor Data Pegawai
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            {{-- <li>
               <a class="dropdown-item"
                  href="{{ route('pegawai/export') }}">
-                <i class="fa-solid fa-file-download fa-fw text-success"></i> Ekspor
-                Data Pegawai</a>
-            </li> --}}
+                Ekspor Data Pegawai
+                <i class="fa-solid fa-file-export text-success ml-4"></i>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -59,7 +64,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($pegawai as $p)
+            @forelse ($pegawai as $p)
               <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $p->npp }}</td>
@@ -70,58 +75,68 @@
                 <td>{{ $p->no_hp }}</td>
                 <td>{{ $p->epin }}</td>
               </tr>
-            @endforeach
+            @empty
+              <tr>
+                <td colspan="9"
+                    class="text-center">Belum ada data</td>
+              </tr>
+            @endforelse
           </tbody>
+          <tfoot>
+            {{ $pegawai->appends($_GET)->links() }}
+          </tfoot>
         </table>
       </div>
 
     </div>
   </div>
-  <!-- Modal -->
-  <div id="modalImportEmployee"
-       class="modal fade"
-       tabindex="-1"
-       role="dialog"
-       aria-labelledby="modalTitleId"
-       aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-lg"
-         role="document">
-      <div class="modal-content">
-        <form action="{{ route('pegawai/import-baru') }}"
-              method="post"
-              enctype="multipart/form-data">
-          @csrf
-          <div class="modal-header">
-            <h5 class="modal-title">Impor Data Pegawai</h5>
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
+@endsection
 
-            <div class="mb-3">
-              <label for=""
-                     class="form-label">File</label>
-              <input id="filePegawai"
-                     type="file"
-                     class="form-control @error('filePegawai') is-invalid @enderror"
-                     name="filePegawai"
-                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-              @error('filePegawai')
-                <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
+@once
+  @push('modals')
+    <!-- Modal -->
+    <div id="modalImportEmployee"
+         class="modal fade"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="modalTitleId"
+         aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-lg"
+           role="document">
+        <div class="modal-content">
+          <form action="{{ route('karyawan-import') }}"
+                method="post"
+                enctype="multipart/form-data">
+            @csrf
+            <div class="modal-header">
+              <h5 class="modal-title">Impor Data Pegawai</h5>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal">Tutup</button>
-            <button type="submit"
-                    class="btn btn-primary">Simpan</button>
-          </div>
-        </form>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="filePegawai"
+                       class="form-label">File</label>
+                <input id="filePegawai"
+                       type="file"
+                       class="form-control @error('filePegawai') is-invalid @enderror"
+                       name="filePegawai"
+                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                @error('filePegawai')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal">Tutup</button>
+              <button type="submit"
+                      class="btn btn-primary">Import
+                <i class="fa-solid fa-file-import"></i>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-@endsection
+  @endpush
+@endonce

@@ -9,7 +9,6 @@ use App\Models\PublishFileNpwp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 
@@ -154,18 +153,22 @@ class PajakPublishedController extends Controller
         $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1]));
         $publishedFile->folder_status             = true;
         $publishedFile->save();
-
+        // dd($filtered);
         try {
             if ($isReset) {
                 // foreach ($filtered as $key => $filter) {
-                $final = PublishFileNpwp::upsert(
-                    [array_filter($filtered)],
-                    ['publish_file_id', 'file_identitas_npwp', 'file_identitas_npwp'],
-                    ['file_path',       'file_path',           'file_identitas_nama', 'file_identitas_alamat']
-                );
+                // $final = PublishFileNpwp::upsert(
+                //     [array_filter($filtered)],
+                //     ['file_identitas_npwp'],
+                //     ['publish_file_id','file_path', 'file_name', 'file_identitas_npwp', 'file_identitas_nik', 'file_identitas_nama']
+                // );
                 // }
+                // $final = PublishFileNpwp::updateOrCreate(array_filter($filtered));
+                PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
+                $final = PublishFileNpwp::insert(array_filter($filtered));
             } else {
                 $final = PublishFileNpwp::insert(array_filter($filtered));
+                // dd($final);
             }
         } catch (\Throwable $th) {
             return $th->getMessage();

@@ -9,16 +9,12 @@ use App\Http\Controllers\Daftar\CariController;
 use App\Http\Controllers\Daftar\DaftarController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\ParserController;
-use App\Http\Controllers\Pajak\KaryawanController;
 use App\Http\Controllers\Pajak\PajakController;
 use App\Http\Controllers\Pajak\PajakPublishedController;
-use App\Http\Controllers\GajiController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\PPH21Controller;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Personalia\KaryawanController;
+use App\Http\Controllers\Personalia\PegawaiController;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Facades\Excel;
 
 /*
  * |--------------------------------------------------------------------------
@@ -42,7 +38,6 @@ Route::middleware(['guest'])->group(function () {
     Route::controller(DaftarController::class)->group(function () {
         Route::prefix('daftar')->group(function () {
             Route::get('/', 'index')->name('daftar-index');
-            // Route::get('/', 'create')->name('daftar-create');
             Route::post('/', 'store')->name('daftar-store');
         });
     });
@@ -57,6 +52,10 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'role:super-admin'], function () {
+        Route::get('/versi', function () {
+            return phpinfo();
+        });
+
         Route::controller(AksesController::class)->group(function () {
             Route::get('akses', 'index')->name('akses');
             Route::prefix('akses/role')->group(function () {
@@ -84,88 +83,47 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/{id}', 'assignPermission')->name('role-assign-permission');
             });
         });
-    });
-
-    Route::group(['middleware' => 'role:pajak|personalia'], function () {
-        Route::get('/versi', function () {
-            return phpinfo();
-        });
-
-        Route::controller(PegawaiController::class)->group(function () {
-            Route::get('pegawai', 'index')->name('pegawai');
-
-            Route::post('pegawai/store', 'store')->name('pegawai/store');
-
-            Route::post('pegawai/import', 'import')->name('pegawai/import');
-            Route::post('pegawai/import-baru', 'importBaru')->name('pegawai/import-baru');
-
-            Route::get('pegawai/export', 'export')->name('pegawai/export');
-
-            Route::delete('pegawai/delete/{id}', 'destroy')->name('pegawai/delete');
-        });
-
-        Route::controller(GajiController::class)->group(function () {
-            Route::get('gaji', 'index')->name('gaji');
-
-            Route::get('gaji/detail/{gaji}', 'show')->name('gaji/detail');
-
-            Route::delete('gaji/delete/{gaji}', 'destroy')->name('gaji/delete');
-
-            Route::post('gaji/import', 'import')->name('gaji/import');
-
-            Route::post('gaji/store', 'store')->name('gaji/store');
-
-            Route::post('gaji/pph21', 'calculatePPH21')->name('gaji/pph21');
-
-            Route::post('gaji/pph21new', 'calculatePPH21New')->name('gaji/pph21new');
-
-            Route::get('gaji/export', 'export')->name('gaji/export');
-        });
-
-        Route::controller(PPH21Controller::class)->group(function () {
-            Route::get('pph21', 'index')->name('pph21');
-
-            Route::get('pph21/detail/{pph21}', 'show')->name('pph21/detail');
-
-            Route::get('pph21/export', 'export')->name('pph21/export');
-
-            Route::get('pph21/export-detail/{id}', 'detailExport')->name('pph21/export-detail');
-
-            Route::get('pph21/export-detail/{id}', 'detailExport')->name('pph21/export-detail');
-
-            Route::delete('pph21/delete', 'destroy')->name('pph21/delete');
-        });
 
         Route::group(['prefix' => 'pajak_manager'], function () {
             Cache::flush();
             \UniSharp\LaravelFilemanager\Lfm::routes();
         });
-
-        Route::group(['prefix' => 'pajak_file'], function () {
-            Route::controller(PajakController::class)->group(function () {
-                Route::get('/', 'index')->name('pajak-index');
-                Route::get('/target/{filename}', 'publish')->name('pajak-publish');
-                Route::post('/target', 'published')->name('pajak-published');
-                Route::post('/unpublish', 'unPublish')->name('pajak-unpublish');
-                Route::post('/upload-bukti-potong', 'uploadBuktiPotong')->name('upload-bukti-potong');
-                Route::post('/remove-bukti-potong', 'removeBuktiPotong')->name('remove-bukti-potong');
-            });
-        });
-
-        Route::group(['prefix' => 'pajak_publised_file'], function () {
-            Route::controller(PajakPublishedController::class)->group(function () {
-                Route::get('/', 'index')->name('pajak-published-index');
-                Route::post('/cari-data-pajak', 'cariDataPajak')->name('cari-data-pajak');
-                Route::get('/file-data-pajak/{file?}{cari?}', 'fileDataPajak')->name('published-file-data-pajak');
-                Route::get('/published-cari-file-pajak/{folder}/{filename}', 'publishedCariFilePajak')->name('published-cari-file-pajak');
-            });
-        });
     });
 
-    Route::group(['middleware' => 'role:personalia'], function () {
+    Route::group(['middleware' => 'role:personalia|pajak'], function () {
         Route::controller(KaryawanController::class)->group(function () {
             Route::get('karyawan', 'index')->name('karyawan');
-            // Route::patch('pegawai', 'edit')->name('pegawai-edit');
+            Route::post('karyawan/import', 'import')->name('karyawan-import');
+        });
+
+        Route::group(['middleware' => 'role:pajak'], function () {
+            Route::controller(PegawaiController::class)->group(function () {
+                Route::post('pegawai/store', 'store')->name('pegawai/store');
+
+                Route::get('pegawai/export', 'export')->name('pegawai/export');
+
+                Route::delete('pegawai/delete/{id}', 'destroy')->name('pegawai/delete');
+            });
+
+            Route::group(['prefix' => 'pajak_file'], function () {
+                Route::controller(PajakController::class)->group(function () {
+                    Route::get('/', 'index')->name('pajak-index');
+                    Route::get('/target/{filename}', 'publish')->name('pajak-publish');
+                    Route::post('/target', 'published')->name('pajak-published');
+                    Route::post('/unpublish', 'unPublish')->name('pajak-unpublish');
+                    Route::post('/upload-bukti-potong', 'uploadBuktiPotong')->name('upload-bukti-potong');
+                    Route::post('/remove-bukti-potong', 'removeBuktiPotong')->name('remove-bukti-potong');
+                });
+            });
+
+            Route::group(['prefix' => 'pajak_publised_file'], function () {
+                Route::controller(PajakPublishedController::class)->group(function () {
+                    Route::get('/', 'index')->name('pajak-published-index');
+                    Route::post('/cari-data-pajak', 'cariDataPajak')->name('cari-data-pajak');
+                    Route::get('/file-data-pajak/{file?}{cari?}', 'fileDataPajak')->name('published-file-data-pajak');
+                    Route::get('/published-cari-file-pajak/{folder}/{filename}', 'publishedCariFilePajak')->name('published-cari-file-pajak');
+                });
+            });
         });
     });
 

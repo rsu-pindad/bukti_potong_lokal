@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use ZanySoft\Zip\ZipManager;
-use Zip;
 
 class EmployeeController extends Controller
 {
@@ -39,6 +37,7 @@ class EmployeeController extends Controller
             flash()
                 ->error('terjadi kesalahan validasi, mohon cek kembali')
                 ->flash();
+
             return redirect()
                        ->back()
                        ->withErrors($validator)

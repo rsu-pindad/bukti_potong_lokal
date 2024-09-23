@@ -17,6 +17,7 @@ class PegawaiExport implements FromCollection, WithHeadings
         $pegawai = $pegawai->map(function ($item, $key) {
             return collect($item)->except(['created_at', 'updated_at'])->toArray();
         });
+
         return $pegawai;
     }
 

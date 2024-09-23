@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Personalia;
 
 use App\Exports\PegawaiExport;
+use App\Http\Controllers\Controller;
+use App\Imports\PegawaiBaruImport;
 use App\Imports\PegawaiImport;
 use App\Models\Pegawai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\PegawaiBaruImport;
 
 class PegawaiController extends Controller
 {
     public function index()
     {
         $pegawai = Pegawai::all();
-        $data = ['title' => 'Data Pegawai', 'pegawai' => $pegawai];
+        $data    = ['title' => 'Data Pegawai', 'pegawai' => $pegawai];
 
         return view('pegawai.index', $data);
     }
@@ -23,11 +24,11 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'npp' => 'required',
-            'nama' => 'required',
-            'npwp' => 'required',
+            'npp'     => 'required',
+            'nama'    => 'required',
+            'npwp'    => 'required',
             'st_ptkp' => 'required',
-            'st_peg' => 'required',
+            'st_peg'  => 'required',
         ]);
         Pegawai::updateOrCreate(['npp' => $validated['npp']], $validated);
 
@@ -44,6 +45,7 @@ class PegawaiController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('toast_error', 'upload file yang benar!');
         }
+
         return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
     }
 
@@ -57,18 +59,21 @@ class PegawaiController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('toast_error', 'upload file yang benar!');
         }
+
         return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
     }
 
     public function export()
     {
         $fileName = Carbon::now() . '_' . 'pegawai.xlsx';
+
         return Excel::download(new PegawaiExport, $fileName, \Maatwebsite\Excel\Excel::XLSX);
     }
 
     public function destroy($id)
     {
         Pegawai::find($id)->delete();
+
         return redirect()->back()->withToastSuccess('berhasil menghapus data pegawai');
     }
 }
