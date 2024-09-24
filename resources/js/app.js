@@ -8,3 +8,4 @@ import $ from "jquery";
 window.$ = $;
 window.Inputmask = Inputmask;
 window.driver = driver;
+window.bootstrap = bootstrap;

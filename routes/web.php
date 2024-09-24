@@ -93,9 +93,13 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'role:personalia|pajak'], function () {
         Route::controller(KaryawanController::class)->group(function () {
             Route::get('karyawan', 'index')->name('karyawan');
+            Route::post('karyawan/store', 'store')->name('karyawan-store');
             Route::post('karyawan/import', 'import')->name('karyawan-import');
             Route::get('karyawan/export', 'export')->name('karyawan-export');
             Route::get('karyawan/template', 'template')->name('karyawan-template');
+            Route::get('karyawan/{id}/edit', 'edit')->name('karyawan-edit');
+            Route::patch('karyawan/{id}/edit', 'update')->name('karyawan-update');
+            // Route::post('karyawan/soft', 'softDel')->name('karyawan-soft-delete');
         });
 
         Route::group(['middleware' => 'role:pajak'], function () {
