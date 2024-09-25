@@ -193,11 +193,12 @@ class PajakPublishedController extends Controller
                 ];
 
                 // unset($resultFormulir[$key]);
-                return $filtered;
+                // return $filtered;
             }
 
-            return null;
+            // return null;
         }
+        return $filtered;
     }
 
     public function fileDataPajak(Request $request)
