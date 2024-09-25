@@ -28,7 +28,7 @@ class PegawaiBaruImport implements OnEachRow, WithHeadingRow, WithUpserts, WithC
 
         $nik = Employee::where('nik', $row['nik'])->first();
         if ($nik) {
-            $nik->npp                = $row['npp_baru'] ?? $row['npp'];
+            $nik->npp                = $row['npp'];
             $nik->npp_baru           = $row['npp_baru'];
             $nik->nama               = $row['nama'];
             $nik->status_kepegawaian = $row['status_kepegawaian'];
@@ -45,7 +45,7 @@ class PegawaiBaruImport implements OnEachRow, WithHeadingRow, WithUpserts, WithC
         }
 
         return Employee::insert([
-            'npp'                => $row['npp_baru'] ?? $row['npp'],
+            'npp'                => $row['npp'],
             'npp_baru'           => $row['npp_baru'],
             'nama'               => $row['nama'],
             'status_kepegawaian' => $row['status_kepegawaian'],
