@@ -62,11 +62,14 @@ class CariController extends Controller
             // return redirect('daftar')->onlyInput('npp');
             // dd($validator->safe()->npp);
             $request->session()->put('npp', $validator->safe()->npp);
+            $request->session()->put('nama', $pegawai->nama);
             $request->session()->put('nik', $pegawai->nik);
             $request->session()->put('npwp', $pegawai->npwp);
             $request->session()->put('email', $pegawai->email);
             $request->session()->put('no_hp', $pegawai->no_hp);
             $request->session()->put('status_ptkp', $pegawai->status_ptkp);
+            $request->session()->put('status_kepegawaian', $pegawai->status_kepegawaian);
+            $request->session()->put('epin', $pegawai->epin);
 
             // return redirect('daftar');
             return redirect('daftar')->withInput($request->input());

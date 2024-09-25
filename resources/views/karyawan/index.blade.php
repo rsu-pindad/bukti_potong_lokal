@@ -129,7 +129,7 @@
                   <td>{{ $p->tmt_masuk }}</td>
                   <td>{{ $p->tmt_keluar }}</td>
                   <td>{{ $p->epin }}</td>
-                  <td>{{ Illuminate\Support\Carbon::parse($p->updated_at)->diffForHumans() }}</td>
+                  <td>{{ Illuminate\Support\Carbon::parse($p->updated_at ?? $p->created_at)->diffForHumans() }}</td>
                   <td>
                     <div class="d-flex justify-content-around flex-row">
                       <div>
@@ -163,7 +163,7 @@
                   <td>{{ $p->no_hp }}</td>
                   <td>{{ $p->tmt_masuk }}</td>
                   <td>{{ $p->tmt_keluar }}</td>
-                  <td>{{ Illuminate\Support\Carbon::parse($p->updated_at)->diffForHumans() }}</td>
+                  <td>{{ Illuminate\Support\Carbon::parse($p->updated_at ?? $p->created_at)->diffForHumans() }}</td>
                   <td>
                     <div class="d-flex justify-content-around flex-row">
                       <div>

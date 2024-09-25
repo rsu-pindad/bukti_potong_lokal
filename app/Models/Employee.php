@@ -29,4 +29,23 @@ class Employee extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::updated(function (Employee $model) {
+            $karyawan = Karyawan::where('nik', $model->nik)->first();
+            if ($karyawan) {
+                $karyawan->npp     = $model->npp;
+                $karyawan->nik     = $model->nik;
+                $karyawan->npwp    = $model->npwp;
+                $karyawan->email   = $model->email;
+                $karyawan->no_tel  = $model->no_hp;
+                $karyawan->st_ptkp = $model->status_ptkp;
+                $karyawan->st_peg  = $model->status_kepegawaian;
+                $karyawan->epin    = $model->epin;
+                $karyawan->save();
+            }
+        });
+    }
 }

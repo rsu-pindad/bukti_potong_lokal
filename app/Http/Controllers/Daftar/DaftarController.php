@@ -24,6 +24,7 @@ class DaftarController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|unique:tbl_user|min:5|max:15',
             'password' => 'required|confirmed|min:6',
+            'otp'      => 'required',
         ]);
 
         $request->session()->reflash();
@@ -32,6 +33,13 @@ class DaftarController extends Controller
             return redirect('daftar')
                        ->withErrors($validator)
                        ->withInput();
+        }
+        if ($validator->safe()->otp != session()->get('otp')) {
+            flash()
+                ->error('OTP Tidak sama')
+                ->flash();
+
+            return redirect()->back()->withInput();
         }
 
         try {
@@ -51,5 +59,61 @@ class DaftarController extends Controller
 
             return redirect()->back()->withInput();
         }
+    }
+
+    public function sendOtp()
+    {
+        $sendBlast = json_decode($this->sendWa(), true);
+        $status    = $sendBlast['status'];
+        if ($status == true) {
+            flash()
+                ->success('OTP Dikirim')
+                ->flash();
+        } else {
+            flash()
+                ->error($sendBlast['reason'])
+                ->flash();
+        }
+    }
+
+    private function sendWa()
+    {
+        $noHP      = session()->get('no_hp');
+        $randomOTP = rand(1000,9999);
+        session()->put('otp', $randomOTP);
+        $pesan = 'Bukti Potong OTP : ' . $randomOTP . PHP_EOL;
+        $curl  = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target'      => $noHP,
+                'message'     => $pesan,
+                'delay'       => '5',
+                'countryCode' => '62',
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: ' . config('app.FONNTE')
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+        }
+        curl_close($curl);
+
+        if (isset($error_msg)) {
+            return $error_msg;
+        }
+
+        return $response;
     }
 }

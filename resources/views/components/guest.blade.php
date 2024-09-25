@@ -7,6 +7,8 @@
           content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible"
           content="ie=edge">
+    <meta name="_token"
+          content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Guest Layout' }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
