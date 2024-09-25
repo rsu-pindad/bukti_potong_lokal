@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\Personalia\PegawaiBaruImport;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
@@ -17,9 +18,15 @@ class KaryawanController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->hasRole('personalia')) {
+            $pegawai = Employee::paginate(25);
+        } else {
+            $pegawai = Employee::where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->paginate(25);
+        }
+
         return view('karyawan.index')->with([
             'title'   => 'Data Pegawai',
-            'pegawai' => Employee::paginate(25),
+            'pegawai' => $pegawai,
         ]);
     }
 
