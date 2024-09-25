@@ -130,7 +130,7 @@ class PajakPublishedController extends Controller
                 'formulir'        => $content,
             ];
         }
-        $employees = Employee::all();
+        $employees = Employee::where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->get();
         $filtered  = [];
         foreach ($employees as $employee) {
             foreach ($resultFormulir as $key => $formulir) {
@@ -145,6 +145,8 @@ class PajakPublishedController extends Controller
                         'file_identitas_nama' => $employee->nama,
                     ];
                     unset($resultFormulir[$key]);
+                } else {
+                    $filtered[] = [];
                 }
             }
         }
@@ -165,9 +167,9 @@ class PajakPublishedController extends Controller
                 // }
                 // $final = PublishFileNpwp::updateOrCreate(array_filter($filtered));
                 PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
-                $final = PublishFileNpwp::insert(array_filter($filtered));
+                PublishFileNpwp::insert(array_filter($filtered));
             } else {
-                $final = PublishFileNpwp::insert(array_filter($filtered));
+                PublishFileNpwp::insert(array_filter($filtered));
                 // dd($final);
             }
         } catch (\Throwable $th) {
