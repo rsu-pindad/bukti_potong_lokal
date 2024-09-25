@@ -78,7 +78,7 @@ class DaftarController extends Controller
             ->error('OTP Gagal dikirim')
             ->flash();
 
-        return response()->json(['status' => 'gagal'], 200);
+        return response()->json(['status' => 'gagal']);
         // sleep(3);
     }
 
