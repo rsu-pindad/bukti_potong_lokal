@@ -65,21 +65,27 @@ class DaftarController extends Controller
     {
         $sendBlast = json_decode($this->sendWa(), true);
         $status    = $sendBlast['status'];
+        // $status = false;
         if ($status == true) {
             flash()
                 ->success('OTP Dikirim')
                 ->flash();
-        } else {
-            flash()
-                ->error($sendBlast['reason'])
-                ->flash();
+
+            return response()->json(['status' => 'terkirim'], 200);
         }
+        flash()
+            // ->error($sendBlast['reason'])
+            ->error('OTP Gagal dikirim')
+            ->flash();
+
+        return response()->json(['status' => 'gagal'], 200);
+        // sleep(3);
     }
 
     private function sendWa()
     {
         $noHP      = session()->get('no_hp');
-        $randomOTP = rand(1000,9999);
+        $randomOTP = rand(1000, 9999);
         session()->put('otp', $randomOTP);
         $pesan = 'Bukti Potong OTP : ' . $randomOTP . PHP_EOL;
         $curl  = curl_init();

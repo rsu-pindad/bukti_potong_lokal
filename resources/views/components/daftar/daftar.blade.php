@@ -246,23 +246,32 @@
 
         $('#sendOTPCODE').on('click', function(e) {
           e.preventDefault();
-          $(this).attr("disabled", "disabled");
-          $(this).text("Check Whatsapp");
-          $('#otpHelper').text("Otp Sudah dikirim");
+          // $(this).attr("disabled", "disabled");
+          // $(this).text("Kirim Ulang");
+          // $('#otpHelper').text("Otp Sudah dikirim");
+          // let results;
           $.ajax({
             url: "{{ route('send-otp') }}",
             type: 'POST',
-            success: function() {
-              localStorage.setItem('hasSendOtp', 'true');
-              location.reload();
+            success: function(result) {
+              // console.log(result);
+              // return result.status;
+              if (result.status == 'terkirim') {
+                // alert('ok');
+                localStorage.setItem('hasSendOtp', 'dikirim');
+                location.reload();
+              } else {
+                alert('Terjadi Kesalahan')
+              }
             }
           });
+          // console.log(results);
         });
 
-        if (localStorage.getItem('hasSendOtp') === 'true') {
+        if (localStorage.getItem('hasSendOtp') === 'dikirim') {
           // localStorage.setItem('hasSendOtp', 'true');
-          $('#sendOTPCODE').attr("disabled", "disabled");
-          $('#sendOTPCODE').text("Check Whatsapp");
+          // $('#sendOTPCODE').attr("disabled", "disabled");
+          $('#sendOTPCODE').text("Kirim Ulang");
           $('#otpHelper').text("Otp Sudah dikirim");
         }
 
