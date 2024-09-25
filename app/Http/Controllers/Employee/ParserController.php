@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 
 class ParserController extends Controller
@@ -37,17 +38,19 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Auth::user()->karyawan->npwp)) {
+            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
                 $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
-        if($hasil < 1){
+        if ($hasil < 1) {
             flash()
                 ->warning('Faktur Pajak Anda belum ada')
                 ->flash();
+
             return redirect()
-                ->back();
+                       ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $target_bulan . '/bupot_final_tidakfinal/' . $result[0]);
@@ -67,7 +70,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         }
     }
 
@@ -100,7 +103,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         }
         $result = [];
         foreach ($files as $file) {
@@ -109,17 +112,19 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Auth::user()->karyawan->npwp)) {
+            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
                 $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
-        if($hasil < 1){
+        if ($hasil < 1) {
             flash()
                 ->warning('Faktur Pajak Anda belum ada')
                 ->flash();
+
             return redirect()
-                ->back();
+                       ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0]);
@@ -138,7 +143,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         }
     }
 }
