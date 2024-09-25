@@ -255,7 +255,7 @@
             type: 'POST',
             data: {
               "_token": "{{ csrf_token() }}",
-            }
+            },
             success: function(result) {
               // console.log(result);
               // return result.status;
