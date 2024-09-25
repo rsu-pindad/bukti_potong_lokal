@@ -253,11 +253,38 @@
                          type="file"
                          class="form-control @error('filePegawai') is-invalid @enderror"
                          name="filePegawai"
-                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                         required>
                   @error('filePegawai')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
+                {{-- <div class="row mb-3">
+                  <div class="col">
+                    <label for="mulai"
+                           class="form-label">Baris Mulai</label>
+                    <input id="mulai"
+                           type="number"
+                           class="form-control @error('mulai') is-invalid @enderror"
+                           name="mulai"
+                           required>
+                    @error('mulai')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                  <div class="col">
+                    <label for="akhir"
+                           class="form-label">Baris Akhir</label>
+                    <input id="akhir"
+                           type="number"
+                           class="form-control @error('akhir') is-invalid @enderror"
+                           name="akhir"
+                           required>
+                    @error('akhir')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div> --}}
               </div>
               <div class="modal-footer">
                 <button type="button"
