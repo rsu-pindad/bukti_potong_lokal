@@ -26,23 +26,36 @@ class KaryawanController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'filePegawai' => 'required'
+            'filePegawai' => 'required',
+            // 'mulai'       => 'required',
+            // 'akhir'       => 'required',
         ]);
+        $mulai = $request->input('mulai');
+        $akhir = $request->input('akhir');
         try {
-            Excel::import(new PegawaiBaruImport, $request->file('filePegawai'));
+            // Excel::import(new PegawaiBaruImport($mulai, $akhir), $request->file('filePegawai'));
+            Excel::import(new PegawaiBaruImport(), $request->file('filePegawai'));
             flash()
                 ->success('berhasil import data pegawai')
                 ->flash();
 
             return redirect()
                        ->back();
-        } catch (\Throwable $th) {
-            flash()
-                ->warning($th->getMessage())
-                ->flash();
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            // flash()
+            //     ->warning($th->getMessage())
+            //     ->flash();
 
-            return redirect()
-                       ->back();
+            // return redirect()
+            //            ->back();
+            $failures = $e->failures();
+
+            foreach ($failures as $failure) {
+                $failure->row();        // row that went wrong
+                $failure->attribute();  // either heading key (if using heading row concern) or column index
+                $failure->errors();     // Actual error messages from Laravel validator
+                $failure->values();     // The values of the row that has failed.
+            }
         }
     }
 

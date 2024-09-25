@@ -8,14 +8,36 @@ use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Row;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
-class PegawaiBaruImport implements OnEachRow, WithHeadingRow, WithUpserts, WithChunkReading, WithBatchInserts, SkipsEmptyRows, WithSkipDuplicates
+class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates
 {
+    protected $mulai;
+    protected $akhir;
+
+    // public function __construct($mulai, $akhir)
+    // {
+    //     $this->mulai = $mulai;
+    //     $this->akhir = $akhir;
+    // }
+
+    // public function startRow(): int
+    // {
+    //     return $this->mulai;
+    // }
+
+    // public function limit(): int
+    // {
+    //     return $this->akhir;
+    // }
+
     public function uniqueBy()
     {
         return ['id', 'nik'];
@@ -25,6 +47,7 @@ class PegawaiBaruImport implements OnEachRow, WithHeadingRow, WithUpserts, WithC
     {
         $rowIndex = $row->getIndex();
         $row      = $row->toArray();
+        // dd($row);
 
         $nik = Employee::where('nik', $row['nik'])->first();
         if ($nik) {
@@ -41,7 +64,7 @@ class PegawaiBaruImport implements OnEachRow, WithHeadingRow, WithUpserts, WithC
             $nik->tmt_keluar         = $row['tmt_keluar'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_keluar']))->format('d/m/Y');
             $nik->save();
 
-            return;
+            return false;
         }
 
         return Employee::insert([
