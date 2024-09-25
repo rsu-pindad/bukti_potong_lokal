@@ -145,7 +145,7 @@ class PajakPublishedController extends Controller
                         'file_identitas_nama' => $employee->nama,
                     ];
                     unset($resultFormulir[$key]);
-                    break;
+                    return $filtered;
                 }
             }
         }
