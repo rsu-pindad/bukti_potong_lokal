@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Imports\Personalia;
 
 use App\Models\Employee;
 use Illuminate\Support\Carbon;
