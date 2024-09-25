@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Personalia;
 
 use App\Exports\Personalia\EmployeeExport;
 use App\Http\Controllers\Controller;
-use App\Imports\PegawaiBaruImport;
+use App\Imports\Personalia\PegawaiBaruImport;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -175,10 +175,5 @@ class KaryawanController extends Controller
 
             return redirect()->back()->withInput();
         }
-    }
-
-    public function softDel(Request $request)
-    {
-        dd(request()->input('inlineCheck'));
     }
 }

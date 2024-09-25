@@ -9,6 +9,7 @@ use App\Http\Controllers\Daftar\CariController;
 use App\Http\Controllers\Daftar\DaftarController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\ParserController;
+use App\Http\Controllers\Pajak\EpinKaryawanController;
 use App\Http\Controllers\Pajak\PajakController;
 use App\Http\Controllers\Pajak\PajakPublishedController;
 use App\Http\Controllers\Personalia\KaryawanController;
@@ -103,6 +104,14 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::group(['middleware' => 'role:pajak'], function () {
+            Route::controller(EpinKaryawanController::class)->group(function () {
+                Route::get('karyawan/epin/{id}/edit', 'edit')->name('karyawan-epin-edit');
+                Route::patch('karyawan/epin/{id}/edit', 'update')->name('karyawan-epin-update');
+                Route::post('karyawan/epin/import', 'import')->name('karyawan-epin-import');
+                Route::get('karyawan/epin/export', 'export')->name('karyawan-epin-export');
+                Route::get('karyawan/epin/template', 'template')->name('karyawan-epin-template');
+            });
+
             Route::controller(PegawaiController::class)->group(function () {
                 Route::post('pegawai/store', 'store')->name('pegawai/store');
 
