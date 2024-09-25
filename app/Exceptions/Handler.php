@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -36,8 +37,20 @@ class Handler extends ExceptionHandler
                 ->warning($e->getMessage())
                 ->flash();
 
-            return redirect()
-                       ->back();
+            // return redirect()
+            //            ->back();
+            $user = Auth::user();
+            if ($user->hasRole('pajak')) {
+                return redirect()->route('pajak-index');
+            }
+            if ($user->hasRole('super-admin')) {
+                return redirect()->route('akses');
+            }
+            if ($user->hasRole('personalia')) {
+                return redirect()->route('karyawan');
+            }
+
+            return redirect()->intended(route('employee'));
         });
     }
 }
