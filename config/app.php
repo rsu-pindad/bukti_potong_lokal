@@ -174,4 +174,5 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
     'seeder_default' => env('SEEDER_DEFAULT', ''),
+    'FONNTE' => env('FONNTE_TOKEN', ''),
 ];

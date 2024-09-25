@@ -40,6 +40,7 @@ Route::middleware(['guest'])->group(function () {
         Route::prefix('daftar')->group(function () {
             Route::get('/', 'index')->name('daftar-index');
             Route::post('/', 'store')->name('daftar-store');
+            Route::post('/send-otp', 'sendOtp')->name('send-otp');
         });
     });
 
