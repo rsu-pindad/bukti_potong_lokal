@@ -150,7 +150,7 @@ class PajakPublishedController extends Controller
             //         return $filtered;
             //     }
             // }
-            $filtered[] = $this->crawlingData($resultFormulir, Str::remove("/",$employee->npwp), $employee->nik, $employee->nama, $publishedFile->folder_name);
+            $filtered[] = $this->crawlingData($resultFormulir, Str::remove('/', $employee->npwp), $employee->nik, $employee->nama, $publishedFile->folder_name);
             // dd($filtered);
         }
         // dd($filtered);
@@ -184,6 +184,11 @@ class PajakPublishedController extends Controller
         $filtered = [];
         foreach ($resultFormulir as $key => $formulir) {
             $squishContent = Str::of($formulir['formulir'])->squish();
+            if ($eNpwp == '') {
+                $squishContent = '';
+
+                return null;
+            }
             if (Str::of($squishContent)->isMatch('/' . $eNpwp . '/')) {
                 $filtered = [
                     'publish_file_id'     => $formulir['publish_file_id'],
@@ -193,12 +198,16 @@ class PajakPublishedController extends Controller
                     'file_identitas_nik'  => $eNik,
                     'file_identitas_nama' => $eNama,
                 ];
-                break;
                 // unset($resultFormulir[$key]);
+                $squishContent = '';
+                break;
                 // return $filtered;
             }
+            $squishContent = '';
 
+            // unset($filtered[$key]);
             // return null;
+            // return $filtered;
         }
 
         return $filtered;

@@ -23,6 +23,15 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
+        if (Auth::user()->karyawan->npwp == '') {
+            flash()
+                ->warning('Maaf npwp masih kosong')
+                ->flash();
+
+            return redirect()
+                       ->back();
+        }
+
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $target_bulan);
         if ($files < 1) {
             flash()
@@ -94,6 +103,15 @@ class ParserController extends Controller
                        ->back()
                        ->withErrors($validator)
                        ->withInput();
+        }
+
+        if (Auth::user()->karyawan->npwp == '') {
+            flash()
+                ->warning('Maaf npwp masih kosong')
+                ->flash();
+
+            return redirect()
+                       ->back();
         }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
