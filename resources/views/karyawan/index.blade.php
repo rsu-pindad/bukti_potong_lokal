@@ -117,8 +117,8 @@
               @hasexactroles('personalia')
                 <th>Email</th>
                 <th>No Hp</th>
+                <th>TMT Masuk</th>
               @endhasexactroles
-              <th>TMT Masuk</th>
               <th>TMT Keluar</th>
               @hasexactroles('pajak')
                 <th>EPin</th>
@@ -138,7 +138,6 @@
                   <td>{{ $p->nik }}</td>
                   <td>{{ $p->npwp }}</td>
                   <td>{{ $p->status_ptkp }}</td>
-                  <td>{{ $p->tmt_masuk }}</td>
                   <td>{{ $p->tmt_keluar }}</td>
                   <td>{{ $p->epin }}</td>
                   <td>{{ Illuminate\Support\Carbon::parse($p->updated_at ?? $p->created_at)->diffForHumans() }}</td>
@@ -190,7 +189,7 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="9"
+                  <td colspan="13"
                       class="text-center">Belum ada data</td>
                 </tr>
               @endforelse

@@ -35,7 +35,21 @@ class KaryawanController extends Controller
                 $pegawai = Employee::paginate(25);
             }
         } else {
-            $pegawai = Employee::where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->paginate(25);
+            if ($cari = $request->input('cari')) {
+                $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])
+                               ->where(function ($query) use ($cari) {
+                                   $query
+                                       ->orWhere('npp', 'LIKE', "%{$cari}%")
+                                       ->orWhere('npp_baru', 'LIKE', "%{$cari}%")
+                                       ->orWhere('nik', 'LIKE', "%{$cari}%")
+                                       ->orWhere('nama', 'LIKE', "%{$cari}%")
+                                       ->orWhere('npwp', 'LIKE', "%{$cari}%")
+                                       ->orWhere('epin', 'LIKE', "%{$cari}%");
+                               })
+                               ->paginate(25);
+            } else {
+                $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])->paginate(25);
+            }
         }
 
         return view('karyawan.index')->with([
