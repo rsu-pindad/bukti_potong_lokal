@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => 'role:personalia|pajak'], function () {
         Route::controller(KaryawanController::class)->group(function () {
-            Route::get('karyawan', 'index')->name('karyawan');
+            Route::get('karyawan{cari?}', 'index')->name('karyawan');
             Route::post('karyawan/store', 'store')->name('karyawan-store');
             Route::post('karyawan/import', 'import')->name('karyawan-import');
             Route::get('karyawan/export', 'export')->name('karyawan-export');

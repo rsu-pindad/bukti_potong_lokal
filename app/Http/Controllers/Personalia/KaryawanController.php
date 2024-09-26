@@ -16,10 +16,24 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class KaryawanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::user()->hasRole('personalia')) {
-            $pegawai = Employee::paginate(25);
+            if ($cari = $request->input('cari')) {
+                // $pegawai = new Employee();
+                // $pegawai->where(function ($query) use ($cari) {
+                // $query
+                $pegawai = Employee::where('npp', 'LIKE', "%{$cari}%")
+                               ->orWhere('npp_baru', 'LIKE', "%{$cari}%")
+                               ->orWhere('nik', 'LIKE', "%{$cari}%")
+                               ->orWhere('nama', 'LIKE', "%{$cari}%")
+                               ->orWhere('email', 'LIKE', "%{$cari}%")
+                               ->orWhere('no_hp', 'LIKE', "%{$cari}%")
+                               ->paginate(25);
+                // });
+            } else {
+                $pegawai = Employee::paginate(25);
+            }
         } else {
             $pegawai = Employee::where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->paginate(25);
         }

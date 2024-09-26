@@ -46,7 +46,7 @@
           <tbody>
             @forelse ($files as $file)
               <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ $files->perPage() * ($files->currentPage() - 1) + $loop->iteration }}</td>
                 <td>{{ $file->file_path }}</td>
                 <td>{{ $file->file_name }}</td>
                 <td>{{ $file->file_identitas_npwp }}</td>

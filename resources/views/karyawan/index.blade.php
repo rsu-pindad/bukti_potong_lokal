@@ -12,7 +12,6 @@
             Menu
             <i class="fa-solid fa-ellipsis"></i>
           </button>
-
           <ul class="dropdown-menu">
             @hasexactroles('personalia')
               {{-- <li>
@@ -90,6 +89,19 @@
       </div>
     </div>
     <div class="card-body">
+      <div>
+        <form action="{{ route('karyawan') }}"
+              method="get">
+          <div class="input-group mb-2">
+            <button class="btn btn-primary">Cari</button>
+            <input type="text"
+                   class="form-control"
+                   name="cari"
+                   value="{{ request('cari') }}"
+                   placeholder="cari pegawai">
+          </div>
+        </form>
+      </div>
       <div class="table-responsive">
         <table id="dataTable"
                class="table-light table-bordered table-hover table-striped table">
@@ -119,7 +131,7 @@
             @hasexactroles('pajak')
               @forelse ($pegawai as $p)
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $pegawai->perPage() * ($pegawai->currentPage() - 1) + $loop->iteration }}</td>
                   <td>{{ $p->npp_baru == null ? $p->npp : $p->npp_baru }}</td>
                   <td>{{ $p->nama }}</td>
                   <td>{{ $p->status_kepegawaian }}</td>
@@ -152,7 +164,7 @@
             @hasexactroles('personalia')
               @forelse ($pegawai as $p)
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $pegawai->perPage() * ($pegawai->currentPage() - 1) + $loop->iteration }}</td>
                   <td>{{ $p->npp_baru == null ? $p->npp : $p->npp_baru }}</td>
                   <td>{{ $p->nama }}</td>
                   <td>{{ $p->status_kepegawaian }}</td>

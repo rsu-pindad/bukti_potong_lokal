@@ -28,7 +28,7 @@
           <tbody>
             @forelse ($published as $publish)
               <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ $published->perPage() * ($published->currentPage() - 1) + $loop->iteration }}</td>
                 <td>{{ $publish->folder_publish }}</td>
                 <td>{{ $publish->folder_name }}</td>
                 @if ($publish->folder_status == 0)
