@@ -20,6 +20,8 @@ class EpinKaryawanExport implements FromView
                 'status_ptkp',
                 'status_kepegawaian',
                 'npwp',
+                'email',
+                'no_hp',
                 'epin'
             ])->where('status_kepegawaian', 'Tetap')
               ->orWhere('status_kepegawaian', 'Kontrak')
