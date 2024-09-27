@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pajak;
 
 use App\Http\Controllers\Controller;
 use App\Models\PublishFile;
+use App\Models\PublishFileNpwp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -109,7 +110,10 @@ class PajakController extends Controller
         try {
             Storage::disk('public')->deleteDirectory('files/shares/pajak/publish/' . $folder);
             Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/' . $published_file);
-            PublishFile::where('folder_name', $request->folder_target)->delete();
+            $deletePublish = PublishFile::where('folder_name', $request->folder_target);
+            $filenpwp      = $deletePublish->first()->id;
+            PublishFileNpwp::where('publish_file_id', $filenpwp)->forceDelete();
+            $deletePublish->forceDelete();
             flash()
                 ->success('folder berhasil di unpublished')
                 ->flash();
