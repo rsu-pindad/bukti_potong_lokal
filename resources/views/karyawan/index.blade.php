@@ -114,8 +114,8 @@
               <th>NIK</th>
               <th>NPWP</th>
               <th>Status PTKP</th>
+              <th>Email</th>
               @hasexactroles('personalia')
-                <th>Email</th>
                 <th>No Hp</th>
                 <th>TMT Masuk</th>
               @endhasexactroles
@@ -138,6 +138,7 @@
                   <td>{{ $p->nik }}</td>
                   <td>{{ $p->npwp }}</td>
                   <td>{{ $p->status_ptkp }}</td>
+                  <td>{{ $p->email }}</td>
                   <td>{{ $p->tmt_keluar }}</td>
                   <td>{{ $p->epin }}</td>
                   <td>{{ Illuminate\Support\Carbon::parse($p->updated_at ?? $p->created_at)->diffForHumans() }}</td>
