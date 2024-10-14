@@ -55,7 +55,7 @@ class ParserController extends Controller
         $hasil = count($result);
         if ($hasil < 1) {
             flash()
-                ->warning('Faktur Pajak Anda belum ada')
+                ->warning('Bukti Potong Anda belum ada')
                 ->flash();
 
             return redirect()
@@ -117,7 +117,7 @@ class ParserController extends Controller
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         if (count($files) < 1) {
             flash()
-                ->warning('Faktur Pajak bulan ini belum di unggah')
+                ->warning('Bukti Potong bulan ini belum di unggah')
                 ->flash();
 
             return redirect()
@@ -138,7 +138,7 @@ class ParserController extends Controller
         $hasil = count($result);
         if ($hasil < 1) {
             flash()
-                ->warning('Faktur Pajak Anda belum ada')
+                ->warning('Bukti Potong Anda belum ada')
                 ->flash();
 
             return redirect()

@@ -251,8 +251,8 @@
         }, {
           element: '#fakturPajak',
           popover: {
-            title: 'Faktur Pajak',
-            description: 'Dokumen Faktur pajak dapat dilihat setelah melengkapi identitas kepegawaian'
+            title: 'Bukti Potong',
+            description: 'Dokumen Bukti Potong dapat dilihat setelah melengkapi identitas kepegawaian'
           }
         }, ]
       });
