@@ -50,6 +50,14 @@ class ParserController extends Controller
             if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
                 $result[] = File::basename($file);
                 break;
+            } else {
+                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+                $filterNpwp = Str::remove('-', $filterNpwp);
+                $filterNpwp = Str::remove('.', $filterNpwp);
+                if (str_contains($content, $filterNpwp)) {
+                    $result[] = File::basename($file);
+                    break;
+                }
             }
         }
         $hasil = count($result);
@@ -133,6 +141,14 @@ class ParserController extends Controller
             if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
                 $result[] = File::basename($file);
                 break;
+            } else {
+                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+                $filterNpwp = Str::remove('-', $filterNpwp);
+                $filterNpwp = Str::remove('.', $filterNpwp);
+                if (str_contains($content, $filterNpwp)) {
+                    $result[] = File::basename($file);
+                    break;
+                }
             }
         }
         $hasil = count($result);

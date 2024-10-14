@@ -24,12 +24,17 @@ class PajakPublishedController extends Controller
 
     public function cariDataPajak(Request $request)
     {
-        $isReset = request()->input('isReset');
+        $isReset   = request()->input('isReset');
+        $isMetode2 = request()->input('isMetode2') ?? false;
         try {
             if ($isReset == 'true') {
-                $this->jenisFormulir($request->id, true);
+                $this->jenisFormulir($request->id, true, false);
             } else {
-                $this->jenisFormulir($request->id, false);
+                if ($isMetode2) {
+                    $this->jenisFormulir($request->id, false, true);
+                } else {
+                    $this->jenisFormulir($request->id, false, false);
+                }
             }
             flash()
                 ->success('pencarian data selesai dilakukan')
@@ -111,9 +116,10 @@ class PajakPublishedController extends Controller
         return $final;
     }
 
-    private function jenisFormulir($id, $isReset = false)
+    private function jenisFormulir($id, $isReset = false, $isMetode2 = false)
     {
         $isReset        = $isReset;
+        $isMetode2      = $isMetode2;
         $publishedFile  = PublishFile::find($id);
         $files          = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name);
         $resultFormulir = [];
@@ -131,9 +137,9 @@ class PajakPublishedController extends Controller
             ];
         }
         // $employees = Employee::whereNotNull('npwp')->where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->limit(275)->get();
-        $employees = Employee::whereNotNull('npwp')->where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->get();
-        $filtered  = [];
-        // dd($employees);
+        $employees  = Employee::whereNotNull('npwp')->where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->get();
+        $filtered   = [];
+        $filterNpwp = '';
         foreach ($employees as $employee) {
             // foreach ($resultFormulir as $key => $formulir) {
             //     $squishContent = Str::of($formulir['formulir'])->squish();
@@ -150,8 +156,15 @@ class PajakPublishedController extends Controller
             //         return $filtered;
             //     }
             // }
-            $filtered[] = $this->crawlingData($resultFormulir, Str::remove('/', $employee->npwp), $employee->nik, $employee->nama, $publishedFile->folder_name);
-            // dd($filtered);
+            $filterNpwp = Str::remove('/', $employee->npwp);
+            $filterNpwp = Str::remove('-', $filterNpwp);
+            $filterNpwp = Str::remove('.', $filterNpwp);
+            if ($isMetode2) {
+                $filtered[] = $this->crawlingData($resultFormulir, $filterNpwp, $employee->nik, $employee->nama, $publishedFile->folder_name);
+            } else {
+                $filtered[] = $this->crawlingData($resultFormulir, Str::remove('/', $employee->npwp), $employee->nik, $employee->nama, $publishedFile->folder_name);
+            }
+            $filterNpwp = '';
         }
         // dd($filtered);
         $folderTarget                             = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);

@@ -41,10 +41,9 @@ class PajakController extends Controller
             'tahun'    => 'required|numeric'
         ]);
 
-        $request->session()->reflash();
         if ($validator->fails()) {
             flash()
-                ->error('validasi error')
+                ->error($validator->errors()->first())
                 ->flash();
 
             return redirect()

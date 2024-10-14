@@ -90,20 +90,40 @@
                     </form>
                   </td>
                   <td>
-                    <form action="{{ route('cari-data-pajak') }}"
-                          method="post">
-                      @csrf
-                      <input type="hidden"
-                             name="id"
-                             value="{{ $publish->id }}">
-                      <input type="hidden"
-                             name="isReset"
-                             value="true">
-                      <button class="btn btn-danger btn-sm mx-4">
-                        Reset
-                        <i class="fa-solid fa-arrow-rotate-left"></i>
-                      </button>
-                    </form>
+                    <div class="justify-content-around flex flex-row">
+                      <div class="py-2">
+                        <form action="{{ route('cari-data-pajak') }}"
+                              method="post">
+                          @csrf
+                          <input type="hidden"
+                                 name="id"
+                                 value="{{ $publish->id }}">
+                          <input type="hidden"
+                                 name="isReset"
+                                 value="true">
+                          <button class="btn btn-danger btn-sm mx-4">
+                            Reset
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                          </button>
+                        </form>
+                      </div>
+                      <div class="py-2">
+                        <form action="{{ route('cari-data-pajak') }}"
+                              method="post">
+                          @csrf
+                          <input type="hidden"
+                                 name="id"
+                                 value="{{ $publish->id }}">
+                          <input type="hidden"
+                                 name="isMetode2"
+                                 value="true">
+                          <button class="btn btn-warning btn-sm mx-4">
+                            Metode 2
+                            <i class="fa-solid fa-arrow-rotate-right"></i>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
                   </td>
                 @endif
               </tr>
