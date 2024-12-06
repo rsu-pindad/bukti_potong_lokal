@@ -29,10 +29,11 @@ class KaryawanController extends Controller
                                ->orWhere('nama', 'LIKE', "%{$cari}%")
                                ->orWhere('email', 'LIKE', "%{$cari}%")
                                ->orWhere('no_hp', 'LIKE', "%{$cari}%")
+                               ->orderBy('updated_at', 'DESC')
                                ->paginate(25);
                 // });
             } else {
-                $pegawai = Employee::paginate(25);
+                $pegawai = Employee::orderBy('updated_at', 'DESC')->paginate(25);
             }
         } else {
             if ($cari = $request->input('cari')) {
@@ -46,9 +47,10 @@ class KaryawanController extends Controller
                                        ->orWhere('npwp', 'LIKE', "%{$cari}%")
                                        ->orWhere('epin', 'LIKE', "%{$cari}%");
                                })
+                               ->orderBy('updated_at', 'DESC')
                                ->paginate(25);
             } else {
-                $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])->paginate(25);
+                $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])->orderBy('updated_at', 'DESC')->paginate(25);
             }
         }
 
