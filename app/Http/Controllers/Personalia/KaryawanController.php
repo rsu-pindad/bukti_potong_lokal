@@ -37,16 +37,24 @@ class KaryawanController extends Controller
             }
         } else {
             if ($cari = $request->input('cari')) {
-                $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])
-                               ->where(function ($query) use ($cari) {
-                                   $query
-                                       ->orWhere('npp', 'LIKE', "%{$cari}%")
-                                       ->orWhere('npp_baru', 'LIKE', "%{$cari}%")
-                                       ->orWhere('nik', 'LIKE', "%{$cari}%")
-                                       ->orWhere('nama', 'LIKE', "%{$cari}%")
-                                       ->orWhere('npwp', 'LIKE', "%{$cari}%")
-                                       ->orWhere('epin', 'LIKE', "%{$cari}%");
-                               })
+                // $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])
+                //                ->where(function ($query) use ($cari) {
+                //                    $query
+                //                        ->orWhere('npp', 'LIKE', "%{$cari}%")
+                //                        ->orWhere('npp_baru', 'LIKE', "%{$cari}%")
+                //                        ->orWhere('nik', 'LIKE', "%{$cari}%")
+                //                        ->orWhere('nama', 'LIKE', "%{$cari}%")
+                //                        ->orWhere('npwp', 'LIKE', "%{$cari}%")
+                //                        ->orWhere('epin', 'LIKE', "%{$cari}%");
+                //                })
+                //                ->orderBy('updated_at', 'DESC')
+                //                ->paginate(25);
+                $pegawai = Employee::where('npp', 'LIKE', "%{$cari}%")
+                               ->orWhere('npp_baru', 'LIKE', "%{$cari}%")
+                               ->orWhere('nik', 'LIKE', "%{$cari}%")
+                               ->orWhere('nama', 'LIKE', "%{$cari}%")
+                               ->orWhere('email', 'LIKE', "%{$cari}%")
+                               ->orWhere('no_hp', 'LIKE', "%{$cari}%")
                                ->orderBy('updated_at', 'DESC')
                                ->paginate(25);
             } else {
