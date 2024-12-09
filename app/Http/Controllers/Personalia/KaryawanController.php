@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KaryawanController extends Controller
-{
+{s
     public function index(Request $request)
     {
         if (Auth::user()->hasRole('personalia')) {
@@ -50,7 +50,7 @@ class KaryawanController extends Controller
                                ->orderBy('updated_at', 'DESC')
                                ->paginate(25);
             } else {
-                $pegawai = Employee::whereIn('status_kepegawaian', ['Tetap', 'Kontrak'])->orderBy('updated_at', 'DESC')->paginate(25);
+                $pegawai = Employee::whereIn('status_kepegawaian')->orderBy('updated_at', 'DESC')->paginate(25);
             }
         }
 
