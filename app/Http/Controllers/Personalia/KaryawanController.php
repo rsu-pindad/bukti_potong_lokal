@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KaryawanController extends Controller
-{s
+{
     public function index(Request $request)
     {
         if (Auth::user()->hasRole('personalia')) {
