@@ -47,45 +47,49 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
     public function onRow(Row $row)
     {
         $rowIndex = $row->getIndex();
-        $row      = $row->toArray();
+        $row = $row->toArray();
+
+        // dd($row);
 
         // try {
-            $nik = Employee::where('nik', $row['nik'])->first();
-            if ($nik) {
-                $nik->npp                = $row['npp'];
-                $nik->npp_baru           = $row['npp_baru'];
-                $nik->nama               = $row['nama'];
-                $nik->status_kepegawaian = $row['status_kepegawaian'];
-                $nik->nik                = $row['nik'];
-                $nik->npwp               = $row['npwp'];
-                $nik->status_ptkp        = $row['status_ptkp'];
-                $nik->email              = $row['email'];
-                $nik->no_hp              = $row['no_hp'];
-                $nik->tmt_masuk          = intval($row['tmt_masuk']) == null ? null : intval($row['tmt_masuk']);
-                $nik->tmt_keluar         = intval($row['tmt_keluar']) == null ? null : intval($row['tmt_keluar']);
-                $nik->save();
+        $tmt_masuk = $row['tmt_masuk'] == null ? null : Carbon::createFromFormat('d/m/Y', $row['tmt_masuk']);
+        $tmt_keluar = $row['tmt_keluar'] == null ? null : Carbon::createFromFormat('d/m/Y', $row['tmt_keluar']);
+        $nik = Employee::where('nik', $row['nik'])->first();
+        if ($nik) {
+            $nik->npp = $row['npp'];
+            $nik->npp_baru = $row['npp_baru'];
+            $nik->nama = $row['nama'];
+            $nik->status_kepegawaian = $row['status_kepegawaian'];
+            $nik->nik = $row['nik'];
+            $nik->npwp = $row['npwp'];
+            $nik->status_ptkp = $row['status_ptkp'];
+            $nik->email = $row['email'];
+            $nik->no_hp = $row['no_hp'];
+            $nik->tmt_masuk = $row['tmt_masuk'] == null ? null : $tmt_masuk;
+            $nik->tmt_keluar = $row['tmt_keluar'] == null ? null : $tmt_keluar;
+            $nik->save();
 
-                return false;
-            }
+            return false;
+        }
 
-            $store = Employee::insert([
-                'npp'                => $row['npp'],
-                'npp_baru'           => $row['npp_baru'],
-                'nama'               => $row['nama'],
-                'status_kepegawaian' => $row['status_kepegawaian'],
-                'nik'                => $row['nik'],
-                'npwp'               => $row['npwp'],
-                'status_ptkp'        => $row['status_ptkp'],
-                'email'              => $row['email'],
-                'no_hp'              => $row['no_hp'],
-                'tmt_masuk'          => intval($row['tmt_masuk']) == null ? null : intval($row['tmt_masuk']),
-                'tmt_keluar'         => intval($row['tmt_keluar']) == null ? null : intval($row['tmt_keluar']),
-                'created_at'         => Carbon::now(),
-            ]);
+        $store = Employee::insert([
+            'npp' => $row['npp'],
+            'npp_baru' => $row['npp_baru'],
+            'nama' => $row['nama'],
+            'status_kepegawaian' => $row['status_kepegawaian'],
+            'nik' => $row['nik'],
+            'npwp' => $row['npwp'],
+            'status_ptkp' => $row['status_ptkp'],
+            'email' => $row['email'],
+            'no_hp' => $row['no_hp'],
+            'tmt_masuk' => $row['tmt_masuk'] == null ? null : $tmt_masuk,
+            'tmt_keluar' => $row['tmt_keluar'] == null ? null : $tmt_keluar,
+            'created_at' => Carbon::now(),
+        ]);
 
-            Log::debug($store);
+        Log::debug($store);
 
-            return $store;
+        return $store;
         // } catch (\Throwable $th) {
         //     Log::error($th->getMessage());
         // }

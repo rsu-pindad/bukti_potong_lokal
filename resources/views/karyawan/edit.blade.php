@@ -128,10 +128,15 @@
                         class="form-select @error('st_peg') is-invalid @enderror"
                         name="st_peg">
                   <option hidden>Pilih Status Pegawai</option>
+                  <option value="Direktur"
+                          @if (\Illuminate\Support\Str::upper($pegawai->status_kepegawaian) == 'DIREKTUR') selected="true" @endif>DIREKTUR</option>
                   <option value="KONTRAK"
                           @if (\Illuminate\Support\Str::upper($pegawai->status_kepegawaian) == 'KONTRAK') selected="true" @endif>KONTRAK</option>
                   <option value="TETAP"
                           @if (\Illuminate\Support\Str::upper($pegawai->status_kepegawaian) == 'TETAP') selected="true" @endif>TETAP</option>
+                  <option value="OS"
+                          @if (\Illuminate\Support\Str::upper($pegawai->status_kepegawaian) == 'OS') selected="true" @endif>OS</option>
+                
                 </select>
                 @error('st_peg')
                   <div class="invalid-feedback">
@@ -181,7 +186,9 @@
                        type="date"
                        class="form-control @error('masuk') is-invalid @enderror"
                        name="masuk"
-                       value="@if ($pegawai->tmt_masuk != null) {{ old('masuk', \Illuminate\Support\Carbon::createFromFormat('d/m/Y', $pegawai->tmt_masuk)->format('mm/dd/yyyy')) }} @endif">
+                       @if($pegawai->tmt_masuk != null) 
+                       value="{{old('masuk', Illuminate\Support\Carbon::parse($pegawai->tmt_masuk)->format('Y-m-d'))}}" 
+                       @endif>
                 @error('masuk')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -197,7 +204,9 @@
                        type="date"
                        class="form-control @error('keluar') is-invalid @enderror"
                        name="keluar"
-                       @if ($pegawai->tmt_keluar != null) value="{{ old('keluar', \Illuminate\Support\Carbon::createFromFormat('d/m/Y', $pegawai->tmt_keluar)->format('mm/dd/yyyy')) }}"> @endif
+                       @if ($pegawai->tmt_keluar != null) 
+                       value="{{ old('keluar', \Illuminate\Support\Carbon::parse($pegawai->tmt_keluar)->format('Y-m-d')) }}" 
+                       @endif>
                        @error('keluar')
                   <div class="invalid-feedback">
                     {{ $message }}

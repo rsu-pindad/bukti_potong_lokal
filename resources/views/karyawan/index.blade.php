@@ -432,7 +432,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for=""
+                    <label for="st_peg"
                            class="form-label">Status Pegawai</label>
                     <select id="st_peg"
                             class="form-select @error('st_peg') is-invalid @enderror"
@@ -450,7 +450,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for=""
+                    <label for="st_ptkp"
                            class="form-label">Status PTKP</label>
                     <select id="st_ptkp"
                             class="form-select @error('st_ptkp') is-invalid @enderror"
