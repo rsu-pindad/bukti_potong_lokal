@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->date('tmt_masuk')->nullable(true)->change();
-            $table->date('tmt_keluar')->nullable(true)->change();
+            $table->timestamp('tmt_masuk')->nullable(true)->change();
+            $table->timestamp('tmt_keluar')->nullable(true)->change();
         });
     }
 

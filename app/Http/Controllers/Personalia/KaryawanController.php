@@ -218,8 +218,8 @@ class KaryawanController extends Controller
             $employee->no_hp              = $validator->safe()->no_hp;
             $employee->status_ptkp        = $validator->safe()->st_ptkp;
             $employee->status_kepegawaian = $validator->safe()->st_peg;
-            $employee->tmt_masuk          = $validator->safe()->masuk == null ? null : Carbon::parse($validator->safe()->masuk)->format('d/m/Y');
-            $employee->tmt_keluar         = $validator->safe()->keluar == null ? null : Carbon::parse($validator->safe()->keluar)->format('d/m/Y');
+            $employee->tmt_masuk          = $validator->safe()->masuk == null ? null : Carbon::parse($validator->safe()->masuk)->format('Y-m-d');
+            $employee->tmt_keluar         = $validator->safe()->keluar == null ? null : Carbon::parse($validator->safe()->keluar)->format('Y-m-d');
             $employee->save();
             flash()
                 ->success('Data pegawai berhasil di perbarui')
