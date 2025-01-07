@@ -49,7 +49,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         $rowIndex = $row->getIndex();
         $row      = $row->toArray();
 
-        try {
+        // try {
             $nik = Employee::where('nik', $row['nik'])->first();
             if ($nik) {
                 $nik->npp                = $row['npp'];
@@ -61,8 +61,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
                 $nik->status_ptkp        = $row['status_ptkp'];
                 $nik->email              = $row['email'];
                 $nik->no_hp              = $row['no_hp'];
-                $nik->tmt_masuk          = $row['tmt_masuk'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_masuk']))->format('d/m/Y');
-                $nik->tmt_keluar         = $row['tmt_keluar'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_keluar']))->format('d/m/Y');
+                $nik->tmt_masuk          = intval($row['tmt_masuk']) == null ? null : intval($row['tmt_masuk']);
+                $nik->tmt_keluar         = intval($row['tmt_keluar']) == null ? null : intval($row['tmt_keluar']);
                 $nik->save();
 
                 return false;
@@ -78,17 +78,17 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
                 'status_ptkp'        => $row['status_ptkp'],
                 'email'              => $row['email'],
                 'no_hp'              => $row['no_hp'],
-                'tmt_masuk'          => $row['tmt_masuk'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_masuk']))->format('d/m/Y'),
-                'tmt_keluar'         => $row['tmt_keluar'] == null ? null : Carbon::parse(Date::excelToDateTimeObject($row['tmt_keluar']))->format('d/m/Y'),
+                'tmt_masuk'          => intval($row['tmt_masuk']) == null ? null : intval($row['tmt_masuk']),
+                'tmt_keluar'         => intval($row['tmt_keluar']) == null ? null : intval($row['tmt_keluar']),
                 'created_at'         => Carbon::now(),
             ]);
 
             Log::debug($store);
 
             return $store;
-        } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-        }
+        // } catch (\Throwable $th) {
+        //     Log::error($th->getMessage());
+        // }
     }
 
     public function batchSize(): int
