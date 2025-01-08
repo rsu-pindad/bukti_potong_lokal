@@ -107,7 +107,8 @@
                                 name="npwp"
                                 value="{{ Auth::user()->karyawan->npwp }}"
                                 placeholder="npwp...."
-                                required />
+                                required
+                                readonly />
               </x-forms.floating-labels>
             </div>
             <div class="col-12 mb-3">
@@ -115,20 +116,20 @@
                                        label="PTKP"
                                        required>
                 <x-inputs.select id="ptkp"
-                                 name="ptkp">
-                  <option hidden>Pilih Status PTKP</option>
-                  <option hidden
-                          value="{{ Auth::user()->karyawan->st_ptkp ?? '' }}"
+                                 name="ptkp"
+                                 readonly>
+                  {{-- <option hidden>Pilih Status PTKP</option> --}}
+                  <option value="{{ Auth::user()->karyawan->st_ptkp ?? '' }}"
                           selected
                           readonly>{{ Auth::user()->karyawan->st_ptkp ?? 'Belum Diisi' }}</option>
-                  <option value="TK0">TK0</option>
+                  {{-- <option value="TK0">TK0</option>
                   <option value="TK1">TK1</option>
                   <option value="TK2">TK2</option>
                   <option value="TK3">TK3</option>
                   <option value="K0">K0</option>
                   <option value="K1">K1</option>
                   <option value="K2">K2</option>
-                  <option value="K3">K3</option>
+                  <option value="K3">K3</option> --}}
                 </x-inputs.select>
               </x-forms.floating-labels>
             </div>
@@ -137,13 +138,14 @@
                                        label="Status"
                                        required>
                 <x-inputs.select id="st_peg"
-                                 name="st_peg">
-                  <option hidden>Pilih Status Karyawan</option>
+                                 name="st_peg"
+                                 readonly>
+                  {{-- <option hidden>Pilih Status Karyawan</option> --}}
                   <option value="{{ Auth::user()->karyawan->st_peg ?? '' }}"
                           selected
                           readonly>{{ Auth::user()->karyawan->st_peg ?? 'Belum Diisi' }}</option>
-                  <option value="KONTRAK">KONTRAK</option>
-                  <option value="TETAP">TETAP</option>
+                  {{-- <option value="KONTRAK">KONTRAK</option>
+                  <option value="TETAP">TETAP</option> --}}
                 </x-inputs.select>
               </x-forms.floating-labels>
             </div>
@@ -156,18 +158,19 @@
                                 class="form-check-input"
                                 value="true" />
                 <x-slot:caption>
-                  Dengan ini saya,
-                  menyatakan telah mengisi data kepegawaian dengan benar,
-                  sesuai dengan aturan yang ditetapkan perusahaan
-                  saya siap bertanggung jawab atas data kepegaiawan yang saya isi.
+                  data kepegawaian saya sudah benar.
+                  jika terdapat ketidak sesuaikan data kepegawaian,
+                  mohon hubungi bagian sdm
                 </x-slot:caption>
               </x-forms.check>
             </div>
             <div class="col">
-              <x-inputs.button type="submit"
-                               class="btn btn-primary">
-                Simpan
-              </x-inputs.button>
+              <div class="d-grid gap-2">
+                <x-inputs.button type="submit"
+                                 class="btn btn-primary">
+                  Simpan & Buka Form Bukti Potong
+                </x-inputs.button>
+              </div>
             </div>
           </div>
         </form>

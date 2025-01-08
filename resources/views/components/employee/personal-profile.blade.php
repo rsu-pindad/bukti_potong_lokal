@@ -127,6 +127,9 @@
                   <h6 class="d-flex justify-content-between">Bukti Potong</h6>
                   <hr class="mb-4 mt-0">
                   <div class="row pt-1">
+                    @if (!Auth::user()->karyawan->user_edited)
+                    <p class="text-muted">Mohon lihat informasi kepegawaian</p>
+                    @endif
                     <div class="col-12 mb-3">
                       @php
                         \Carbon\Carbon::setLocale('id');
