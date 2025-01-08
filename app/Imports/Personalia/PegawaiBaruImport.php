@@ -54,8 +54,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
 
         // try {
         if ($row['tmt_masuk'] != null) {
-            $tmt_masuk  = $row['tmt_masuk'];
-            $tmt_keluar = $row['tmt_keluar'];
+            $tmt_masuk  = Carbon::createFromFormat('d/m/Y', $row['tmt_masuk']);
+            $tmt_keluar = Carbon::createFromFormat('d/m/Y', $row['tmt_keluar']);
         } else {
             $tmt_masuk  = null;
             $tmt_keluar = null;
@@ -71,8 +71,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             $nik->status_ptkp        = $row['status_ptkp'];
             $nik->email              = $row['email'];
             $nik->no_hp              = $row['no_hp'];
-            $nik->tmt_masuk          = $row['tmt_masuk'] == null ? null : Carbon::parse($tmt_masuk)->format('Y-m-d');
-            $nik->tmt_keluar         = $row['tmt_keluar'] == null ? null : Carbon::parse($tmt_keluar)->format('Y-m-d');
+            $nik->tmt_masuk          = Carbon::parse($tmt_masuk)->format('Y-m-d');
+            $nik->tmt_keluar         = Carbon::parse($tmt_keluar)->format('Y-m-d');
             $nik->save();
 
             return false;
@@ -88,8 +88,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             'status_ptkp'        => $row['status_ptkp'],
             'email'              => $row['email'],
             'no_hp'              => $row['no_hp'],
-            'tmt_masuk'          => $row['tmt_masuk'] == null ? null : Carbon::parse($tmt_masuk)->format('Y-m-d'),
-            'tmt_keluar'         => $row['tmt_keluar'] == null ? null : Carbon::parse($tmt_keluar)->format('Y-m-d'),
+            'tmt_masuk'          => Carbon::parse($tmt_masuk)->format('Y-m-d'),
+            'tmt_keluar'         => Carbon::parse($tmt_keluar)->format('Y-m-d'),
             'created_at'         => Carbon::now(),
         ]);
 
