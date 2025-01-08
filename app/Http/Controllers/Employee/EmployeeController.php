@@ -50,7 +50,7 @@ class EmployeeController extends Controller
             // $karyawan->st_ptkp     = $validator->safe()->ptkp;
             // $karyawan->st_peg      = $validator->safe()->st_peg;
             $karyawan->user_edited = true;
-            // $karyawan->save();
+            $karyawan->save();
             // flash()
             //     ->success('identitas pegawai berhasil diperbarui')
             //     ->flash();
