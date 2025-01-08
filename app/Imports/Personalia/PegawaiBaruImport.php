@@ -51,6 +51,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
 
         $tmt_masuk  = null;
         $tmt_keluar = null;
+        dd($row);
 
         // try {
         if ($row['tmt_masuk'] != null) {
