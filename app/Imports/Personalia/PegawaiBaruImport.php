@@ -52,8 +52,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         // dd($row);
 
         // try {
-        $tmt_masuk = $row['tmt_masuk'] == null ? null : Carbon::createFromFormat('d/m/Y', $row['tmt_masuk'])->format('Y-m-d');
-        $tmt_keluar = $row['tmt_keluar'] == null ? null : Carbon::createFromFormat('d/m/Y', $row['tmt_keluar'])->format('Y-m-d');
+        $tmt_masuk = $row['tmt_masuk'] == null ? null : Carbon::createFromFormat('d/m/Y', $row['tmt_masuk']);
+        $tmt_keluar = $row['tmt_keluar'] == null ? null : Carbon::createFromFormat('d/m/Y', $row['tmt_keluar']);
         $nik = Employee::where('nik', $row['nik'])->first();
         if ($nik) {
             $nik->npp = $row['npp'];
@@ -65,8 +65,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             $nik->status_ptkp = $row['status_ptkp'];
             $nik->email = $row['email'];
             $nik->no_hp = $row['no_hp'];
-            $nik->tmt_masuk = $row['tmt_masuk'] == null ? null : $tmt_masuk;
-            $nik->tmt_keluar = $row['tmt_keluar'] == null ? null : $tmt_keluar;
+            $nik->tmt_masuk = $row['tmt_masuk'] == null ? null : Carbon::parse($tmt_masuk)->format('Y-m-d');
+            $nik->tmt_keluar = $row['tmt_keluar'] == null ? null : Carbon::parse($tmt_keluar)->format('Y-m-d');
             $nik->save();
 
             return false;
@@ -82,8 +82,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             'status_ptkp' => $row['status_ptkp'],
             'email' => $row['email'],
             'no_hp' => $row['no_hp'],
-            'tmt_masuk' => $row['tmt_masuk'] == null ? null : $tmt_masuk,
-            'tmt_keluar' => $row['tmt_keluar'] == null ? null : $tmt_keluar,
+            'tmt_masuk' => $row['tmt_masuk'] == null ? null : Carbon::parse($tmt_masuk)->format('Y-m-d'),
+            'tmt_keluar' => $row['tmt_keluar'] == null ? null : Carbon::parse($tmt_keluar)->format('Y-m-d'),
             'created_at' => Carbon::now(),
         ]);
 
