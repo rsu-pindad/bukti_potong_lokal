@@ -51,7 +51,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
 
         $tmt_masuk  = null;
         $tmt_keluar = null;
-        dd(Date::excelToDateTimeObject($row));
+        dd(Date::excelToDateTimeObject($row['tmt_masuk']));
 
         // try {
         if ($row['tmt_masuk'] != null) {
