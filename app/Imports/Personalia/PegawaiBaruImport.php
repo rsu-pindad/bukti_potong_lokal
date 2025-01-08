@@ -52,8 +52,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         // dd($row);
 
         // try {
-        $tmt_masuk = $row['tmt_masuk'] == null ? null :  $row['tmt_masuk'];
-        $tmt_keluar = $row['tmt_keluar'] == null ? null :  $row['tmt_keluar'];
+        $tmt_masuk = $row['tmt_masuk'] == null ? null : Carbon::parse( $row['tmt_masuk'])->timestamp;
+        $tmt_keluar = $row['tmt_keluar'] == null ? null : Carbon::parse( $row['tmt_keluar'])->timestamp;
         $nik = Employee::where('nik', $row['nik'])->first();
         if ($nik) {
             $nik->npp = $row['npp'];
