@@ -61,8 +61,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         if ($row['tmt_masuk'] != null) {
             $tmt_masuk        = Date::excelToDateTimeObject($row['tmt_masuk']);
             $tmt_keluar       = Date::excelToDateTimeObject($row['tmt_keluar']);
-            $tmt_masuk_parse  = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_masuk']);
-            $tmt_keluar_parse = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_keluar']);
+            $tmt_masuk_parse  = Carbon::createFromFormat('d/m/Y H:i', $tmt_masuk);
+            $tmt_keluar_parse = Carbon::createFromFormat('d/m/Y H:i', $tmt_keluar);
             $final_masuk      = Carbon::parse($tmt_masuk_parse)->format('Y-m-d');
             $final_keluar     = Carbon::parse($tmt_keluar_parse)->format('Y-m-d');
             // $tmt_masuk  = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_masuk']);
