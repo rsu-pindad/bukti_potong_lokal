@@ -313,7 +313,7 @@
         </div>
       </div>
       <!-- Modal -->
-      <div id="modalCreateEmployee"
+      {{-- <div id="modalCreateEmployee"
            class="modal fade"
            tabindex="-1"
            role="dialog"
@@ -521,7 +521,7 @@
 
           </div>
         </div>
-      </div>
+      </div> --}}
     @endhasexactroles
 
     @hasexactroles('pajak')

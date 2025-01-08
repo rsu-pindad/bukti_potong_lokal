@@ -179,8 +179,9 @@ class KaryawanController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id_karyawan)
     {
+        // dd($id_karyawan);
         $validator = Validator::make($request->all(), [
             'npp' => 'required|digits:5',
             'npwp' => [
@@ -191,7 +192,7 @@ class KaryawanController extends Controller
             'nama' => 'required|min:3',
             'email' => [
                 'nullable',
-                'email:rfc,dns',
+                // 'email:rfc,dns',
                 Rule::unique('employees')->ignore($request->id),
             ],
             'no_hp' => [
@@ -203,14 +204,15 @@ class KaryawanController extends Controller
             'masuk' => 'required|date',
             'keluar' => 'nullable|date'
         ]);
+        // dd($validator->fails());
         if ($validator->fails()) {
-            return redirect('karyawan')
+            return redirect('karyawan/' . $id_karyawan . '/edit')
                        ->withErrors($validator)
                        ->withInput();
         }
 
         try {
-            $employee                     = Employee::find($request->id);
+            $employee                     = Employee::find($id_karyawan);
             $employee->npp                = $validator->safe()->npp;
             $employee->nama               = $validator->safe()->nama;
             $employee->npwp               = $validator->safe()->npwp;
@@ -221,6 +223,7 @@ class KaryawanController extends Controller
             $employee->tmt_masuk          = $validator->safe()->masuk == null ? null : Carbon::parse($validator->safe()->masuk)->format('Y-m-d');
             $employee->tmt_keluar         = $validator->safe()->keluar == null ? null : Carbon::parse($validator->safe()->keluar)->format('Y-m-d');
             $employee->save();
+
             flash()
                 ->success('Data pegawai berhasil di perbarui')
                 ->flash();
