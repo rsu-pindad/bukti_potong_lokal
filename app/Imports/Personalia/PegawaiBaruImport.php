@@ -78,12 +78,12 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         } else {
             $tmt_masuk = null;
         }
-        if ($row['tmt_masuk'] != null) {
-            $tmt_keluar   = Date::excelToDateTimeObject($row['tmt_keluar']);
-            $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
-        } else {
-            $tmt_keluar = null;
-        }
+        // if ($row['tmt_masuk'] != null) {
+        //     $tmt_keluar   = Date::excelToDateTimeObject($row['tmt_keluar']);
+        //     $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
+        // } else {
+        //     $tmt_keluar = null;
+        // }
         $nik = Employee::where('nik', $row['nik'])->first();
         if ($nik) {
             $nik->npp                = $row['npp'];
@@ -96,7 +96,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             $nik->email              = $row['email'];
             $nik->no_hp              = $row['no_hp'];
             $nik->tmt_masuk          = $final_masuk;
-            $nik->tmt_keluar         = $final_keluar;
+            $nik->tmt_keluar         = null;
             $nik->save();
 
             return false;
@@ -113,7 +113,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             'email'              => $row['email'],
             'no_hp'              => $row['no_hp'],
             'tmt_masuk'          => $final_masuk,
-            'tmt_keluar'         => $final_keluar,
+            'tmt_keluar'         => null,
             'created_at'         => Carbon::now(),
         ]);
 
