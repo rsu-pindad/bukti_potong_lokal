@@ -49,14 +49,24 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         $rowIndex = $row->getIndex();
         $row      = $row->toArray();
 
-        $tmt_masuk  = null;
-        $tmt_keluar = null;
-        dd(Date::excelToDateTimeObject($row['tmt_masuk']));
+        $tmt_masuk        = null;
+        $tmt_keluar       = null;
+        $tmt_masuk_parse  = null;
+        $tmt_keluar_parse = null;
+        $final_masuk      = null;
+        $final_keluar     = null;
+        // dd(Date::excelToDateTimeObject($row['tmt_masuk']));
 
         // try {
         if ($row['tmt_masuk'] != null) {
-            $tmt_masuk  = Carbon::createFromFormat('d/m/Y', $row['tmt_masuk']);
-            $tmt_keluar = Carbon::createFromFormat('d/m/Y', $row['tmt_keluar']);
+            $tmt_masuk        = Date::excelToDateTimeObject($row['tmt_masuk']);
+            $tmt_keluar       = Date::excelToDateTimeObject($row['tmt_keluar']);
+            $tmt_masuk_parse  = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_masuk']);
+            $tmt_keluar_parse = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_keluar']);
+            $final_masuk      = Carbon::parse($tmt_masuk_parse)->format('Y-m-d');
+            $final_keluar     = Carbon::parse($tmt_keluar_parse)->format('Y-m-d');
+            // $tmt_masuk  = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_masuk']);
+            // $tmt_keluar = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_keluar']);
         } else {
             $tmt_masuk  = null;
             $tmt_keluar = null;
@@ -72,8 +82,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             $nik->status_ptkp        = $row['status_ptkp'];
             $nik->email              = $row['email'];
             $nik->no_hp              = $row['no_hp'];
-            $nik->tmt_masuk          = Carbon::parse($tmt_masuk)->format('Y-m-d');
-            $nik->tmt_keluar         = Carbon::parse($tmt_keluar)->format('Y-m-d');
+            $nik->tmt_masuk          = $final_masuk;
+            $nik->tmt_keluar         = $final_keluar;
             $nik->save();
 
             return false;
@@ -89,8 +99,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             'status_ptkp'        => $row['status_ptkp'],
             'email'              => $row['email'],
             'no_hp'              => $row['no_hp'],
-            'tmt_masuk'          => Carbon::parse($tmt_masuk)->format('Y-m-d'),
-            'tmt_keluar'         => Carbon::parse($tmt_keluar)->format('Y-m-d'),
+            'tmt_masuk'          => $final_masuk,
+            'tmt_keluar'         => $final_keluar,
             'created_at'         => Carbon::now(),
         ]);
 
