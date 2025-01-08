@@ -45,14 +45,17 @@ class EmployeeController extends Controller
         }
 
         try {
-            $karyawan              = Karyawan::find(Auth::user()->karyawan->id);
-            $karyawan->npwp        = $validator->safe()->npwp;
-            $karyawan->st_ptkp     = $validator->safe()->ptkp;
-            $karyawan->st_peg      = $validator->safe()->st_peg;
-            $karyawan->user_edited = true;
-            $karyawan->save();
+            // $karyawan              = Karyawan::find(Auth::user()->karyawan->id);
+            // $karyawan->npwp        = $validator->safe()->npwp;
+            // $karyawan->st_ptkp     = $validator->safe()->ptkp;
+            // $karyawan->st_peg      = $validator->safe()->st_peg;
+            // $karyawan->user_edited = true;
+            // $karyawan->save();
+            // flash()
+            //     ->success('identitas pegawai berhasil diperbarui')
+            //     ->flash();
             flash()
-                ->success('identitas pegawai berhasil diperbarui')
+                ->success('form pencarian bukti potong terbuka')
                 ->flash();
 
             return redirect()->back();
