@@ -33,7 +33,7 @@ class KaryawanController extends Controller
                                ->paginate(25);
                 // });
             } else {
-                $pegawai = Employee::orderBy('updated_at', 'DESC')->paginate(25);
+                $pegawai = Employee::orderBy('tmt_masuk', 'DESC')->paginate(25);
             }
         } else {
             if ($cari = $request->input('cari')) {
@@ -58,7 +58,7 @@ class KaryawanController extends Controller
                                ->orderBy('updated_at', 'DESC')
                                ->paginate(25);
             } else {
-                $pegawai = Employee::orderBy('updated_at', 'DESC')->paginate(25);
+                $pegawai = Employee::orderBy('tmt_masuk', 'DESC')->paginate(25);
             }
         }
 
