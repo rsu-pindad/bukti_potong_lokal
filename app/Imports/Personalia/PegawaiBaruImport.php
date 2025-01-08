@@ -60,8 +60,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
 
         // try {
         if ($row['tmt_masuk'] != null) {
-            $tmt_masuk  = Date::excelToDateTimeObject($row['tmt_masuk']);
-            $tmt_keluar = Date::excelToDateTimeObject($row['tmt_keluar']);
+            $tmt_masuk = Date::excelToDateTimeObject($row['tmt_masuk']);
 
             // $date_masuk = new DateTime($tmt_masuk);
             // // Convert the DateTime object to a string using the format() method
@@ -72,13 +71,17 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             // $final_keluar = $date_keluar->format('Y-m-d H:i:s');
             // $tmt_masuk_parse  = Carbon::createFromFormat('d/m/Y H:i', $tmt_masuk);
             // $tmt_keluar_parse = Carbon::createFromFormat('d/m/Y H:i', $tmt_keluar);
-            $final_masuk      = Carbon::parse($tmt_masuk)->format('Y-m-d');
-            $final_keluar     = Carbon::parse($tmt_keluar)->format('Y-m-d');
+            $final_masuk = Carbon::parse($tmt_masuk)->format('Y-m-d');
             // dd($final_masuk);
             // $tmt_masuk  = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_masuk']);
             // $tmt_keluar = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_keluar']);
         } else {
-            $tmt_masuk  = null;
+            $tmt_masuk = null;
+        }
+        if ($row['tmt_masuk'] != null) {
+            $tmt_keluar   = Date::excelToDateTimeObject($row['tmt_keluar']);
+            $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
+        } else {
             $tmt_keluar = null;
         }
         $nik = Employee::where('nik', $row['nik'])->first();
