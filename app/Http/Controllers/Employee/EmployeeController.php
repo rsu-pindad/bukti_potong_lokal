@@ -45,11 +45,11 @@ class EmployeeController extends Controller
         }
 
         try {
-            // $karyawan              = Karyawan::find(Auth::user()->karyawan->id);
+            $karyawan              = Karyawan::find(Auth::user()->karyawan->id);
             // $karyawan->npwp        = $validator->safe()->npwp;
             // $karyawan->st_ptkp     = $validator->safe()->ptkp;
             // $karyawan->st_peg      = $validator->safe()->st_peg;
-            // $karyawan->user_edited = true;
+            $karyawan->user_edited = true;
             // $karyawan->save();
             // flash()
             //     ->success('identitas pegawai berhasil diperbarui')
