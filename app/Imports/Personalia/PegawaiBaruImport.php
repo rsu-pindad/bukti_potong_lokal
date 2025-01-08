@@ -74,7 +74,7 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             // $tmt_keluar_parse = Carbon::createFromFormat('d/m/Y H:i', $tmt_keluar);
             $final_masuk      = Carbon::parse($tmt_masuk)->format('Y-m-d');
             $final_keluar     = Carbon::parse($tmt_keluar)->format('Y-m-d');
-            dd($final_masuk);
+            // dd($final_masuk);
             // $tmt_masuk  = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_masuk']);
             // $tmt_keluar = Carbon::createFromFormat('d/m/Y H:i', $row['tmt_keluar']);
         } else {
