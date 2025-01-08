@@ -3,6 +3,7 @@
 namespace App\Imports\Personalia;
 
 use App\Models\Employee;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
@@ -16,7 +17,6 @@ use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Row;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
-use Carbon\Carbon;
 
 class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates
 {
@@ -54,8 +54,8 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
 
         // try {
         if ($row['tmt_masuk'] != null) {
-            $tmt_masuk  = Carbon::createFromFormat('d/m/Y', $row['tmt_masuk'])->toDateTimeString();
-            $tmt_keluar = Carbon::createFromFormat('d/m/Y', $row['tmt_keluar'])->toDateTimeString();
+            $tmt_masuk  = $row['tmt_masuk'];
+            $tmt_keluar = $row['tmt_keluar'];
         } else {
             $tmt_masuk  = null;
             $tmt_keluar = null;
