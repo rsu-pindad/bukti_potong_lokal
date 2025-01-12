@@ -35,14 +35,14 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         $nik = Employee::where('nik', $row['nik'])->first();
         if ($nik) {
             if ($row['tmt_masuk'] != null) {
-                $tmt_masuk   = Date::excelToDateTimeObject($row['tmt_masuk']);
-                $final_masuk = Carbon::parse($tmt_masuk)->format('Y-m-d');
+                $tmt_masuk   = $row['tmt_masuk'];
+                $final_masuk = Carbon::createFromFormat('d/m/Y',$tmt_masuk)->format('Y-m-d');
             } else {
                 $tmt_masuk = null;
             }
-            if ($row['tmt_masuk'] != null) {
-                $tmt_keluar   = Date::excelToDateTimeObject($row['tmt_keluar']);
-                $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
+            if ($row['tmt_keluar'] != null) {
+                $tmt_keluar   = $row['tmt_keluar'];
+                $final_keluar = Carbon::createFromFormat('d/m/Y',$tmt_keluar)->format('Y-m-d');
             } else {
                 $tmt_keluar = null;
             }

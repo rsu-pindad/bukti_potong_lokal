@@ -14,7 +14,7 @@ use App\Http\Controllers\Pajak\PajakController;
 use App\Http\Controllers\Pajak\PajakPublishedController;
 use App\Http\Controllers\Personalia\KaryawanController;
 use App\Http\Controllers\Personalia\PegawaiController;
-use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\Tables\TablesEmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,10 +30,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
     Route::controller(LoginController::class)->group(function () {
-        Route::get('/', 'index')->name('auth/login');
+        Route::get('/', 'index')->name('auth-login');
         Route::get('/login', 'index')->name('login');
-
-        Route::post('authenticate', 'authenticate')->name('auth/authenticate');
+        Route::post('/authenticate', 'authenticate')->name('auth-authenticate');
     });
 
     Route::controller(DaftarController::class)->group(function () {
@@ -87,12 +86,15 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::group(['prefix' => 'pajak_manager'], function () {
-            Cache::flush();
+            Illuminate\Support\Facades\Cache::flush();
             \UniSharp\LaravelFilemanager\Lfm::routes();
         });
     });
 
     Route::group(['middleware' => 'role:personalia|pajak'], function () {
+        Route::get('/employee/index', [TablesEmployeeController::class, 'index'])->name('employee-index');
+        Route::delete('/employee/destroy/{id}', [TablesEmployeeController::class, 'destroy'])->name('employee-destroy');
+
         Route::controller(KaryawanController::class)->group(function () {
             Route::get('karyawan{cari?}', 'index')->name('karyawan');
             Route::post('karyawan/store', 'store')->name('karyawan-store');

@@ -22,7 +22,7 @@
             </h4>
           </div>
           <div class="card-body">
-            <form action="{{ route('auth/authenticate') }}"
+            <form action="{{ route('auth-authenticate') }}"
                   method="post">
               @csrf
               <label for="username"

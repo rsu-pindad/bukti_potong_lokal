@@ -9,7 +9,6 @@
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false">
-            Menu
             <i class="fa-solid fa-ellipsis"></i>
           </button>
           <ul class="dropdown-menu">
@@ -28,7 +27,7 @@
                    class="dropdown-item"
                    data-bs-toggle="modal"
                    data-bs-target="#modalImportEmployee">
-                  Import (Upload) <br>Data Pegawai
+                  Import <br>Pegawai
                   <i class="fa-solid fa-file-import text-success ml-4"></i>
                 </a>
               </li>
@@ -38,7 +37,7 @@
               <li>
                 <a class="dropdown-item"
                    href="{{ route('karyawan-export') }}">
-                  Eksport (Download) <br>Data Pegawai
+                  Eksport <br>Pegawai
                   <i class="fa-solid fa-file-export text-success ml-4"></i>
                 </a>
               </li>
@@ -110,12 +109,12 @@
               <th>No</th>
               <th>NPP</th>
               <th>Nama</th>
-              <th>Status Pegawai</th>
+              <th>Pegawai</th>
               <th>NIK</th>
               <th>NPWP</th>
-              <th>Status PTKP</th>
+              <th>PTKP</th>
               <th>Email</th>
-              <th>No Hp</th>
+              <th>HP</th>
               @hasexactroles('personalia')
                 <th>TMT Masuk</th>
               @endhasexactroles

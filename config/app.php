@@ -50,7 +50,7 @@ return [
      * | your application so that it is used when running Artisan tasks.
      * |
      */
-    'url'       => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
     'asset_url' => env('ASSET_URL'),
 
     /*
@@ -99,7 +99,7 @@ return [
      * | localized telephone numbers, street address information and more.
      * |
      */
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'id_ID',
 
     /*
      * |--------------------------------------------------------------------------
@@ -111,7 +111,7 @@ return [
      * | will not be safe. Please do this before deploying an application!
      * |
      */
-    'key'    => env('APP_KEY'),
+    'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
 
     /*
@@ -156,6 +156,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         ZanySoft\Zip\ZipServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -170,7 +171,7 @@ return [
      */
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Zip'   => ZanySoft\Zip\Facades\Zip::class,
+        'Zip' => ZanySoft\Zip\Facades\Zip::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
     'seeder_default' => env('SEEDER_DEFAULT', ''),

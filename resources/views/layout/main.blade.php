@@ -2,20 +2,12 @@
 <html lang="en">
 
   <head>
-    <title>{{ $title }}</title>
+    <title>{{ $title ?? 'PMU'}}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {{-- <title>{{ config('app.name', 'Bukti Potong') }}</title> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{-- @bassetDirectory(base_path('vendor/datatables.net/'), 'datatables.net')
-    @basset('datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css')
-    @basset('datatables.net/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')
-    @basset('datatables.net/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')
-    @basset('datatables.net/datatables.net-rowgroup-bs5/css/rowGroup.bootstrap5.min.css')
-    @basset('datatables.net/datatables.net-scroller-bs5/css/scroller.bootstrap5.min.css') --}}
 
     @stack('styles')
 
@@ -133,13 +125,6 @@
       </div>
     </main>
 
-    {{-- @bassetDirectory(base_path('vendor/datatables.net/'), 'datatables.net')
-    @basset('datatables.net/datatables.net/js/dataTables.js')
-    @basset('datatables.net/datatables.net-bs5/js/dataTables.bootstrap5.min.js')
-    @basset('datatables.net/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js')
-    @basset('datatables.net/datatables.net-fixedheader-bs5/js/fixedHeader.bootstrap5.min.js')
-    @basset('datatables.net/datatables.net-rowgroup-bs5/js/rowGroup.bootstrap5.min.js')
-    @basset('datatables.net/datatables.net-scroller-bs5/js/scroller.bootstrap5.min.js') --}}
     <script type="module">
       $(function() {
         $("form").submit(function() {
