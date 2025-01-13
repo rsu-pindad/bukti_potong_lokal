@@ -140,7 +140,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'role:employee', 'prefix' => 'personal'], function () {
         // Route::controller(EmployeeController::class)->group(function () {
         Route::get('/', [PersonalController::class,       'index'])->name('personal');
-        Route::put('/edit', [PersonalController::class,   'edit'])->name('personal-edited');
+        Route::put('/edit', [PersonalController::class,   'edit'])->name('personal-edit');
         Route::patch('/edit', [PersonalController::class, 'update'])->name('personal-update');
         // Route::get('employee/pajak/', 'lihatDokumen')->name('pajak')->middleware('signed');
         // });
