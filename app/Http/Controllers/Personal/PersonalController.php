@@ -19,6 +19,51 @@ class PersonalController extends Controller
         return view('employee.beranda');
     }
 
+    public function edit(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
+            ],
+            'nama' => 'required',
+            'notel' => [
+                'required',
+                'numeric',
+                Rule::unique('karyawan', 'no_tel')->ignore(Auth::user()->karyawan->id),
+            ],
+        ]);
+
+        $request->session()->reflash();
+
+        if ($validator->fails()) {
+            return redirect()
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
+        }
+
+        try {
+            $karyawan         = Karyawan::find(Auth::user()->karyawan->id);
+            $karyawan->nama   = $validator->safe()->nama;
+            $karyawan->email  = $validator->safe()->email;
+            $karyawan->no_tel = $validator->safe()->notel;
+            $karyawan->save();
+            flash()
+                ->success('identitas pribadi berhasil diperbarui')
+                ->flash();
+
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            flash()
+                ->error($th->getMessage())
+                ->flash();
+
+            return redirect()->back()->withInput();
+        }
+    }
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -58,51 +103,6 @@ class PersonalController extends Controller
             //     ->flash();
             flash()
                 ->success('form pencarian bukti potong terbuka')
-                ->flash();
-
-            return redirect()->back();
-        } catch (\Throwable $th) {
-            flash()
-                ->error($th->getMessage())
-                ->flash();
-
-            return redirect()->back()->withInput();
-        }
-    }
-
-    public function edit(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
-            ],
-            'nama' => 'required',
-            'notel' => [
-                'required',
-                'numeric',
-                Rule::unique('karyawan', 'no_tel')->ignore(Auth::user()->karyawan->id),
-            ],
-        ]);
-
-        $request->session()->reflash();
-
-        if ($validator->fails()) {
-            return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
-        }
-
-        try {
-            $karyawan         = Karyawan::find(Auth::user()->karyawan->id);
-            $karyawan->nama   = $validator->safe()->nama;
-            $karyawan->email  = $validator->safe()->email;
-            $karyawan->no_tel = $validator->safe()->notel;
-            $karyawan->save();
-            flash()
-                ->success('identitas pribadi berhasil diperbarui')
                 ->flash();
 
             return redirect()->back();

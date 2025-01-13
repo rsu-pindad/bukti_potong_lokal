@@ -128,7 +128,7 @@
                   <hr class="mb-4 mt-0">
                   <div class="row pt-1">
                     @if (!Auth::user()->karyawan->user_edited)
-                    <p class="text-muted">Mohon lihat informasi kepegawaian</p>
+                      <p class="text-muted">Mohon lihat informasi kepegawaian</p>
                     @endif
                     <div class="col-12 mb-3">
                       @php
@@ -139,19 +139,36 @@
                       <h6>Status Bulan {{ $bulan_ini }}</h6>
                       <p class="text-muted">
                         @if (Auth::user()->karyawan->user_edited === true)
-                          <form action="{{ URL::signedRoute('personal-parser-bp') }}"
-                                method="post">
-                            @csrf
-                            <input type="hidden"
-                                   name="bulan_ini"
-                                   value="{{ $bulan_ini_signed }}"
-                                   readonly>
-                            <button type="submit"
-                                    class="btn btn-outline-primary btn-sm">
-                              Lihat
-                              <i class="fa-solid fa-eye"></i>
-                            </button>
-                          </form>
+                          <div class="d-flex">
+                            <form action="{{ URL::signedRoute('personal-parser-bp') }}"
+                                  method="post"
+                                  class="mx-2">
+                              @csrf
+                              <input type="hidden"
+                                     name="bulan_ini"
+                                     value="{{ $bulan_ini_signed }}"
+                                     readonly>
+                              <button type="submit"
+                                      class="btn btn-outline-primary btn-sm">
+                                Lihat
+                                <i class="fa-solid fa-eye"></i>
+                              </button>
+                            </form>
+                            <form action="{{ URL::signedRoute('personal-parser-bp-download') }}"
+                                  method="post"
+                                  class="mx-2">
+                              @csrf
+                              <input type="hidden"
+                                     name="bulan_ini"
+                                     value="{{ $bulan_ini_signed }}"
+                                     readonly>
+                              <button type="submit"
+                                      class="btn btn-outline-secondary btn-sm">
+                                Lihat
+                                <i class="fa-solid fa-download"></i>
+                              </button>
+                            </form>
+                          </div>
                           {{-- <a href="{ URL::signedRoute('personal-parser-bp') }" target="_blank">Lihat</a> --}}
                         @else
                           Belum Siap
