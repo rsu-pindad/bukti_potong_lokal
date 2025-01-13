@@ -5,7 +5,7 @@
       <h4>Publish File</h4>
     </div>
     <div class="card-body">
-      <form action="{{ route('upload-bukti-potong') }}"
+      <form action="{{ route('pajak-file-upload-bukti-potong') }}"
             method="post"
             enctype="multipart/form-data">
         @csrf
@@ -51,7 +51,7 @@
                     <span class="badge rounded-pill text-bg-success p-2">{{ $folderTanggal }}</span>
                   </td>
                   <td class="text-center">
-                    <form action="{{ route('pajak-unpublish') }}"
+                    <form action="{{ route('pajak-file-unpublish') }}"
                           method="post">
                       @csrf
                       <input type="hidden"
@@ -71,16 +71,16 @@
                     <span class="badge rounded-pill text-bg-secondary p-2">Unpublish</span>
                   </td>
                   <td class="text-center">
-                    <div class="d-flex flex-row justify-content-evenly">
+                    <div class="d-flex justify-content-evenly flex-row">
                       <div>
-                        <a href="{{ route('pajak-publish', ['filename' => $itemName['3']]) }}"
+                        <a href="{{ route('pajak-file-publish', ['filename' => $itemName['3']]) }}"
                            class="btn btn-primary">
                           Set
                           <i class="fa-solid fa-share-nodes"></i>
                         </a>
                       </div>
                       <div>
-                        <form action="{{ route('remove-bukti-potong') }}"
+                        <form action="{{ route('pajak-file-remove-bukti-potong') }}"
                               method="post">
                           @csrf
                           <input type="hidden"
@@ -99,9 +99,10 @@
                 @endif
               </tr>
             @empty
-            <tr>
-              <td class="text-center" colspan="4">Belum ada data file pajak</td>
-            </tr>
+              <tr>
+                <td class="text-center"
+                    colspan="4">Belum ada data file pajak</td>
+              </tr>
             @endforelse
           </tbody>
         </table>

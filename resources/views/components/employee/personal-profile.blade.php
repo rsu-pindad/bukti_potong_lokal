@@ -139,7 +139,7 @@
                       <h6>Status Bulan {{ $bulan_ini }}</h6>
                       <p class="text-muted">
                         @if (Auth::user()->karyawan->user_edited === true)
-                          <form action="{{ URL::signedRoute('pajak-parser') }}"
+                          <form action="{{ URL::signedRoute('personal-parser-bp') }}"
                                 method="post">
                             @csrf
                             <input type="hidden"
@@ -152,7 +152,7 @@
                               <i class="fa-solid fa-eye"></i>
                             </button>
                           </form>
-                          {{-- <a href="{ URL::signedRoute('pajak-parser') }" target="_blank">Lihat</a> --}}
+                          {{-- <a href="{ URL::signedRoute('personal-parser-bp') }" target="_blank">Lihat</a> --}}
                         @else
                           Belum Siap
                         @endif
@@ -164,7 +164,7 @@
                       <h6>Status Bulan Lain</h6>
                       <p class="text-muted">
                         @if (Auth::user()->karyawan->user_edited === true)
-                          <form action="{{ URL::signedRoute('pajak-parser-search') }}"
+                          <form action="{{ URL::signedRoute('personal-parser-bp-search') }}"
                                 method="post">
                             @csrf
                             <div class="row mb-2">

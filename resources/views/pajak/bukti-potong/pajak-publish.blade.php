@@ -6,14 +6,14 @@
     </div>
     <div class="card-body">
       <div class="card-title mb-4">
-        <a href="{{ route('pajak-index') }}"
+        <a href="{{ route('pajak-file-index') }}"
            class="btn btn-outline-secondary">
           <i class="fa-solid fa-chevron-left mr-2"></i>
           Kembali
         </a>
       </div>
       <form class="row g-2"
-            action="{{ route('pajak-published') }}"
+            action="{{ route('pajak-file-published') }}"
             method="post">
         @csrf
         <div class="row mb-3">

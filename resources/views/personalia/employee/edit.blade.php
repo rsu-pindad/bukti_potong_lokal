@@ -6,14 +6,14 @@
     </div>
     <div class="card-body">
       <div class="card-title">
-        <a href="{{ route('karyawan') }}"
+        <a href="{{ route('personalia-employee-index') }}"
            class="btn btn-outline-secondary">
           <i class="fa-solid fa-chevron-left mr-2"></i>
           Kembali
         </a>
       </div>
       <div>
-        <form action="{{ route('karyawan-update', ['id' => $pegawai->id]) }}"
+        <form action="{{ route('personalia-employee-update', ['id' => $pegawai->id]) }}"
               method="post">
           @csrf
           @method('patch')
@@ -136,7 +136,7 @@
                           @if (\Illuminate\Support\Str::upper($pegawai->status_kepegawaian) == 'TETAP') selected="true" @endif>TETAP</option>
                   <option value="OS"
                           @if (\Illuminate\Support\Str::upper($pegawai->status_kepegawaian) == 'OS') selected="true" @endif>OS</option>
-                
+
                 </select>
                 @error('st_peg')
                   <div class="invalid-feedback">
@@ -186,9 +186,7 @@
                        type="date"
                        class="form-control @error('masuk') is-invalid @enderror"
                        name="masuk"
-                       @if($pegawai->tmt_masuk != null) 
-                       value="{{old('masuk', Illuminate\Support\Carbon::parse($pegawai->tmt_masuk)->format('Y-m-d'))}}" 
-                       @endif>
+                       @if ($pegawai->tmt_masuk != null) value="{{ old('masuk', Illuminate\Support\Carbon::parse($pegawai->tmt_masuk)->format('Y-m-d')) }}" @endif>
                 @error('masuk')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -204,25 +202,23 @@
                        type="date"
                        class="form-control @error('keluar') is-invalid @enderror"
                        name="keluar"
-                       @if ($pegawai->tmt_keluar != null) 
-                       value="{{ old('keluar', \Illuminate\Support\Carbon::parse($pegawai->tmt_keluar)->format('Y-m-d')) }}" 
-                       @endif>
-                       @error('keluar')
+                       @if ($pegawai->tmt_keluar != null) value="{{ old('keluar', \Illuminate\Support\Carbon::parse($pegawai->tmt_keluar)->format('Y-m-d')) }}" @endif>
+                @error('keluar')
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
                 @enderror
-                       </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-2">
-                <button type="submit"
-                        class="btn btn-primary">
-                  Perbarui
-                </button>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
+              <button type="submit"
+                      class="btn btn-primary">
+                Perbarui
+              </button>
             </div>
+          </div>
         </form>
       </div>
     </div>

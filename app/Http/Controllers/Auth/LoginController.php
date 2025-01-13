@@ -14,7 +14,7 @@ class LoginController extends Controller
     {
         $data = ['title' => 'Halaman Login Bukti Potong'];
 
-        return view('auth.index', $data);
+        return view('guest.login', $data);
     }
 
     public function authenticate(Request $request): RedirectResponse
@@ -35,13 +35,13 @@ class LoginController extends Controller
                 ->addSuccess('selamat datang ' . Auth::user()->username);
 
             if ($user->hasRole('pajak')) {
-                return redirect()->intended(route('pajak-index'));
+                return redirect()->intended(route('pajak-file-index'));
             }
             if ($user->hasRole('super-admin')) {
                 return redirect()->intended(route('akses'));
             }
             if ($user->hasRole('personalia')) {
-                return redirect()->intended(route('karyawan'));
+                return redirect()->intended(route('personalia-employee-index'));
             }
 
             return redirect()->intended(route('employee'));

@@ -6,14 +6,14 @@
     </div>
     <div class="card-body">
       <div class="card-title mb-4">
-        <a href="{{ route('pajak-published-index') }}"
+        <a href="{{ route('pajak-published-file-index') }}"
            class="btn btn-outline-secondary">
           <i class="fa-solid fa-chevron-left mr-2"></i>
           Kembali
         </a>
       </div>
       <div>
-        <form action="{{ route('published-file-data-pajak') }}"
+        <form action="{{ route('pajak-published-file-data-pajak') }}"
               method="get">
           <input type="hidden"
                  name="file"
@@ -56,7 +56,7 @@
                 <td>
                   <a target="_blank"
                      class="btn btn-outline-danger"
-                     href="{{ route('published-cari-file-pajak', ['folder' => $file->file_path, 'filename' => $file->file_name]) }}">
+                     href="{{ route('pajak-published-cari-file-pajak', ['folder' => $file->file_path, 'filename' => $file->file_name]) }}">
                     <i class="fa-solid fa-file-pdf"></i>
                   </a>
                 </td>

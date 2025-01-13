@@ -2,13 +2,13 @@
 <html lang="en">
 
   <head>
-    <title>{{ $title ?? 'PMU'}}</title>
+    <title>{{ $title ?? 'PMU' }}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    
     @stack('styles')
 
     <style>
@@ -28,6 +28,7 @@
   </head>
 
   <body>
+
     <header class="border-bottom py-2">
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container">
@@ -47,15 +48,24 @@
           <div id="collapsibleNavId"
                class="navbar-collapse collapse">
             <ul class="navbar-nav mt-lg-0 me-auto mt-2">
-              @hasanyrole(['personalia', 'pajak'])
+              @hasexactroles('personalia')
                 <li class="nav-item border-top border-dark mx-2">
-                  <a class="nav-link {{ Route::currentRouteName() == 'karyawan' ? 'active' : '' }}"
-                     href="{{ route('karyawan') }}"
+                  <a class="nav-link {{ Route::currentRouteName() == 'personalia-employee-index' ? 'active' : '' }}"
+                     href="{{ route('personalia-employee-index') }}"
                      aria-current="page">
                     <i class="fa-solid fa-users"></i> Pegawai
                   </a>
                 </li>
-              @endhasanyrole
+              @endhasexactroles
+              @hasexactroles('pajak')
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-employee-index' ? 'active' : '' }}"
+                     href="{{ route('pajak-employee-index') }}"
+                     aria-current="page">
+                    <i class="fa-solid fa-users"></i> Pegawai
+                  </a>
+                </li>
+              @endhasexactroles
               @hasexactroles('super-admin')
                 <li class="nav-item dropdown border-top border-dark mx-2">
                   <a class="nav-link dropdown-toggle"
@@ -86,14 +96,14 @@
               @endhasexactroles
               @hasexactroles('pajak')
                 <li class="nav-item border-top border-dark mx-2">
-                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-index' ? 'active' : '' }}"
-                     href="{{ route('pajak-index') }}">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-file-index' ? 'active' : '' }}"
+                     href="{{ route('pajak-file-index') }}">
                     <i class="fa-solid fa-bullhorn"></i> Publish File
                   </a>
                 </li>
                 <li class="nav-item border-top border-dark mx-2">
-                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-published-index' ? 'active' : '' }}"
-                     href="{{ route('pajak-published-index') }}">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-published-file-index' ? 'active' : '' }}"
+                     href="{{ route('pajak-published-file-index') }}">
                     <i class="fa-solid fa-bullhorn"></i> Published File
                   </a>
                 </li>
@@ -135,6 +145,7 @@
       const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
       const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
+
     @stack('scripts')
     @stack('modals')
 

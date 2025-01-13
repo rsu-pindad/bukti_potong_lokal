@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Pajak;
 
+use App\Exports\Pajak\EpinKaryawanExport;
 use App\Http\Controllers\Controller;
 use App\Imports\Pajak\EpinPegawaiImport;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\{Storage, Validator};
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Carbon;
-use App\Exports\Pajak\EpinKaryawanExport;
 
-class EpinKaryawanController extends Controller
+class PajakEpinEmployeeController extends Controller
 {
     public function edit(Request $request)
     {
-        return view('karyawan.epin-edit')->with([
+        return view('pajak.employee.epin-edit')->with([
             'title'   => 'Edit Epin Pegawai',
             'pegawai' => Employee::find($request->id),
         ]);
@@ -35,7 +34,7 @@ class EpinKaryawanController extends Controller
             ],
         ]);
         if ($validator->fails()) {
-            return redirect('karyawan')
+            return redirect('pajak-employee')
                        ->withErrors($validator)
                        ->withInput();
         }
@@ -45,10 +44,10 @@ class EpinKaryawanController extends Controller
             $employee->epin = $validator->safe()->epin;
             $employee->save();
             flash()
-                ->success('Data epin pegawai berhasil di perbarui')
+                ->success('Data epin pegawai berhasil diperbarui')
                 ->flash();
 
-            return redirect('karyawan');
+            return redirect('pajak-employee');
         } catch (\Throwable $th) {
             flash()
                 ->error($th->getMessage())
@@ -96,5 +95,4 @@ class EpinKaryawanController extends Controller
             $pathLokasiFile,
         );
     }
-
 }

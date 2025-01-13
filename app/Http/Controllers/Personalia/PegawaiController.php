@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Personalia;
 
 use App\Exports\PegawaiExport;
 use App\Http\Controllers\Controller;
-use App\Imports\PegawaiBaruImport;
+use App\Imports\PersonaliaEmployeeImport;
 use App\Imports\PegawaiImport;
 use App\Models\Pegawai;
 use Carbon\Carbon;
@@ -55,7 +55,7 @@ class PegawaiController extends Controller
             'filePegawai' => 'required'
         ]);
         try {
-            Excel::import(new PegawaiBaruImport, $request->file('filePegawai'));
+            Excel::import(new PersonaliaEmployeeImport, $request->file('filePegawai'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('toast_error', 'upload file yang benar!');
         }

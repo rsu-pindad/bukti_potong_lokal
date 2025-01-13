@@ -16,7 +16,7 @@ class PajakPublishedController extends Controller
 {
     public function index()
     {
-        return view('pajak.pajak-published-file')->with([
+        return view('pajak.bukti-potong.pajak-published-file')->with([
             'title'     => 'Published Pajak',
             'published' => PublishFile::paginate(15),
         ]);
@@ -246,7 +246,7 @@ class PajakPublishedController extends Controller
         }
         $files = $files->paginate(15);
 
-        return view('pajak.pajak-published-file-name', compact(['title', 'published', 'files']));
+        return view('pajak.bukti-potong.pajak-published-file-name', compact(['title', 'published', 'files']));
     }
 
     public function publishedCariFilePajak(Request $request)

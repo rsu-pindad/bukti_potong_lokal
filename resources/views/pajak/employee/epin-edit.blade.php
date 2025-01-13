@@ -6,14 +6,14 @@
     </div>
     <div class="card-body">
       <div class="card-title">
-        <a href="{{ route('karyawan') }}"
+        <a href="{{ route('personalia-employee-index') }}"
            class="btn btn-outline-secondary">
           <i class="fa-solid fa-chevron-left mr-2"></i>
           Kembali
         </a>
       </div>
       <div>
-        <form action="{{ route('karyawan-epin-update', ['id' => $pegawai->id]) }}"
+        <form action="{{ route('pajak-employee-epin-update', ['id' => $pegawai->id]) }}"
               method="post">
           @csrf
           @method('patch')

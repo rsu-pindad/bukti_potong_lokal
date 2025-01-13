@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
       {{-- <div class="card-title mb-4">
-        <a href="{{ route('pajak-index') }}"
+        <a href="{{ route('pajak-file-index') }}"
            class="btn btn-outline-secondary">
           <i class="fa-solid fa-chevron-left mr-2"></i>
           Publish
@@ -38,7 +38,7 @@
                   <td>{{ $publish->folder_jumlah_final }}</td>
                   <td>{{ $publish->folder_jumlah_tidak_final }}</td>
                   <td>
-                    <form action="{{ route('cari-data-pajak') }}"
+                    <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
                           method="post">
                       @csrf
                       <input type="hidden"
@@ -58,7 +58,7 @@
                     <span class="badge rounded-pill text-bg-success p-2">Sudah Dicari</span>
                   </td>
                   <td>
-                    <form action="{{ route('published-file-data-pajak') }}"
+                    <form action="{{ route('pajak-published-file-data-pajak') }}"
                           method="get">
                       <div>
                         <input type="hidden"
@@ -74,7 +74,7 @@
                     </form>
                   </td>
                   <td>
-                    <form action="{{ route('published-file-data-pajak') }}"
+                    <form action="{{ route('pajak-published-file-data-pajak') }}"
                           method="get">
                       <div>
                         <input type="hidden"
@@ -92,7 +92,7 @@
                   <td>
                     <div class="justify-content-around flex flex-row">
                       <div class="py-2">
-                        <form action="{{ route('cari-data-pajak') }}"
+                        <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
                               method="post">
                           @csrf
                           <input type="hidden"
@@ -108,7 +108,7 @@
                         </form>
                       </div>
                       <div class="py-2">
-                        <form action="{{ route('cari-data-pajak') }}"
+                        <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
                               method="post">
                           @csrf
                           <input type="hidden"

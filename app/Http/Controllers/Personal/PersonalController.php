@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Employee;
+namespace App\Http\Controllers\Personal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Karyawan;
@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
+use ZanySoft\Zip\Facades\Zip;
+use ZanySoft\Zip\ZipManager;
 
-class EmployeeController extends Controller
+class PersonalController extends Controller
 {
     public function index(): View
     {
@@ -45,7 +46,7 @@ class EmployeeController extends Controller
         }
 
         try {
-            $karyawan              = Karyawan::find(Auth::user()->karyawan->id);
+            $karyawan = Karyawan::find(Auth::user()->karyawan->id);
             // $karyawan->npwp        = $validator->safe()->npwp;
             // $karyawan->st_ptkp     = $validator->safe()->ptkp;
             // $karyawan->st_peg      = $validator->safe()->st_peg;

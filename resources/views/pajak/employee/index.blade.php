@@ -13,42 +13,13 @@
               <i class="fa-solid fa-ellipsis"></i>
             </button>
             <ul class="dropdown-menu">
-              @hasexactroles('personalia')
-                <li>
-                  <a type="button"
-                     class="dropdown-item"
-                     data-bs-toggle="modal"
-                     data-bs-target="#modalImportEmployee">
-                    Import Pegawai <i class="fa-solid fa-file-import text-success ml-4"></i>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('personalia-employee-export') }}">
-                    Eksport Pegawai <i class="fa-solid fa-file-export text-success ml-4"></i>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('personalia-employee-template') }}">
-                    Template Import <i class="fa-solid fa-table-cells text-danger ml-4"></i>
-                  </a>
-                </li>
-              @endhasexactroles
               @hasexactroles('pajak')
                 <li>
                   <a type="button"
                      class="dropdown-item"
                      data-bs-toggle="modal"
                      data-bs-target="#modalEpinImportEmployee">
-                    Import (Upload) <br>Epin Data Pegawai
-                    <i class="fa-solid fa-file-import text-success ml-4"></i>
+                    Import Epin Pegawai <i class="fa-solid fa-file-import text-success ml-4"></i>
                   </a>
                 </li>
                 <li>
@@ -56,9 +27,8 @@
                 </li>
                 <li>
                   <a class="dropdown-item"
-                     href="{{ route('pajak-karyawan-epin-export') }}">
-                    Eksport (Download) <br>Epin Data Pegawai
-                    <i class="fa-solid fa-file-export text-success ml-4"></i>
+                     href="{{ route('pajak-employee-epin-export') }}">
+                    Eksport Epin Pegawai<i class="fa-solid fa-file-export text-success ml-4"></i>
                   </a>
                 </li>
                 <li>
@@ -66,9 +36,8 @@
                 </li>
                 <li>
                   <a class="dropdown-item"
-                     href="{{ route('pajak-karyawan-epin-template') }}">
-                    Download <br>Template EPin Import
-                    <i class="fa-solid fa-table-cells text-danger ml-4"></i>
+                     href="{{ route('pajak-employee-epin-template') }}">
+                    Template EPin Import <i class="fa-solid fa-table-cells text-danger ml-4"></i>
                   </a>
                 </li>
               @endhasexactroles
@@ -90,6 +59,7 @@
                 <th>NPWP</th>
                 <th>Email</th>
                 <th>No HP</th>
+                <th>Epin</th>
                 <th>Masuk</th>
                 <th>Keluar</th>
                 <th>Update</th>
@@ -105,54 +75,6 @@
 
 @once
   @push('modals')
-    @hasexactroles('personalia')
-      <!-- Modal -->
-      <div id="modalImportEmployee"
-           class="modal fade"
-           tabindex="-1"
-           role="dialog"
-           aria-labelledby="modalTitleId"
-           aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-lg"
-             role="document">
-          <div class="modal-content">
-            <form action="{{ route('personalia-employee-import') }}"
-                  method="post"
-                  enctype="multipart/form-data">
-              @csrf
-              <div class="modal-header">
-                <h5 class="modal-title">Impor Data Pegawai</h5>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label for="filePegawai"
-                         class="form-label">File</label>
-                  <input id="filePegawai"
-                         type="file"
-                         class="form-control @error('filePegawai') is-invalid @enderror"
-                         name="filePegawai"
-                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                         required>
-                  @error('filePegawai')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">Tutup</button>
-                <button type="submit"
-                        class="btn btn-primary">Import
-                  <i class="fa-solid fa-file-import"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    @endhasexactroles
-
     @hasexactroles('pajak')
       <!-- Modal -->
       <div id="modalEpinImportEmployee"
@@ -164,7 +86,7 @@
         <div class="modal-dialog modal-sm modal-lg"
              role="document">
           <div class="modal-content">
-            <form action="{{ route('pajak-karyawan-epin-import') }}"
+            <form action="{{ route('pajak-employee-epin-import') }}"
                   method="post"
                   enctype="multipart/form-data">
               @csrf
@@ -206,7 +128,7 @@
       document.addEventListener("DOMContentLoaded", (e) => {
         e.preventDefault();
         const token = "{{ csrf_token() }}";
-        const apiUrl = '{{ route('personalia-employee-index') }}';
+        const apiUrl = '{{ route('pajak-employee-index') }}';
         let EmployeeTable = new DataTable('#employee-table', {
           processing: true,
           serverSide: true,
@@ -220,7 +142,6 @@
           columns: [{
               data: null,
               render: function(data, type, row, meta) {
-                // return i++;
                 return meta.row + meta.settings._iDisplayStart + 1;
               },
               searchable: false,
@@ -263,6 +184,12 @@
               searchable: false,
             },
             {
+              data: 'epin',
+              name: 'epin',
+              orderable: false,
+              searchable: false,
+            },
+            {
               data: 'tmt_masuk',
               name: 'tmt_masuk',
               class: 'text-left',
@@ -289,62 +216,24 @@
               orderable: false,
               searchable: false,
               render: function(data, type, row, meta) {
-                let htm = $('<a>')
-                  .attr('class', 'btn btn-info btn-sm edit mx-2')
+                return $('<a>')
+                  .attr('class', 'btn btn-secondary btn-sm epin mx-2')
                   .attr('data-id', data)
                   .attr('href', '#')
-                  .text('Edit')
+                  .text('Epin')
                   .wrap('<div></div>')
                   .parent()
                   .html();
-                htm += $('<a>')
-                  .attr('class', 'btn btn-danger btn-sm hapus mx-2')
-                  .attr('data-id', data)
-                  .attr('href', '#')
-                  .text('Hapus')
-                  .wrap('<div></div>')
-                  .parent()
-                  .html();
-                return htm;
               }
             },
           ]
         });
 
-        EmployeeTable.on('click', 'td.actionButton a.edit', function(e) {
+        EmployeeTable.on('click', 'td.actionButton a.epin', function(e) {
           var dataId = this.getAttribute('data-id');
-          var url = `{{ route('personalia-employee-edit', ':data_id') }}`;
+          var url = `{{ route('pajak-employee-epin-edit', ':data_id') }}`;
           url = url.replace(':data_id', dataId);
           window.location.href = url;
-        });
-
-        EmployeeTable.on('click', 'td.actionButton a.hapus', async function(e) {
-          e.preventDefault();
-          var dataId = this.getAttribute('data-id');
-          var url = await `{{ route('personalia-employee-destroy', ':data_id') }}`;
-          url = url.replace(':data_id', dataId);
-          fetch(url, {
-            method: 'DELETE',
-            credentials: "same-origin",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              "X-Requested-With": "XMLHttpRequest",
-              "X-CSRF-TOKEN": token,
-            },
-          }).then((response) => {
-            return response.json();
-          }).then((res) => {
-            if (res.status === 201) {
-              Notiflix.Notify.warning(res.message);
-              EmployeeTable.clear();
-              EmployeeTable.ajax.reload();
-            }else{
-              Notiflix.Notify.warning(res.message);
-            }
-          }).catch((error) => {
-            Notiflix.Notify.failure(error);
-          });
         });
 
       });

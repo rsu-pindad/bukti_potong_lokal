@@ -9,17 +9,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use RealRashid\SweetAlert\Facades\Alert;
 use ZanySoft\Zip\Facades\Zip;
 use ZanySoft\Zip\ZipManager;
 
-class PajakController extends Controller
+class PajakFileController extends Controller
 {
     public function index()
     {
         $zip_files = Storage::disk('public')->files('files/shares/pajak');
 
-        return view('pajak.pajak-file')->with([
+        return view('pajak.bukti-potong.pajak-file')->with([
             'title'     => 'Publish Pajak',
             'zip_files' => $zip_files
         ]);
@@ -27,7 +26,7 @@ class PajakController extends Controller
 
     public function publish(Request $request)
     {
-        return view('pajak.pajak-publish')->with([
+        return view('pajak.bukti-potong.pajak-publish')->with([
             'title'     => 'Publish Pajak',
             'nama_file' => $request->filename
         ]);
@@ -91,7 +90,7 @@ class PajakController extends Controller
                 ->success('file berhasil di publish')
                 ->flash();
 
-            return redirect()->route('pajak-index');
+            return redirect()->route('pajak-file-index');
         } catch (\Throwable $th) {
             flash()
                 ->error($th->getMessage())
@@ -117,7 +116,7 @@ class PajakController extends Controller
                 ->success('folder berhasil di unpublished')
                 ->flash();
 
-            return redirect()->route('pajak-index');
+            return redirect()->route('pajak-file-index');
         } catch (\Throwable $th) {
             flash()
                 ->error($th->getMessage())
@@ -175,7 +174,6 @@ class PajakController extends Controller
                        ->withErrors($validator)
                        ->withInput();
         }
-        // dd($request->input('filename'));
         try {
             Storage::disk('public')->delete('files/shares/pajak/' . $request->input('filename'));
             flash()

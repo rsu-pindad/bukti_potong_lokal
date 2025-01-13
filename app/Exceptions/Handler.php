@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler
             //            ->back();
             $user = Auth::user();
             if ($user->hasRole('pajak')) {
-                return redirect()->route('pajak-index');
+                return redirect()->route('pajak-file-index');
             }
             if ($user->hasRole('super-admin')) {
                 return redirect()->route('akses');

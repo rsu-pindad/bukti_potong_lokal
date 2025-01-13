@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
 use Maatwebsite\Excel\Row;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates
+class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates
 {
     protected $mulai;
     protected $akhir;
@@ -36,13 +36,13 @@ class PegawaiBaruImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
         if ($nik) {
             if ($row['tmt_masuk'] != null) {
                 $tmt_masuk   = $row['tmt_masuk'];
-                $final_masuk = Carbon::createFromFormat('d/m/Y',$tmt_masuk)->format('Y-m-d');
+                $final_masuk = Carbon::createFromFormat('d/m/Y', $tmt_masuk)->format('Y-m-d');
             } else {
                 $tmt_masuk = null;
             }
             if ($row['tmt_keluar'] != null) {
                 $tmt_keluar   = $row['tmt_keluar'];
-                $final_keluar = Carbon::createFromFormat('d/m/Y',$tmt_keluar)->format('Y-m-d');
+                $final_keluar = Carbon::createFromFormat('d/m/Y', $tmt_keluar)->format('Y-m-d');
             } else {
                 $tmt_keluar = null;
             }

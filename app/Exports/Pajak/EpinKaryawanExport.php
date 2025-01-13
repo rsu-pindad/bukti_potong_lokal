@@ -11,7 +11,7 @@ class EpinKaryawanExport implements FromView
 {
     public function view(): View
     {
-        return view('personalia.exports.epin-employee')->with([
+        return view('pajak.exports.epin-employee')->with([
             'employees' => Employee::select([
                 'npp',
                 'npp_baru',
@@ -23,8 +23,9 @@ class EpinKaryawanExport implements FromView
                 'email',
                 'no_hp',
                 'epin'
-            ])->where('status_kepegawaian', 'Tetap')
-              ->orWhere('status_kepegawaian', 'Kontrak')
+            ])
+            // ->where('status_kepegawaian', 'Tetap')
+            //   ->orWhere('status_kepegawaian', 'Kontrak')
               ->get(),
         ]);
     }
