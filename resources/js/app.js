@@ -6,8 +6,7 @@ import {
 } from "driver.js";
 import "driver.js/dist/driver.css";
 import DataTable from 'datatables.net-bs5';
-import '../../node_modules/notiflix/src/notiflix.css';
-import '../../node_modules/notiflix/src/notiflix.js';
+import Notiflix from 'notiflix';
 
 import $ from "jquery";
 window.$ = $;
