@@ -70,7 +70,7 @@ class PersonalController extends Controller
         }
     }
 
-    public function editPribadi(Request $request)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => [
