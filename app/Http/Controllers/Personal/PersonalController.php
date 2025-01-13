@@ -19,7 +19,7 @@ class PersonalController extends Controller
         return view('employee.beranda');
     }
 
-    public function edit(Request $request)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'npwp' => [
@@ -70,7 +70,7 @@ class PersonalController extends Controller
         }
     }
 
-    public function update(Request $request)
+    public function edit(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => [
