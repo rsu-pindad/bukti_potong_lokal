@@ -34,7 +34,7 @@
       <div class="card-footer">
         <ul class="list-group list-group-horizontal d-flex justify-content-between">
           <li class="list-group-item">
-            <a href="/"
+            <a href="{{ route('login') }}"
                class="text-decoration-none">
               <i class="fa-solid fa-chevron-left"></i>
               login
@@ -103,7 +103,7 @@
             <div class="row mx-4">
               <div class="col">
                 <x-forms.floating-labels name="no_hp"
-                                         label="No NP">
+                                         label="No HP">
                   <x-inputs.input id="np_hp"
                                   name="np_hp"
                                   class="form-control-plaintext"
@@ -238,6 +238,41 @@
   @push('scripts')
     <script type="module">
       document.addEventListener("DOMContentLoaded", () => {
+        const nik = document.getElementById("nik");
+        const npwp = document.getElementById("npwp");
+        const notel = document.getElementById("np_hp");
+        const email = document.getElementById("email");
+        // console.log(email.value);
+
+        const maksedNik = MaskData.maskStringV2(nik.value, {
+          maskWith: "*",
+          maxMaskedCharacters: 16,
+          unmaskedStartCharacters: 4,
+          unmaskedEndCharacters: 1,
+        });
+        const maksedNpwp = MaskData.maskStringV2(npwp.value, {
+          maskWith: "*",
+          maxMaskedCharacters: 15,
+          unmaskedStartCharacters: 4,
+          unmaskedEndCharacters: 4,
+        });
+        const maskedNoTel = MaskData.maskPhone(notel.value, {
+          maskWith: "*",
+          unmaskedStartDigits: 4,
+          unmaskedEndDigits: 1
+        });
+        const maskedMail = MaskData.maskEmail2(email.value, {
+          maskWith: "*",
+          unmaskedStartCharactersBeforeAt: 3,
+          unmaskedEndCharactersAfterAt: 3,
+          maskAtTheRate: false
+        });
+        nik.value = maksedNik;
+        npwp.value = maksedNpwp;
+        notel.value = maskedNoTel;
+        email.value = maskedMail;
+        const token = $('meta[name="_token"]').attr('content');
+        
         $.ajaxSetup({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
