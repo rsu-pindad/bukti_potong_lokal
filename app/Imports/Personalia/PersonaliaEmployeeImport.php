@@ -35,13 +35,15 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
             $tmt_masuk   = strtotime($row['tmt_masuk']);
             $final_masuk = Carbon::parse($tmt_masuk)->format('Y-m-d');
         } else {
-            $tmt_masuk = null;
+            $tmt_masuk   = null;
+            $final_masuk = null;
         }
         if ($row['tmt_keluar'] != null) {
             $tmt_keluar   = strtotime($row['tmt_keluar']);
             $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
         } else {
-            $tmt_keluar = null;
+            $tmt_keluar   = null;
+            $final_keluar = null;
         }
 
         Employee::updateOrInsert(

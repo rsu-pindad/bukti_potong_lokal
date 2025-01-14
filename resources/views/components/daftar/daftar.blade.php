@@ -272,7 +272,7 @@
         notel.value = maskedNoTel;
         email.value = maskedMail;
         const token = $('meta[name="_token"]').attr('content');
-        
+
         $.ajaxSetup({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
