@@ -31,54 +31,36 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
         $tmt_keluar   = null;
         $final_masuk  = null;
         $final_keluar = null;
-
-        $nik = Employee::where('nik', $row['nik'])->first();
-        if ($nik) {
-            if ($row['tmt_masuk'] != null) {
-                $tmt_masuk   = $row['tmt_masuk'];
-                $final_masuk = Carbon::createFromFormat('d/m/Y', $tmt_masuk)->format('Y-m-d');
-            } else {
-                $tmt_masuk = null;
-            }
-            if ($row['tmt_keluar'] != null) {
-                $tmt_keluar   = $row['tmt_keluar'];
-                $final_keluar = Carbon::createFromFormat('d/m/Y', $tmt_keluar)->format('Y-m-d');
-            } else {
-                $tmt_keluar = null;
-            }
-
-            $nik->npp                = $row['npp'];
-            $nik->npp_baru           = $row['npp_baru'];
-            $nik->nama               = $row['nama'];
-            $nik->status_kepegawaian = $row['status_kepegawaian'];
-            $nik->nik                = $row['nik'];
-            $nik->npwp               = $row['npwp'];
-            $nik->status_ptkp        = $row['status_ptkp'];
-            $nik->email              = $row['email'];
-            $nik->no_hp              = $row['no_hp'];
-            $nik->tmt_masuk          = $final_masuk;
-            $nik->tmt_keluar         = $final_keluar;
-            $nik->save();
-
-            return false;
+        if ($row['tmt_masuk'] != null) {
+            $tmt_masuk   = strtotime($row['tmt_masuk']);
+            $final_masuk = Carbon::parse($tmt_masuk)->format('Y-m-d');
+        } else {
+            $tmt_masuk = null;
+        }
+        if ($row['tmt_keluar'] != null) {
+            $tmt_keluar   = strtotime($row['tmt_keluar']);
+            $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
+        } else {
+            $tmt_keluar = null;
         }
 
-        $store = Employee::insert([
-            'npp'                => $row['npp'],
-            'npp_baru'           => $row['npp_baru'],
-            'nama'               => $row['nama'],
-            'status_kepegawaian' => $row['status_kepegawaian'],
-            'nik'                => $row['nik'],
-            'npwp'               => $row['npwp'],
-            'status_ptkp'        => $row['status_ptkp'],
-            'email'              => $row['email'],
-            'no_hp'              => $row['no_hp'],
-            'tmt_masuk'          => $final_masuk,
-            'tmt_keluar'         => $final_keluar,
-            'created_at'         => Carbon::now(),
-        ]);
-
-        return $store;
+        Employee::updateOrInsert(
+            ['nik' => $row['nik']],
+            [
+                'npp'                => $row['npp'],
+                'npp_baru'           => $row['npp_baru'],
+                'nama'               => $row['nama'],
+                'status_kepegawaian' => $row['status_kepegawaian'],
+                'nik'                => $row['nik'],
+                'npwp'               => $row['npwp'],
+                'status_ptkp'        => $row['status_ptkp'],
+                'email'              => $row['email'],
+                'no_hp'              => $row['no_hp'],
+                'tmt_masuk'          => $final_masuk,
+                'tmt_keluar'         => $final_keluar,
+                'created_at'         => Carbon::now(),
+            ]
+        );
     }
 
     public function batchSize(): int
