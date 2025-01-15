@@ -52,6 +52,36 @@ class PajakPublishedController extends Controller
         }
     }
 
+    public function cariDataPajakAOne(Request $request)
+    {
+        $isReset = request()->input('isReset');
+        $isMetode2 = request()->input('isMetode2') ?? false;
+        try {
+            if ($isReset == 'true') {
+                $this->jenisFormulirAOne($request->id, true, false);
+            } else {
+                if ($isMetode2) {
+                    $this->jenisFormulirAOne($request->id, false, true);
+                } else {
+                    $this->jenisFormulirAOne($request->id, false, false);
+                }
+            }
+            flash()
+                ->success('pencarian data selesai dilakukan')
+                ->flash();
+
+            return redirect()
+                ->back();
+        } catch (\Throwable $th) {
+            flash()
+                ->warning($th->getMessage())
+                ->flash();
+
+            return redirect()
+                ->back();
+        }
+    }
+
     private function bulananPajak($id)
     {
         $publishedFile = PublishFile::find($id);
@@ -197,6 +227,55 @@ class PajakPublishedController extends Controller
             return $th->getMessage();
         }
     }
+
+    // A1
+    private function jenisFormulirAOne($id, $isReset = false, $isMetode2 = false)
+    {
+        $isReset = $isReset;
+        $isMetode2 = $isMetode2;
+        $publishedFile = PublishFile::find($id);
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name.'/bupot_tahunan/');
+        $resultFormulir = [];
+        foreach ($files as $file) {
+            $getFile = Storage::disk('public')->path($file);
+            $pdfParser = new Parser();
+            $pdf = $pdfParser->parseFile($getFile);
+            $content = $pdf->getText();
+            $resultFormulir[] = [
+                'publish_file_id' => $publishedFile->id,
+                'lokasi_formulir' => File::basename($file),
+                'formulir' => $content,
+            ];
+        }
+        $batchEmployees = Employee::whereNotNull('npwp')->whereNotNull('status_kepegawaian')->get();
+        $filtered = [];
+        $filterNpwp = '';
+        foreach ($batchEmployees->chunk(10) as $employees) {
+            foreach ($employees as $employee) {
+                $filterNpwp = Str::remove('/', $employee->npwp);
+                $filterNpwp = Str::remove('-', $filterNpwp);
+                $filterNpwp = Str::remove('.', $filterNpwp);
+                if ($isMetode2) {
+                    $filtered[] = $this->crawlingData($resultFormulir, $filterNpwp, $employee->nik, $employee->nama, $publishedFile->folder_name);
+                } else {
+                    $filtered[] = $this->crawlingData($resultFormulir, Str::remove('/', $employee->npwp), $employee->nik, $employee->nama, $publishedFile->folder_name);
+                }
+                $filterNpwp = '';
+            }
+        }
+
+        try {
+            if ($isReset) {
+                PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
+                PublishFileNpwp::insert(array_filter($filtered));
+            } else {
+                PublishFileNpwp::insert(array_filter($filtered));
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+    // END A1
 
     private function crawlingData(array $resultFormulir, $eNpwp, $eNik, $eNama, $publishedFileName)
     {

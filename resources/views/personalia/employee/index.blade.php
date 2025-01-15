@@ -208,7 +208,7 @@
       document.addEventListener("DOMContentLoaded", (e) => {
         e.preventDefault();
         const token = "{{ csrf_token() }}";
-        const apiUrl = '{{ route('personalia-employee-index') }}';
+        const apiUrl = "{{ route('personalia-employee-index') }}";
         let EmployeeTable = new DataTable('#employee-table', {
           processing: true,
           serverSide: true,

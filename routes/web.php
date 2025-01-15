@@ -133,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [PajakPublishedController::class, 'index'])->name('pajak-published-file-index');
 
             Route::post('/cari-data-pajak', [PajakPublishedController::class,                    'cariDataPajak'])->name('pajak-published-file-cari-data-pajak');
+            Route::post('/aone-cari-data-pajak', [PajakPublishedController::class,                    'cariDataPajakAOne'])->name('pajak-published-file-aone-cari-data-pajak');
             Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedController::class,      'fileDataPajak'])->name('pajak-published-file-data-pajak');
             Route::get('/cari-file-pajak/{folder}/{filename}', [PajakPublishedController::class, 'publishedCariFilePajak'])->name('pajak-published-cari-file-pajak');
         });
