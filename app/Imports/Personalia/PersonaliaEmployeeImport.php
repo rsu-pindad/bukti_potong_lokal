@@ -94,8 +94,8 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
                 'status_ptkp'        => $row['status_ptkp'],
                 'email'              => $row['email'],
                 'no_hp'              => $row['no_hp'],
-                'tmt_masuk'          => ($row['tmt_masuk'] == null) ? Carbon::parse($row['tmt_masuk'])->format('Y-m-d') : false,
-                'tmt_keluar'         => ($row['tmt_keluar'] == null) ? Carbon::parse($row['tmt_keluar'])->format('Y-m-d') : false,
+                'tmt_masuk'          => ($row['tmt_masuk'] == null) ? Carbon::createFromFormat('Y-m-d', $row['tmt_masuk'])->format('Y-m-d') : false,
+                'tmt_keluar'         => ($row['tmt_keluar'] == null) ? Carbon::createFromFormat('Y-m-d', $row['tmt_keluar'])->format('Y-m-d') : false,
                 'created_at'         => Carbon::now(),
             ]
         );
