@@ -152,6 +152,7 @@ class PajakPublishedController extends Controller
         $isMetode2 = $isMetode2;
         $publishedFile = PublishFile::find($id);
         $searchDir = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
+        dd($searchDir);
         $arrayDir = array_filter($searchDir, function ($value) use ($publishedFile) {
             return $value !== 'files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan';
         });
