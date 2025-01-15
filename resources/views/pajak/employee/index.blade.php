@@ -59,6 +59,7 @@
                 <th>NPWP</th>
                 <th>Email</th>
                 <th>No HP</th>
+                <th>PTKP</th>
                 <th>Epin</th>
                 <th>Masuk</th>
                 <th>Keluar</th>
@@ -180,6 +181,12 @@
             {
               data: 'no_hp',
               name: 'no_hp',
+              orderable: false,
+              searchable: false,
+            },
+            {
+              data: 'status_ptkp',
+              name: 'status_ptkp',
               orderable: false,
               searchable: false,
             },
