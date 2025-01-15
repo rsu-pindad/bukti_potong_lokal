@@ -11,8 +11,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithMappedCells;
 use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
 use Maatwebsite\Excel\Row;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use DateTime;
 
 class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithMappedCells, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates
 {
@@ -45,46 +43,7 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
     {
         $rowIndex = $row->getIndex();
         $row      = $row->toArray();
-        // dd($row['tmt_masuk']);
-        // dd(Carbon::createFromFormat('yyyy-mm-dd',$row['tmt_masuk'])->toDateString());
-        // dd(Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tmt_masuk']))->toDateString());
-
-        // $tmt_masuk    = null;
-        // $tmt_keluar   = null;
-        $final_masuk  = null;
-        $final_keluar = null;
-
-        // if ($row['tmt_masuk'] != null) {
-        //     $masuk     = date_create(strtotime($row['tmt_masuk']));
-        //     $tmt_masuk = date_format($masuk, 'Y-m-d');
-        //     // $tmt_masuk = date('d/m/Y', $row['tmt_masuk']);
-        //     // $tmt_masuk   = Date::excelToTimestamp(strtotime($row['tmt_masuk']));
-        //     $final_masuk = Carbon::parse($tmt_masuk)->format('Y-m-d');
-        //     dd($final_masuk);
-        // } else {
-        //     $tmt_masuk   = null;
-        //     $final_masuk = null;
-        // }
-        // if ($row['tmt_keluar'] != null) {
-        //     $keluar     = new DateTime(strtotime($row['tmt_keluar']));
-        //     $tmt_keluar = $keluar->format('Y-m-d');
-        //     // $tmt_keluar = date('d/m/Y', $row['tmt_keluar']);
-        //     // $tmt_keluar   = Date::excelToTimestamp(strtotime($row['tmt_keluar']));
-        //     $final_keluar = Carbon::parse($tmt_keluar)->format('Y-m-d');
-        // } else {
-        //     $tmt_keluar   = null;
-        //     $final_keluar = null;
-        // }
-        // dd($row['tmt_masuk']);
-        // $tmt_masuk  = null;
-        // $tmt_keluar = null;
-        // if ($row['tmt_masuk'] instanceof \DateTime) {
-        //     $tmt_masuk = Carbon::createFromFormat('Y-m-d', $row['tmt_masuk'])->format('Y-m-d');
-        // }
-        // if ($row['tmt_keluar'] instanceof \DateTime) {
-        //     $tmt_keluar = Carbon::createFromFormat('Y-m-d', $row['tmt_keluar'])->format('Y-m-d');
-        // }
-
+        
         return Employee::updateOrInsert(
             ['nik' => $row['nik']],
             [

@@ -22,6 +22,7 @@
               <th>Status</th>
               <th>File Bulanan</th>
               <th>File Tidak Final</th>
+              <th>File Tahunan</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -37,6 +38,7 @@
                   </td>
                   <td>{{ $publish->folder_jumlah_final }}</td>
                   <td>{{ $publish->folder_jumlah_tidak_final }}</td>
+                  <td>{{ $publish->folder_jumlah_aone }}</td>
                   <td>
                     <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
                           method="post">
@@ -84,6 +86,22 @@
                         <button type="submit"
                                 class="btn btn-sm btn-outline-secondary mx-4">
                           {{ $publish->folder_jumlah_tidak_final }}
+                          <i class="fa-solid fa-eye px-2"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </td>
+                  <td>
+                    <form action="{{ route('pajak-published-file-data-pajak') }}"
+                          method="get">
+                      <div>
+                        <input type="hidden"
+                               name="file"
+                               value="{{ $publish->id }}"
+                               readonly>
+                        <button type="submit"
+                                class="btn btn-sm btn-outline-secondary mx-4">
+                          {{ $publish->folder_jumlah_aone }}
                           <i class="fa-solid fa-eye px-2"></i>
                         </button>
                       </div>
