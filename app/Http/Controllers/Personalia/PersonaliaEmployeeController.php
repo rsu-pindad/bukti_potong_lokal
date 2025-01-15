@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Personalia;
 
 use App\Http\Controllers\Controller;
-use App\Imports\Personalia\{EmployeeExport, PersonaliaEmployeeImport};
+use App\Imports\Personalia\PersonaliaEmployeeImport;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Storage, Validator};
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Personalia\EmployeeExport;
 
 class PersonaliaEmployeeController extends Controller
 {

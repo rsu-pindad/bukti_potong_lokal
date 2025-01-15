@@ -83,7 +83,8 @@
             <thead>
               <tr>
                 <th>No</th>
-                <th>Npp</th>
+                <th>Npp Lama</th>
+                <th>Npp Baru</th>
                 <th>Nama</th>
                 <th>Status</th>
                 <th>NIK</th>
@@ -229,6 +230,11 @@
             {
               data: 'npp',
               name: 'npp',
+              class: 'text-right',
+            },
+            {
+              data: 'npp_baru',
+              name: 'npp_baru',
               class: 'text-right',
             },
             {
