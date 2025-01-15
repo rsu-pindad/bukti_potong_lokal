@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Pajak;
 
-use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\PublishFile;
-use App\Models\PublishFileNpwp;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Smalot\PdfParser\Parser;
+use App\Models\PublishFileNpwp;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Smalot\PdfParser\Parser;
 
 class PajakPublishedController extends Controller
 {
@@ -152,17 +153,18 @@ class PajakPublishedController extends Controller
         $isMetode2 = $isMetode2;
         $publishedFile = PublishFile::find($id);
         $searchDir = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
-        dd($searchDir);
         $arrayDir = array_filter($searchDir, function ($value) use ($publishedFile) {
             return $value !== 'files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan';
         });
         $searchDir = array_filter($arrayDir);
         $files = [];
         foreach ($searchDir as $dir) {
-            $files = Storage::disk('public')->allFiles($dir);
+            $files []= Storage::disk('public')->allFiles($dir);
         }
+        $files = Arr::flatten($files);
 
         // $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name.'/bupot_bulanan/');
+        // dd($files);
         // dd(array_merge($filesA,$filesB));
         $resultFormulir = [];
         foreach ($files as $file) {
