@@ -151,9 +151,19 @@ class PajakPublishedController extends Controller
         $isReset = $isReset;
         $isMetode2 = $isMetode2;
         $publishedFile = PublishFile::find($id);
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name);
+        $searchDir = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
+        $arrayDir = array_filter($searchDir, function ($value) use ($publishedFile) {
+            return $value !== 'files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan';
+        });
+        $searchDir = array_filter($arrayDir);
+        $files = [];
+        foreach ($searchDir as $dir) {
+            $files = Storage::disk('public')->allFiles($dir);
+        }
+
+        // $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name.'/bupot_bulanan/');
+        // dd(array_merge($filesA,$filesB));
         $resultFormulir = [];
-        // dd($files);
         foreach ($files as $file) {
             $getFile = Storage::disk('public')->path($file);
             $pdfParser = new Parser();
@@ -203,9 +213,9 @@ class PajakPublishedController extends Controller
         }
         // dd($filtered);
         $folderTarget = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
-        $publishedFile->folder_jumlah_final = count(Storage::disk('public')->allFiles($folderTarget[0]) ?? 0);
-        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1]) ?? 0);
-        $publishedFile->folder_jumlah_aone = count(Storage::disk('public')->allFiles($folderTarget[2]) ?? 0);
+        $publishedFile->folder_jumlah_final = count(Storage::disk('public')->allFiles($folderTarget[0] ?? 0));
+        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1] ?? 0));
+        $publishedFile->folder_jumlah_aone = count(Storage::disk('public')->allFiles($folderTarget[2] ?? 0));
         $publishedFile->folder_status = true;
         $publishedFile->save();
         try {
@@ -234,7 +244,7 @@ class PajakPublishedController extends Controller
         $isReset = $isReset;
         $isMetode2 = $isMetode2;
         $publishedFile = PublishFile::find($id);
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name.'/bupot_tahunan/');
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan/');
         $resultFormulir = [];
         foreach ($files as $file) {
             $getFile = Storage::disk('public')->path($file);
