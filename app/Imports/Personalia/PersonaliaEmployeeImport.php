@@ -77,10 +77,10 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
         $tmt_masuk  = null;
         $tmt_keluar = null;
         if ($row['tmt_masuk'] instanceof \DateTime) {
-            $tmt_masuk = Carbon::createFromFormat('d/m/Y', $row['tmt_masuk'])->format('Y-m-d');
+            $tmt_masuk = Carbon::createFromFormat('Y-m-d', $row['tmt_masuk'])->format('Y-m-d');
         }
         if ($row['tmt_keluar'] instanceof \DateTime) {
-            $tmt_keluar = Carbon::createFromFormat('d/m/Y', $row['tmt_keluar'])->format('Y-m-d');
+            $tmt_keluar = Carbon::createFromFormat('Y-m-d', $row['tmt_keluar'])->format('Y-m-d');
         }
 
         return Employee::updateOrInsert(
