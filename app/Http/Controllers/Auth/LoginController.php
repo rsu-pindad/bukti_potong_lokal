@@ -44,7 +44,7 @@ class LoginController extends Controller
                 return redirect()->intended(route('personalia-employee-index'));
             }
 
-            return redirect()->intended(route('employee'));
+            return redirect()->intended(route('personal'));
         }
         $request->session()->reflash();
 

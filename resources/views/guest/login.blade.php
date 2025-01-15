@@ -18,7 +18,7 @@
         <div class="card">
           <div class="card-header">
             <h4 class="m-0 text-center">
-              <i class="fa-solid fa-file-invoice-dollar px-2"></i> Bukti Potong Lokal PMU
+              <i class="fa-solid fa-file-invoice-dollar px-2"></i> PMU Bukti Potong
             </h4>
           </div>
           <div class="card-body">

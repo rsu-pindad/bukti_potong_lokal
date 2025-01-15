@@ -152,6 +152,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/search', [ParserController::class, 'pdfParserSearch'])
                 ->name('personal-parser-bp-search')
                 ->middleware('signed');
+            Route::post('/download', [ParserController::class, 'downloadPdf'])
+                ->name('personal-parser-bp-download')
+                ->middleware('signed');
+            Route::post('/downloads', [ParserController::class, 'downloadSearchPdf'])
+                ->name('personal-parser-bp-search-download')
+                ->middleware('signed');
         });
     });
 

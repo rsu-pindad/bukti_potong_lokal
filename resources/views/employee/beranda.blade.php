@@ -25,7 +25,7 @@
       <x-slot:header>
         <i class="fa-solid fa-user px-2"></i>
       </x-slot:header>
-      <form action="{{ route('employee-edit-pribadi') }}"
+      <form action="{{ route('personal-update') }}"
             method="post">
         @method('patch')
         @csrf
@@ -84,7 +84,7 @@
         <x-slot:header>
           <i class="fa-solid fa-id-card px-2"></i>
         </x-slot:header>
-        <form action="{{ route('employee-edit') }}"
+        <form action="{{ route('personal-edit') }}"
               method="POST">
           @method('patch')
           @csrf
