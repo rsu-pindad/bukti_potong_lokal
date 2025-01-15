@@ -35,7 +35,7 @@ class ParserController extends Controller
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $target_bulan);
         if ($files < 1) {
             flash()
-                ->warning('Faktor bulan ini belum di unggah')
+                ->warning('Bukti Potong bulan ini belum di unggah')
                 ->flash();
         }
         $result = [];
@@ -83,7 +83,7 @@ class ParserController extends Controller
         } catch (\Throwable $th) {
             // return abort(404);
             flash()
-                ->warning($th->getMessage())
+                ->warning('Bupot tidak ditemukan.')
                 ->flash();
 
             return redirect()
@@ -173,7 +173,7 @@ class ParserController extends Controller
             return $dokumenPajak;
         } catch (\Throwable $th) {
             flash()
-                ->warning($th->getMessage())
+                ->warning('Bupot tidak ditemukan.')
                 ->flash();
 
             return redirect()
@@ -203,7 +203,7 @@ class ParserController extends Controller
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $target_bulan);
         if ($files < 1) {
             flash()
-                ->warning('Faktor bulan ini belum di unggah')
+                ->warning('Bukti Potong bulan ini belum di unggah')
                 ->flash();
         }
         $result = [];
@@ -251,7 +251,7 @@ class ParserController extends Controller
         } catch (\Throwable $th) {
             // return abort(404);
             flash()
-                ->warning($th->getMessage())
+                ->warning('Bupot tidak ditemukan.')
                 ->flash();
 
             return redirect()
@@ -341,7 +341,7 @@ class ParserController extends Controller
             return $dokumenPajak;
         } catch (\Throwable $th) {
             flash()
-                ->warning($th->getMessage())
+                ->warning('Bupot tidak ditemukan.')
                 ->flash();
 
             return redirect()

@@ -6,6 +6,7 @@ use App\Http\Controllers\Daftar\{CariController, DaftarController};
 use App\Http\Controllers\Pajak\PajakEpinEmployeeController;
 use App\Http\Controllers\Pajak\PajakFileController;
 use App\Http\Controllers\Pajak\PajakPublishedController;
+use App\Http\Controllers\Personal\ParserAOneController;
 use App\Http\Controllers\Personal\ParserController;
 use App\Http\Controllers\Personal\PersonalController;
 use App\Http\Controllers\Personalia\PersonaliaEmployeeController;
@@ -146,6 +147,7 @@ Route::middleware(['auth'])->group(function () {
         // });
 
         Route::group(['prefix' => 'personal-parser'], function () {
+            // Non A1
             Route::post('/bulan', [ParserController::class, 'pdfParser'])
                 ->name('personal-parser-bp')
                 ->middleware('signed');
@@ -158,6 +160,18 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/downloads', [ParserController::class, 'downloadSearchPdf'])
                 ->name('personal-parser-bp-search-download')
                 ->middleware('signed');
+            // End Non A1
+        });
+
+        Route::group(['prefix' => 'aone-personal-parse'], function () {
+            // A1
+            Route::post('/aone-search', [ParserAOneController::class, 'pdfParserSearch'])
+                ->name('aone-personal-parser-bp-search')
+                ->middleware('signed');
+            Route::post('/aone-downloads', [ParserAOneController::class, 'downloadSearchPdf'])
+                ->name('aone-personal-parser-bp-search-download')
+                ->middleware('signed');
+            // End A1
         });
     });
 
