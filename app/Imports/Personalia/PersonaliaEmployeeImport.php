@@ -45,7 +45,9 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
     {
         $rowIndex = $row->getIndex();
         $row      = $row->toArray();
-        // dd($row);
+        // dd($row['tmt_masuk']);
+        // dd(Carbon::createFromFormat('yyyy-mm-dd',$row['tmt_masuk'])->toDateString());
+        // dd(Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tmt_masuk']))->toDateString());
 
         // $tmt_masuk    = null;
         // $tmt_keluar   = null;
@@ -87,15 +89,15 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
             ['nik' => $row['nik']],
             [
                 'npp'                => $row['npp'],
-                'npp_baru'           => $row['npp_baru'],
+                'npp_baru'           => ($row['npp_baru'] != null) ? $row['npp_baru'] : null,
                 'nama'               => $row['nama'],
                 'status_kepegawaian' => $row['status_kepegawaian'],
-                'npwp'               => $row['npwp'],
+                'npwp'               => ($row['npwp'] != null) ? $row['npwp'] : null,
                 'status_ptkp'        => $row['status_ptkp'],
                 'email'              => $row['email'],
                 'no_hp'              => $row['no_hp'],
-                'tmt_masuk'          => ($row['tmt_masuk'] == null) ? Carbon::createFromFormat('Y-m-d', $row['tmt_masuk'])->format('Y-m-d') : false,
-                'tmt_keluar'         => ($row['tmt_keluar'] == null) ? Carbon::createFromFormat('Y-m-d', $row['tmt_keluar'])->format('Y-m-d') : false,
+                'tmt_masuk'          => ($row['tmt_masuk'] != null) ? Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tmt_masuk']))->toDateString() : null,
+                'tmt_keluar'         => ($row['tmt_keluar'] != null) ? Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tmt_keluar']))->toDateString() : null,
                 'created_at'         => Carbon::now(),
             ]
         );
