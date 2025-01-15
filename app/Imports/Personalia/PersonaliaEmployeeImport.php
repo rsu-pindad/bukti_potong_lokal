@@ -74,14 +74,14 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
         //     $final_keluar = null;
         // }
         // dd($row['tmt_masuk']);
-        $tmt_masuk  = null;
-        $tmt_keluar = null;
-        if ($row['tmt_masuk'] instanceof \DateTime) {
-            $tmt_masuk = Carbon::createFromFormat('Y-m-d', $row['tmt_masuk'])->format('Y-m-d');
-        }
-        if ($row['tmt_keluar'] instanceof \DateTime) {
-            $tmt_keluar = Carbon::createFromFormat('Y-m-d', $row['tmt_keluar'])->format('Y-m-d');
-        }
+        // $tmt_masuk  = null;
+        // $tmt_keluar = null;
+        // if ($row['tmt_masuk'] instanceof \DateTime) {
+        //     $tmt_masuk = Carbon::createFromFormat('Y-m-d', $row['tmt_masuk'])->format('Y-m-d');
+        // }
+        // if ($row['tmt_keluar'] instanceof \DateTime) {
+        //     $tmt_keluar = Carbon::createFromFormat('Y-m-d', $row['tmt_keluar'])->format('Y-m-d');
+        // }
 
         return Employee::updateOrInsert(
             ['nik' => $row['nik']],
@@ -94,8 +94,8 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
                 'status_ptkp'        => $row['status_ptkp'],
                 'email'              => $row['email'],
                 'no_hp'              => $row['no_hp'],
-                'tmt_masuk'          => $tmt_masuk,
-                'tmt_keluar'         => $tmt_keluar,
+                'tmt_masuk'          => ($row['tmt_masuk'] == null) ? Carbon::parse($row['tmt_masuk'])->format('Y-m-d') : false,
+                'tmt_keluar'         => ($row['tmt_keluar'] == null) ? Carbon::parse($row['tmt_keluar'])->format('Y-m-d') : false,
                 'created_at'         => Carbon::now(),
             ]
         );
