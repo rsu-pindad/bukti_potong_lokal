@@ -40,8 +40,7 @@ class ForgotPasswordController extends Controller
                 ->success('Password reset sudah dikirim.')
                 ->flash();
 
-            return redirect()
-                       ->back();
+            return to_route('login');
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
