@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithMappedCells;
 use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
 use Maatwebsite\Excel\Row;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
 
 class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithMappedCells, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates, SkipsOnError
 {
