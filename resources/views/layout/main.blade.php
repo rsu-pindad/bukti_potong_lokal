@@ -109,6 +109,12 @@
                     <i class="fa-solid fa-bullhorn"></i> Published File
                   </a>
                 </li>
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-cari-index' ? 'active' : '' }}"
+                     href="{{ route('pajak-cari-index') }}">
+                    <i class="fa-solid fa-bullhorn"></i> Cari Bupot
+                  </a>
+                </li>
               @endhasexactroles
             </ul>
             <ul class="navbar-nav mt-lg-0 mr-0 mt-2">

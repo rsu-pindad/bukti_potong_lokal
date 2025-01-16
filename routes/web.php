@@ -10,6 +10,7 @@ use App\Http\Controllers\Personal\ParserAOneController;
 use App\Http\Controllers\Personal\ParserController;
 use App\Http\Controllers\Personal\PersonalController;
 use App\Http\Controllers\Personalia\PersonaliaEmployeeController;
+use App\Http\Controllers\Tables\Pajak\BupotController;
 use App\Http\Controllers\Tables\PajakTablesEmployeeController;
 use App\Http\Controllers\Tables\PersonaliaTablesEmployeeController;
 use Illuminate\Support\Facades\Route;
@@ -141,6 +142,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/aone-cari-data-pajak', [PajakPublishedController::class,               'cariDataPajakAOne'])->name('pajak-published-file-aone-cari-data-pajak');
             Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedController::class,      'fileDataPajak'])->name('pajak-published-file-data-pajak');
             Route::get('/cari-file-pajak/{folder}/{filename}', [PajakPublishedController::class, 'publishedCariFilePajak'])->name('pajak-published-cari-file-pajak');
+        });
+
+        Route::group(['prefix' => 'pajak-cari'], function () {
+            Route::get('/', [BupotController::class, 'index'])->name('pajak-cari-index');
+            Route::get('/file-bupot/{id}', [BupotController::class, 'findFile'])->name('pajak-cari-file-bupot');
         });
     });
 
