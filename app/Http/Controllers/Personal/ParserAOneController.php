@@ -44,7 +44,7 @@ class ParserAOneController extends Controller
                        ->back();
         }
 
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun. '/bupot_tahunan/');
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')
@@ -89,7 +89,7 @@ class ParserAOneController extends Controller
             return $dokumenPajak;
         } catch (\Throwable $th) {
             flash()
-                ->warning('Bupot tidak ditemukan.')
+                ->warning('Bupot A1 tidak ditemukan.')
                 ->flash();
 
             return redirect()
@@ -128,7 +128,7 @@ class ParserAOneController extends Controller
                        ->back();
         }
 
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun.'/bupot_tahunan/');
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')
@@ -174,7 +174,7 @@ class ParserAOneController extends Controller
             return $dokumenPajak;
         } catch (\Throwable $th) {
             flash()
-                ->warning('Bupot tidak ditemukan.')
+                ->warning('Bupot A1 tidak ditemukan.')
                 ->flash();
 
             return redirect()
