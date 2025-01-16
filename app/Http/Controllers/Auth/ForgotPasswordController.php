@@ -44,8 +44,8 @@ class ForgotPasswordController extends Controller
                        ->back();
         } catch (\Throwable $th) {
             flash()
-                // ->warning($th->getMessage())
-                ->warning('Terjadi kendala.')
+                ->warning($th->getMessage())
+                // ->warning('Terjadi kendala.')
                 ->flash();
 
             return redirect()
