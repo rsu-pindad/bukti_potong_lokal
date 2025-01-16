@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
 use App\Models\Karyawan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -45,7 +44,8 @@ class ForgotPasswordController extends Controller
                        ->back();
         } catch (\Throwable $th) {
             flash()
-                ->warning($th->getMessage())
+                // ->warning($th->getMessage())
+                ->warning('Terjadi kendala.')
                 ->flash();
 
             return redirect()
@@ -55,7 +55,6 @@ class ForgotPasswordController extends Controller
 
     private function sendWa($karyawan, $token)
     {
-        // dd($karyawan);
         $url    = URL::temporarySignedRoute('auth-send-reset-password', now()->addMinutes(60), ['token' => $token]);
         $pesan  = 'Reset password link : ' . PHP_EOL;
         $pesan .= PHP_EOL;
