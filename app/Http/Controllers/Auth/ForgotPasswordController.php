@@ -26,13 +26,22 @@ class ForgotPasswordController extends Controller
         try {
             $token = Str::random(64);
 
+            $karyawan = Karyawan::where('npp', $request->npp)->first();
+            if (!$karyawan) {
+                flash()
+                    ->warning('NPP tidak ditemukan.')
+                    ->flash();
+
+                return redirect()
+                           ->back();
+            }
+
             $reset = DB::table('password_reset_tokens')->insert([
                 'npp'        => $request->npp,
                 'token'      => $token,
                 'created_at' => Carbon::now()
             ]);
 
-            $karyawan = Karyawan::where('npp', $request->npp)->first();
             if ($karyawan) {
                 $this->sendWa($karyawan, $token);
             }
