@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">
-        <a href="{{ route('personalia-employee-index') }}"
+        <a href="{{ route('pajak-employee-index') }}"
            class="btn btn-outline-secondary">
           <i class="fa-solid fa-chevron-left mr-2"></i>
           Kembali
