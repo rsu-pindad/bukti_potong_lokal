@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\{AksesController, PermissionController, RoleController};
-use App\Http\Controllers\Auth\{LoginController, LogoutController};
+use App\Http\Controllers\Auth\{ForgotPasswordController, LoginController, LogoutController};
 use App\Http\Controllers\Daftar\{CariController, DaftarController};
 use App\Http\Controllers\Pajak\PajakEpinEmployeeController;
 use App\Http\Controllers\Pajak\PajakFileController;
 use App\Http\Controllers\Pajak\PajakPublishedController;
+use App\Http\Controllers\Personal\ParserAOneController;
 use App\Http\Controllers\Personal\ParserController;
 use App\Http\Controllers\Personal\PersonalController;
 use App\Http\Controllers\Personalia\PersonaliaEmployeeController;
+use App\Http\Controllers\Tables\Pajak\BupotController;
 use App\Http\Controllers\Tables\PajakTablesEmployeeController;
 use App\Http\Controllers\Tables\PersonaliaTablesEmployeeController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +27,11 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::middleware(['guest'])->group(function () {
+    Route::get('/lupa-password', [ForgotPasswordController::class,           'index'])->name('auth-forgot-password');
+    Route::post('/send-reset-link', [ForgotPasswordController::class,        'resetLink'])->name('auth-send-reset-link');
+    Route::get('/password-reset/{token}', [ForgotPasswordController::class,  'resetPassword'])->name('auth-get-reset-password');
+    Route::post('/password-reset/{token}', [ForgotPasswordController::class, 'submitResetPassword'])->name('auth-submit-reset-password');
+
     Route::controller(LoginController::class)->group(function () {
         Route::get('/', 'index')->name('auth-login');
         Route::get('/login', 'index')->name('login');
@@ -132,8 +139,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [PajakPublishedController::class, 'index'])->name('pajak-published-file-index');
 
             Route::post('/cari-data-pajak', [PajakPublishedController::class,                    'cariDataPajak'])->name('pajak-published-file-cari-data-pajak');
+            Route::post('/aone-cari-data-pajak', [PajakPublishedController::class,               'cariDataPajakAOne'])->name('pajak-published-file-aone-cari-data-pajak');
             Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedController::class,      'fileDataPajak'])->name('pajak-published-file-data-pajak');
             Route::get('/cari-file-pajak/{folder}/{filename}', [PajakPublishedController::class, 'publishedCariFilePajak'])->name('pajak-published-cari-file-pajak');
+        });
+
+        Route::group(['prefix' => 'pajak-cari'], function () {
+            Route::get('/', [BupotController::class, 'index'])->name('pajak-cari-index');
+            Route::get('/file-bupot/{id}', [BupotController::class, 'findFile'])->name('pajak-cari-file-bupot');
         });
     });
 
@@ -146,6 +159,7 @@ Route::middleware(['auth'])->group(function () {
         // });
 
         Route::group(['prefix' => 'personal-parser'], function () {
+            // Non A1
             Route::post('/bulan', [ParserController::class, 'pdfParser'])
                 ->name('personal-parser-bp')
                 ->middleware('signed');
@@ -158,6 +172,18 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/downloads', [ParserController::class, 'downloadSearchPdf'])
                 ->name('personal-parser-bp-search-download')
                 ->middleware('signed');
+            // End Non A1
+        });
+
+        Route::group(['prefix' => 'aone-personal-parse'], function () {
+            // A1
+            Route::post('/aone-search', [ParserAOneController::class, 'pdfParserSearch'])
+                ->name('aone-personal-parser-bp-search')
+                ->middleware('signed');
+            Route::post('/aone-downloads', [ParserAOneController::class, 'downloadSearchPdf'])
+                ->name('aone-personal-parser-bp-search-download')
+                ->middleware('signed');
+            // End A1
         });
     });
 
