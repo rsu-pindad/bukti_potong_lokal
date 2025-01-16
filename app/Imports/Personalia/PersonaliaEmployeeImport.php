@@ -5,6 +5,7 @@ namespace App\Imports\Personalia;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\OnEachRow;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -12,10 +13,15 @@ use Maatwebsite\Excel\Concerns\WithMappedCells;
 use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
 use Maatwebsite\Excel\Row;
 
-class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithMappedCells, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates
+class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithMappedCells, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates, SkipsOnError
 {
     protected $mulai;
     protected $akhir;
+
+    public function onError(\Throwable $e)
+    {
+        Log::debug($e->getMessage());
+    }
 
     public function mapping(): array
     {
@@ -43,7 +49,7 @@ class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValu
     {
         $rowIndex = $row->getIndex();
         $row      = $row->toArray();
-        
+
         return Employee::updateOrInsert(
             ['nik' => $row['nik']],
             [
