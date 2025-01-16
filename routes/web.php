@@ -28,8 +28,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guest'])->group(function () {
     Route::get('/lupa-password', [ForgotPasswordController::class,           'index'])->name('auth-forgot-password');
     Route::post('/send-reset-link', [ForgotPasswordController::class,        'resetLink'])->name('auth-send-reset-link');
-    Route::get('/password-reset/{token}', [ForgotPasswordController::class,  'resetPassword'])->name('auth-send-reset-password');
-    Route::post('/password-reset/{token}', [ForgotPasswordController::class, 'submitResetPassword'])->name('auth-submit-reset-password')->middleware('signed');;
+    Route::get('/password-reset/{token}', [ForgotPasswordController::class,  'resetPassword'])->name('auth-get-reset-password');
+    Route::post('/password-reset/{token}', [ForgotPasswordController::class, 'submitResetPassword'])->name('auth-submit-reset-password');
 
     Route::controller(LoginController::class)->group(function () {
         Route::get('/', 'index')->name('auth-login');

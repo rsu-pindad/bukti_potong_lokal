@@ -114,7 +114,6 @@ class ForgotPasswordController extends Controller
             'password_confirmation' => 'required'
         ]);
 
-        // dd(request('token'));
         $updatePassword = DB::table('password_reset_tokens')
                               ->where([
                                   'token' => request('token')
@@ -122,7 +121,12 @@ class ForgotPasswordController extends Controller
                               ->first();
 
         if (!$updatePassword) {
-            return back()->withInput()->with('error', 'Invalid token!');
+            flash()
+                ->warning('Token tidak valid')
+                ->flash();
+
+            return redirect()
+                       ->back();
         }
 
         try {
