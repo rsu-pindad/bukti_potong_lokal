@@ -26,7 +26,10 @@
                   method="post">
               @csrf
               <label for="password"
-                     class="form-label">Password</label>
+                     class="form-label">Password
+                <div id="password"
+                     class="form-text">min:6</div>
+              </label>
               <div class="input-group mb-3">
                 <input id="password"
                        type="password"
@@ -44,7 +47,11 @@
                 @enderror
               </div>
               <label for="password_confirmation"
-                     class="form-label">Ulangi Password</label>
+                     class="form-label">Ulangi Password
+
+                <div id="password_confirmation"
+                     class="form-text">min:6</div>
+              </label>
               <div class="input-group mb-3">
                 <input id="password_confirmation"
                        type="password"
