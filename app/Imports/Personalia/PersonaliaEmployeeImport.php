@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Row;
 
 class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithMappedCells, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates, SkipsOnError
 {
+    use SkipsErrors;
     protected $mulai;
     protected $akhir;
 
