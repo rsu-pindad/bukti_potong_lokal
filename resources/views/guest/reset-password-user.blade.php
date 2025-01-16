@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-    <title>PT PINDAD MEDIKA UTAMA | {{ $title }}</title>
+    <title>PT PINDAD MEDIKA UTAMA | {{ $title ?? '' }}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport"
@@ -22,28 +22,9 @@
             </h4>
           </div>
           <div class="card-body">
-            <form action="{{ route('auth-authenticate') }}"
+            <form action="{{ route('auth-submit-reset-password', $token) }}"
                   method="post">
               @csrf
-              <label for="username"
-                     class="form-label">Username</label>
-              <div class="input-group mb-3">
-                <input id="username"
-                       type="text"
-                       class="form-control @error('username') is-invalid @enderror"
-                       name="username"
-                       placeholder="Username"
-                       value="{{ old('username') }}">
-                <span id="basic-addon1"
-                      class="input-group-text">
-                  <i class="fa-solid fa-user"></i>
-                </span>
-                @error('username')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-              </div>
               <label for="password"
                      class="form-label">Password</label>
               <div class="input-group mb-3">
@@ -51,12 +32,30 @@
                        type="password"
                        class="form-control @error('password') is-invalid @enderror"
                        name="password"
-                       placeholder="Password">
-                <span id="basic-addon2"
+                       placeholder="masukan password">
+                <span id="basic-addon1"
                       class="input-group-text">
-                  <i class="fa-solid fa-lock"></i>
+                  <i class="fa-solid fa-user"></i>
                 </span>
                 @error('password')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <label for="password_confirmation"
+                     class="form-label">Ulangi Password</label>
+              <div class="input-group mb-3">
+                <input id="password_confirmation"
+                       type="password"
+                       class="form-control @error('password_confirmation') is-invalid @enderror"
+                       name="password_confirmation"
+                       placeholder="ulangi password">
+                <span id="basic-addon1"
+                      class="input-group-text">
+                  <i class="fa-solid fa-user"></i>
+                </span>
+                @error('password_confirmation')
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
@@ -65,18 +64,13 @@
               <div class="d-grid">
                 <button type="submit"
                         class="btn btn-primary">
-                  Masuk
+                  Reset Password
                 </button>
               </div>
             </form>
           </div>
-          <div class="card-footer d-flex justify-content-around flex-row">
-            <div class="px-2">
-              <a href="{{ route('cari-index') }}">belum punya akun ?</a>
-            </div>
-            <div class="px-2">
-              <a href="{{ route('auth-forgot-password') }}">lupa password</a>
-            </div>
+          <div class="card-footer">
+            <a href="{{ route('login') }}">login</a>
           </div>
         </div>
       </div>

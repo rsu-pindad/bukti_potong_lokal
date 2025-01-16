@@ -23,11 +23,10 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
 
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
+    protected $fillable = [
+        'username',
+        'password',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -67,7 +66,7 @@ class User extends Authenticatable
             $karyawan->no_tel  = session()->pull('no_hp', null);
             $karyawan->st_ptkp = session()->pull('status_ptkp', null);
             $karyawan->st_peg  = session()->pull('status_kepegawaian', null);
-            $karyawan->epin  = session()->pull('epin', null);
+            $karyawan->epin    = session()->pull('epin', null);
             $model->karyawan()->save($karyawan);
             $model->syncRoles('employee');
         });
