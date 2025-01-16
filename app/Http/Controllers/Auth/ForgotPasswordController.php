@@ -55,7 +55,7 @@ class ForgotPasswordController extends Controller
 
     private function sendWa($karyawan, $token)
     {
-        $url    = URL::temporarySignedRoute('auth-send-reset-password', now()->addMinutes(60), ['token' => $token]);
+        $url    = URL::temporarySignedRoute('auth-get-reset-password', now()->addMinutes(60), ['token' => $token]);
         $pesan  = 'Reset password link : ' . PHP_EOL;
         $pesan .= PHP_EOL;
         $pesan .= $url;
