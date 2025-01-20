@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\{AksesController, PermissionController, RoleController};
 use App\Http\Controllers\Auth\{ForgotPasswordController, LoginController, LogoutController};
 use App\Http\Controllers\Daftar\{CariController, DaftarController};
+use App\Http\Controllers\Employee\UserDokumenController;
 use App\Http\Controllers\Pajak\PajakEpinEmployeeController;
 use App\Http\Controllers\Pajak\PajakFileController;
 use App\Http\Controllers\Pajak\PajakPublishedController;
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::middleware(['guest'])->group(function () {
+    Route::post('/user-dokumen-pdf/{id}/{name}', [UserDokumenController::class, 'index'])->name('user-dokumen-pdf')->middleware('signed');
+
     Route::get('/lupa-password', [ForgotPasswordController::class,           'index'])->name('auth-forgot-password');
     Route::post('/send-reset-link', [ForgotPasswordController::class,        'resetLink'])->name('auth-send-reset-link');
     Route::get('/password-reset/{token}', [ForgotPasswordController::class,  'resetPassword'])->name('auth-get-reset-password');
@@ -145,8 +148,9 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::group(['prefix' => 'pajak-cari'], function () {
-            Route::get('/', [BupotController::class, 'index'])->name('pajak-cari-index');
+            Route::get('/', [BupotController::class,                'index'])->name('pajak-cari-index');
             Route::get('/file-bupot/{id}', [BupotController::class, 'findFile'])->name('pajak-cari-file-bupot');
+            Route::get('/link/export', [BupotController::class,     'exportLink'])->name('pajak-cari-link-export');
         });
     });
 
