@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Tables\Pajak;
 
+use App\Exports\Pajak\LinkExport;
 use App\Http\Controllers\Controller;
 use App\Models\PublishFileNpwp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BupotController extends Controller
 {
@@ -38,5 +41,12 @@ class BupotController extends Controller
         }
 
         return false;
+    }
+
+    public function exportLink()
+    {
+        $name = 'link_bupot_' . Carbon::now();
+
+        return Excel::download(new LinkExport, $name . '.xlsx');
     }
 }

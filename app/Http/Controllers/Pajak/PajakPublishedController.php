@@ -2,30 +2,33 @@
 
 namespace App\Http\Controllers\Pajak;
 
+use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\PublishFile;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Smalot\PdfParser\Parser;
 use App\Models\PublishFileNpwp;
-use App\Http\Controllers\Controller;
+use App\Models\ShortLinkFile;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Smalot\PdfParser\Parser;
+use YorCreative\UrlShortener\Services\UrlService;
 
 class PajakPublishedController extends Controller
 {
     public function index()
     {
         return view('pajak.bukti-potong.pajak-published-file')->with([
-            'title' => 'Published Pajak',
+            'title'     => 'Published Pajak',
             'published' => PublishFile::paginate(15),
         ]);
     }
 
     public function cariDataPajak(Request $request)
     {
-        $isReset = request()->input('isReset');
+        $isReset   = request()->input('isReset');
         $isMetode2 = request()->input('isMetode2') ?? false;
         try {
             if ($isReset == 'true') {
@@ -42,20 +45,20 @@ class PajakPublishedController extends Controller
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         }
     }
 
     public function cariDataPajakAOne(Request $request)
     {
-        $isReset = request()->input('isReset');
+        $isReset   = request()->input('isReset');
         $isMetode2 = request()->input('isMetode2') ?? false;
         try {
             if ($isReset == 'true') {
@@ -72,42 +75,42 @@ class PajakPublishedController extends Controller
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
                 ->flash();
 
             return redirect()
-                ->back();
+                       ->back();
         }
     }
 
     private function bulananPajak($id)
     {
-        $publishedFile = PublishFile::find($id);
+        $publishedFile     = PublishFile::find($id);
         $folderTargetBulan = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_bulanan');
-        $resultBulan = [];
+        $resultBulan       = [];
         foreach ($folderTargetBulan as $bulan) {
             $getFile = Storage::disk('public')->path($bulan);
             // $getFile = Storage::disk('public')->path('files/shares/pajak/extrack/022024/bupot_bulanan/1502240000353_010613941424001_7b85a99a-a2f5-4d0d-aef7-73e1bda6afb9.pdf');
             $pdfParser = new Parser();
-            $pdf = $pdfParser->parseFile($getFile);
-            $content = $pdf->getPages()[0]->getDataTm();
+            $pdf       = $pdfParser->parseFile($getFile);
+            $content   = $pdf->getPages()[0]->getDataTm();
             // dd($content);
             $resultBulan[] = [
-                'publish_file_id' => $publishedFile->id,
-                'file_path' => $publishedFile->folder_name . '/bupot_bulanan',
-                'file_name' => File::basename($bulan),
-                'file_identitas_npwp' => $content['23']['1'],
-                'file_identitas_nik' => $content['51']['1'],
-                'file_identitas_nama' => $content['24']['1'],
+                'publish_file_id'       => $publishedFile->id,
+                'file_path'             => $publishedFile->folder_name . '/bupot_bulanan',
+                'file_name'             => File::basename($bulan),
+                'file_identitas_npwp'   => $content['23']['1'],
+                'file_identitas_nik'    => $content['51']['1'],
+                'file_identitas_nama'   => $content['24']['1'],
                 'file_identitas_alamat' => $content['25']['1'],
             ];
         }
         // dd($resultBulan);
         $publishedFile->folder_jumlah_final = count($folderTargetBulan);
-        $publishedFile->folder_status = true;
+        $publishedFile->folder_status       = true;
         $publishedFile->save();
         $bulanan = PublishFileNpwp::insert($resultBulan);
 
@@ -116,31 +119,31 @@ class PajakPublishedController extends Controller
 
     private function finalPajak($id)
     {
-        $publishedFile = PublishFile::find($id);
-        $folderTargetBulan = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_bulanan');
+        $publishedFile          = PublishFile::find($id);
+        $folderTargetBulan      = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_bulanan');
         $folderTargetTidakFinal = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_final_tidakfinal');
-        $resultFinal = [];
+        $resultFinal            = [];
         foreach ($folderTargetTidakFinal as $final) {
             // 1302240000299_010613941424001_bb5d339f-b6c7-4749-aac7-bcf916a187dd.pdf
             $getFile = Storage::disk('public')->path($final);
             // $getFile   = Storage::disk('public')->path('files/shares/pajak/extrack/022024/bupot_final_tidakfinal/1302240000299_010613941424001_bb5d339f-b6c7-4749-aac7-bcf916a187dd.pdf');;
             $pdfParser = new Parser();
-            $pdf = $pdfParser->parseFile($getFile);
-            $content = $pdf->getPages()[0]->getDataTm();
+            $pdf       = $pdfParser->parseFile($getFile);
+            $content   = $pdf->getPages()[0]->getDataTm();
             // dd($content);
             $resultFinal[] = [
-                'publish_file_id' => $publishedFile->id,
-                'file_path' => $publishedFile->folder_name . '/bupot_final_tidakfinal',
-                'file_name' => File::basename($final),
-                'file_identitas_npwp' => $content['25']['1'],
-                'file_identitas_nik' => $content['57']['1'],
-                'file_identitas_nama' => $content['26']['1'],
+                'publish_file_id'       => $publishedFile->id,
+                'file_path'             => $publishedFile->folder_name . '/bupot_final_tidakfinal',
+                'file_name'             => File::basename($final),
+                'file_identitas_npwp'   => $content['25']['1'],
+                'file_identitas_nik'    => $content['57']['1'],
+                'file_identitas_nama'   => $content['26']['1'],
                 'file_identitas_alamat' => $content['27']['1'],
             ];
         }
         // dd($resultBulan);
         $publishedFile->folder_jumlah_tidak_final = count($folderTargetTidakFinal);
-        $publishedFile->folder_status = true;
+        $publishedFile->folder_status             = true;
         $publishedFile->save();
         $final = PublishFileNpwp::insert($resultFinal);
 
@@ -157,9 +160,9 @@ class PajakPublishedController extends Controller
             return $value !== 'files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan';
         });
         $searchDir = array_filter($arrayDir);
-        $files = [];
+        $files     = [];
         foreach ($searchDir as $dir) {
-            $files []= Storage::disk('public')->allFiles($dir);
+            $files[] = Storage::disk('public')->allFiles($dir);
         }
         $files = Arr::flatten($files);
 
@@ -168,23 +171,23 @@ class PajakPublishedController extends Controller
         // dd(array_merge($filesA,$filesB));
         $resultFormulir = [];
         foreach ($files as $file) {
-            $getFile = Storage::disk('public')->path($file);
+            $getFile   = Storage::disk('public')->path($file);
             $pdfParser = new Parser();
-            $pdf = $pdfParser->parseFile($getFile);
+            $pdf       = $pdfParser->parseFile($getFile);
             // $content       = $pdf->getPages()[0]->getDataTm();
             $content = $pdf->getText();
             // $squishContent = Str::of($pdf->getText())->squish();
             $resultFormulir[] = [
                 'publish_file_id' => $publishedFile->id,
                 'lokasi_formulir' => File::basename($file),
-                'formulir' => $content,
+                'formulir'        => $content,
             ];
         }
         // $employees = Employee::whereNotNull('npwp')->where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->limit(275)->get();
         // $batchEmployees = Employee::whereNotNull('npwp')->where('status_kepegawaian', 'Tetap')->orWhere('status_kepegawaian', 'Kontrak')->get();
         $batchEmployees = Employee::whereNotNull('npwp')->whereNotNull('status_kepegawaian')->get();
-        $filtered = [];
-        $filterNpwp = '';
+        $filtered       = [];
+        $filterNpwp     = '';
         // $employees = array_chunk($batchEmployees, 10, true);
         foreach ($batchEmployees->chunk(10) as $employees) {
             foreach ($employees as $employee) {
@@ -214,12 +217,11 @@ class PajakPublishedController extends Controller
                 $filterNpwp = '';
             }
         }
-        // dd($filtered);
-        $folderTarget = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
-        $publishedFile->folder_jumlah_final = count(Storage::disk('public')->allFiles($folderTarget[0] ?? 0));
-        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1] ?? 0));
-        $publishedFile->folder_jumlah_aone = count(Storage::disk('public')->allFiles($folderTarget[2] ?? 0));
-        $publishedFile->folder_status = true;
+        $folderTarget                             = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
+        $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0])) ?? 0;
+        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1])) ?? 0;
+        $publishedFile->folder_jumlah_aone        = count(Storage::disk('public')->allFiles($folderTarget[2])) ?? 0;
+        $publishedFile->folder_status             = true;
         $publishedFile->save();
         try {
             if ($isReset) {
@@ -232,9 +234,9 @@ class PajakPublishedController extends Controller
                 // }
                 // $final = PublishFileNpwp::updateOrCreate(array_filter($filtered));
                 PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
-                PublishFileNpwp::insert(array_filter($filtered));
             } else {
-                PublishFileNpwp::insert(array_filter($filtered));
+                $dataFilter = array_filter($filtered);
+                PublishFileNpwp::insert($dataFilter);
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -244,10 +246,10 @@ class PajakPublishedController extends Controller
     // A1
     private function jenisFormulirAOne($id, $isReset = false, $isMetode2 = false)
     {
-        $isReset = $isReset;
-        $isMetode2 = $isMetode2;
-        $publishedFile = PublishFile::find($id);
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan/');
+        $isReset        = $isReset;
+        $isMetode2      = $isMetode2;
+        $publishedFile  = PublishFile::find($id);
+        $files          = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan/');
         $resultFormulir = [];
         foreach ($files as $file) {
             $getFile = Storage::disk('public')->path($file);
@@ -257,12 +259,12 @@ class PajakPublishedController extends Controller
             $resultFormulir[] = [
                 'publish_file_id' => $publishedFile->id,
                 'lokasi_formulir' => File::basename($file),
-                'formulir' => $content,
+                'formulir'        => $content,
             ];
         }
         $batchEmployees = Employee::whereNotNull('npwp')->whereNotNull('status_kepegawaian')->get();
-        $filtered = [];
-        $filterNpwp = '';
+        $filtered       = [];
+        $filterNpwp     = '';
         foreach ($batchEmployees->chunk(10) as $employees) {
             foreach ($employees as $employee) {
                 $filterNpwp = Str::remove('/', $employee->npwp);
@@ -279,10 +281,10 @@ class PajakPublishedController extends Controller
 
         try {
             if ($isReset) {
+                // PublishFileNpwp::where('publish_file_id', $publishedFile->id)->hasShortLink()->delete();
                 PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
-                PublishFileNpwp::insert(array_filter($filtered));
             } else {
-                PublishFileNpwp::insert(array_filter($filtered));
+                PublishFileNpwp::createMany(array_filter($filtered));
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -301,13 +303,23 @@ class PajakPublishedController extends Controller
                 return null;
             }
             if (Str::of($squishContent)->isMatch('/' . $eNpwp . '/')) {
+                $signedUrl = URL::signedRoute('user-dokumen-pdf', [
+                    'id'   => $formulir['publish_file_id'],
+                    'name' => $formulir['lokasi_formulir'],
+                ]);
+                $shortUrl = UrlService::shorten($signedUrl)
+                                ->withOpenLimit(10)
+                                ->withPassword($eNik)
+                                ->build();
                 $filtered = [
-                    'publish_file_id' => $formulir['publish_file_id'],
-                    'file_path' => $publishedFileName,
-                    'file_name' => $formulir['lokasi_formulir'],
+                    'publish_file_id'     => $formulir['publish_file_id'],
+                    'file_path'           => $publishedFileName,
+                    'file_name'           => $formulir['lokasi_formulir'],
                     'file_identitas_npwp' => $eNpwp,
-                    'file_identitas_nik' => $eNik,
+                    'file_identitas_nik'  => $eNik,
                     'file_identitas_nama' => $eNama,
+                    'short_link'          => $shortUrl,
+                    'original_link'       => $signedUrl,
                 ];
                 // unset($resultFormulir[$key]);
                 $squishContent = '';
@@ -328,8 +340,8 @@ class PajakPublishedController extends Controller
     public function fileDataPajak(Request $request)
     {
         $published = PublishFile::with('hashPublished')->findOrFail(intval($request->input('file')));
-        $title = 'Published Nama Pajak';
-        $files = $published->hashPublished();
+        $title     = 'Published Nama Pajak';
+        $files     = $published->hashPublished();
         if ($request->input('file') && $cari = $request->input('cari')) {
             $files
                 ->whereIn('publish_file_id', [$request->file])
@@ -366,6 +378,6 @@ class PajakPublishedController extends Controller
             ->flash();
 
         return redirect()
-            ->back();
+                   ->back();
     }
 }

@@ -21,6 +21,7 @@
         "spatie/laravel-permission": "^6.10",
         "unisharp/laravel-filemanager": "^2.9",
         "yajra/laravel-datatables": "^10.0",
+        "yorcreative/laravel-urlshortener": "^2.1",
         "zanysoft/laravel-zip": "^2.0"
     },
     "require-dev": {
