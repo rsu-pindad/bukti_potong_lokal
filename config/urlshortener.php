@@ -16,7 +16,7 @@ return [
         'prefix' => 'bupot',
         'host' => getenv('APP_URL'),
         'identifier' => [
-            'length' => 6,
+            'length' => 12,
         ],
     ],
     'protection' => [
