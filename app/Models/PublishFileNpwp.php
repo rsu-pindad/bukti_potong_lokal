@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
 
 class PublishFileNpwp extends Model
@@ -21,6 +20,8 @@ class PublishFileNpwp extends Model
         'file_identitas_nik',
         'file_identitas_nama',
         'file_identitas_alamat',
+        'short_link',
+        'original_link'
     ];
 
     protected $hidden = [
@@ -32,4 +33,5 @@ class PublishFileNpwp extends Model
     {
         return $this->belongsTo(PublishFile::class, 'publish_file_id', 'id');
     }
+
 }

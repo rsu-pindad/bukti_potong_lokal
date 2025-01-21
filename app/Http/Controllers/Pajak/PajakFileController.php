@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use YorCreative\UrlShortener\Services\UrlService;
 use ZanySoft\Zip\Facades\Zip;
 use ZanySoft\Zip\ZipManager;
 
@@ -19,7 +20,7 @@ class PajakFileController extends Controller
         $zip_files = Storage::disk('public')->files('files/shares/pajak');
 
         return view('pajak.bukti-potong.pajak-file')->with([
-            'title' => 'Publish Pajak',
+            'title'     => 'Publish Pajak',
             'zip_files' => $zip_files
         ]);
     }
@@ -27,7 +28,7 @@ class PajakFileController extends Controller
     public function publish(Request $request)
     {
         return view('pajak.bukti-potong.pajak-publish')->with([
-            'title' => 'Publish Pajak',
+            'title'     => 'Publish Pajak',
             'nama_file' => $request->filename
         ]);
     }
@@ -36,8 +37,8 @@ class PajakFileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'namaFile' => 'required',
-            'bulan' => 'required|numeric',
-            'tahun' => 'required|numeric'
+            'bulan'    => 'required|numeric',
+            'tahun'    => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -46,15 +47,15 @@ class PajakFileController extends Controller
                 ->flash();
 
             return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
         }
 
-        $locationZip = Storage::disk('public')->path('files/shares/pajak/' . $validator->safe()->namaFile);
-        $newDirectory = Storage::disk('public')->makeDirectory('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $locationZip          = Storage::disk('public')->path('files/shares/pajak/' . $validator->safe()->namaFile);
+        $newDirectory         = Storage::disk('public')->makeDirectory('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         $markDirectoryPublish = Storage::disk('public')->makeDirectory('files/shares/pajak/publish/' . $validator->safe()->namaFile . '/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        $emptyFolder = Storage::disk('public')->files('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
+        $emptyFolder          = Storage::disk('public')->files('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         if (count($emptyFolder) > 0) {
             flash()
                 ->error('folder tidak kosong, mohon kosongkan folder di file manager')
@@ -63,7 +64,7 @@ class PajakFileController extends Controller
             return redirect()->back();
         }
         $getTargetExtrack = Storage::disk('public')->path('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
-        $is_valid = Zip::check($locationZip);
+        $is_valid         = Zip::check($locationZip);
         if (!$is_valid) {
             flash()
                 ->error('zip tidak valid')
@@ -79,11 +80,11 @@ class PajakFileController extends Controller
             $manager->close();
 
             $publishedFile = PublishFile::create([
-                'folder_uniq' => Str::random(25),
-                'folder_path' => $getTargetExtrack,
+                'folder_uniq'    => Str::random(25),
+                'folder_path'    => $getTargetExtrack,
                 'folder_publish' => $validator->safe()->namaFile,
-                'folder_name' => $validator->safe()->bulan . $validator->safe()->tahun,
-                'folder_status' => false,
+                'folder_name'    => $validator->safe()->bulan . $validator->safe()->tahun,
+                'folder_status'  => false,
             ]);
 
             flash()
@@ -102,14 +103,23 @@ class PajakFileController extends Controller
 
     public function unPublish(Request $request)
     {
-        $folder = $request->nama_file;
-        $folder_path = Storage::disk('public')->directories('files/shares/pajak/publish/' . $folder);
+        $folder         = $request->nama_file;
+        $folder_path    = Storage::disk('public')->directories('files/shares/pajak/publish/' . $folder);
         $published_file = $request->folder_target;
         try {
             Storage::disk('public')->deleteDirectory('files/shares/pajak/publish/' . $folder);
             Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/' . $published_file);
             $deletePublish = PublishFile::where('folder_name', $request->folder_target);
-            $filenpwp = $deletePublish->first()->id;
+            $filenpwp      = $deletePublish->first()->id;
+
+            $dataPublish = PublishFileNpwp::where('publish_file_id', $filenpwp)->get()->toArray();
+            foreach (array_chunk($dataPublish, 50) as $dp => $val) {
+                foreach ($val as $v) {
+                    $dataUrl = UrlService::findByPlainText($v['original_link']);
+                    $dataUrl->forceDelete();;
+                }
+            }
+
             PublishFileNpwp::where('publish_file_id', $filenpwp)->forceDelete();
             $deletePublish->forceDelete();
             flash()
@@ -137,9 +147,9 @@ class PajakFileController extends Controller
                 ->flash();
 
             return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
         }
         $files = $request->file('buktiPotong');
 
@@ -170,9 +180,9 @@ class PajakFileController extends Controller
                 ->flash();
 
             return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
         }
         try {
             Storage::disk('public')->delete('files/shares/pajak/' . $request->input('filename'));
