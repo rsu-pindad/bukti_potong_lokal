@@ -46,15 +46,30 @@ class PajakPublishedController extends Controller
                 $result = $this->jenisFormulir($request->id, true, false);
             } else {
                 if ($isMetode2) {
+                    $dataPublish = PublishFileNpwp::where('publish_file_id', $request->id)->get()->toArray();
+                    foreach (array_chunk($dataPublish, 50) as $dp => $val) {
+                        foreach ($val as $v) {
+                            $dataUrl = UrlService::findByPlainText($v['original_link']);
+                            if ($dataUrl) {
+                                $dataUrl->forceDelete();
+                            }
+                        }
+                    }
+                    $cleanData = PublishFileNpwp::where('publish_file_id', $request->id)->delete();
                     $result = $this->jenisFormulir($request->id, false, true);
                 } else {
                     $result = $this->jenisFormulir($request->id, false, false);
                 }
             }
-            flash()
-                // ->success('pencarian data selesai dilakukan')
-                ->success($result)
-                ->flash();
+            if ($result) {
+                flash()
+                    ->success('pencarian data selesai dilakukan')
+                    ->flash();
+            } else {
+                flash()
+                    ->warning($result)
+                    ->flash();
+            }
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
@@ -62,7 +77,7 @@ class PajakPublishedController extends Controller
         }
 
         return redirect()
-                   ->back();
+            ->back();
     }
 
     private function jenisFormulir($id, $isReset = false, $isMetode2 = false)
@@ -110,13 +125,13 @@ class PajakPublishedController extends Controller
         }
         $folderTarget = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
 
-        try {
-            $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0])) ?? 0;
-            $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1])) ?? 0;
-            $publishedFile->folder_jumlah_aone        = count(Storage::disk('public')->allFiles($folderTarget[2])) ?? 0;
-            $publishedFile->folder_status             = true;
-            $publishedFile->save();
+        $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0] ?? []));
+        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1] ?? []));
+        $publishedFile->folder_jumlah_aone        = count(Storage::disk('public')->allFiles($folderTarget[2] ?? []));
+        $publishedFile->folder_status             = true;
+        $publishedFile->save();
 
+        try {
             $dataFilter = array_filter($filtered);
             // if ($isReset) {
             // foreach ($filtered as $key => $filter) {
@@ -163,7 +178,7 @@ class PajakPublishedController extends Controller
         }
 
         return redirect()
-                   ->back();
+            ->back();
     }
 
     // Start A1
@@ -236,9 +251,9 @@ class PajakPublishedController extends Controller
                     'name' => $formulir['lokasi_formulir'],
                 ]);
                 $shortUrl      = UrlService::shorten($signedUrl)
-                                     ->withOpenLimit(10)
-                                     ->withPassword($eNik)
-                                     ->build();
+                    ->withOpenLimit(10)
+                    ->withPassword($eNik)
+                    ->build();
                 $filtered      = [
                     'publish_file_id'     => $formulir['publish_file_id'],
                     'file_path'           => $publishedFileName,
@@ -299,6 +314,6 @@ class PajakPublishedController extends Controller
             ->flash();
 
         return redirect()
-                   ->back();
+            ->back();
     }
 }
