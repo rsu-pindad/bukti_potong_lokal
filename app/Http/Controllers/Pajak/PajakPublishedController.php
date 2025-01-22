@@ -61,16 +61,15 @@ class PajakPublishedController extends Controller
                     $result = $this->jenisFormulir($request->id, false, false);
                 }
             }
-            dd($result);
-            // if ($result) {
-            //     flash()
-            //         ->success('pencarian data selesai dilakukan')
-            //         ->flash();
-            // } else {
-            //     flash()
-            //         ->warning($result)
-            //         ->flash();
-            // }
+            if ($result) {
+                flash()
+                    ->success('pencarian data selesai dilakukan')
+                    ->flash();
+            } else {
+                flash()
+                    ->warning($result)
+                    ->flash();
+            }
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
@@ -172,6 +171,7 @@ class PajakPublishedController extends Controller
             flash()
                 ->success($result)
                 ->flash();
+                dd($result);
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
