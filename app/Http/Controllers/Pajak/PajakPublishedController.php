@@ -224,7 +224,7 @@ class PajakPublishedController extends Controller
             // $dataFilter = array_filter($filtered);
             // PublishFileNpwp::updateOrCreate($dataFilter);
             // } else {
-            $resultCreate = PublishFileNpwp::createMany(array_filter($filtered));
+            $resultCreate = PublishFileNpwp::updateOrCreate(array_filter($filtered));
 
             return $resultCreate;
             // }
