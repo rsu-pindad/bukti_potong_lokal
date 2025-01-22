@@ -70,6 +70,7 @@ class PajakPublishedController extends Controller
                     ->warning($result)
                     ->flash();
             }
+            dd($result);
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
