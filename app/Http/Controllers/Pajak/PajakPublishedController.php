@@ -56,7 +56,7 @@ class PajakPublishedController extends Controller
                         }
                     }
                     $cleanData = PublishFileNpwp::where('publish_file_id', $request->id)->delete();
-                    $result = $this->jenisFormulir($request->id, false, true);
+                    $result    = $this->jenisFormulir($request->id, false, true);
                 } else {
                     $result = $this->jenisFormulir($request->id, false, false);
                 }
@@ -77,7 +77,7 @@ class PajakPublishedController extends Controller
         }
 
         return redirect()
-            ->back();
+                   ->back();
     }
 
     private function jenisFormulir($id, $isReset = false, $isMetode2 = false)
@@ -168,10 +168,15 @@ class PajakPublishedController extends Controller
                     $result = $this->jenisFormulirAOne($request->id, false, false);
                 }
             }
-            flash()
-                ->success($result)
-                ->flash();
-                dd($result);
+            if ($result) {
+                flash()
+                    ->success('berhasil cari formulir')
+                    ->flash();
+            } else {
+                flash()
+                    ->warning($result)
+                    ->flash();
+            }
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
@@ -179,7 +184,7 @@ class PajakPublishedController extends Controller
         }
 
         return redirect()
-            ->back();
+                   ->back();
     }
 
     // Start A1
@@ -227,7 +232,7 @@ class PajakPublishedController extends Controller
             // } else {
             $resultCreate = PublishFileNpwp::updateOrCreate(array_filter($filtered));
 
-            return $resultCreate;
+            return true;
             // }
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -252,9 +257,9 @@ class PajakPublishedController extends Controller
                     'name' => $formulir['lokasi_formulir'],
                 ]);
                 $shortUrl      = UrlService::shorten($signedUrl)
-                    ->withOpenLimit(10)
-                    ->withPassword($eNik)
-                    ->build();
+                                     ->withOpenLimit(10)
+                                     ->withPassword($eNik)
+                                     ->build();
                 $filtered      = [
                     'publish_file_id'     => $formulir['publish_file_id'],
                     'file_path'           => $publishedFileName,
@@ -315,6 +320,6 @@ class PajakPublishedController extends Controller
             ->flash();
 
         return redirect()
-            ->back();
+                   ->back();
     }
 }
