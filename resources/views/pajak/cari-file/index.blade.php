@@ -4,27 +4,6 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between flex-row">
         <h4>Bukti Potong Pegawai</h4>
-        <div class="my-auto">
-          <div class="dropdown">
-            <button class="btn btn-outline-secondary"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              <i class="fa-solid fa-ellipsis"></i>
-            </button>
-            <ul class="dropdown-menu">
-              @hasexactroles('pajak')
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('pajak-cari-link-export') }}">
-                    Eksport Link Bupot
-                    <i class="fa-solid fa-file-export text-success ml-4"></i>
-                  </a>
-                </li>
-              @endhasexactroles
-            </ul>
-          </div>
-        </div>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -38,7 +17,6 @@
                 <th>NPWP</th>
                 <th>NIK</th>
                 <th>Nama Pegawai</th>
-                <th>Url Keluar</th>
                 <th></th>
               </tr>
             </thead>
@@ -99,10 +77,6 @@
             {
               data: 'file_identitas_nama',
               name: 'file_identitas_nama',
-            },
-            {
-              data: 'short_link',
-              name: 'short_link',
             },
             {
               data: 'id',

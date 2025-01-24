@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use YorCreative\UrlShortener\Services\UrlService;
 use ZanySoft\Zip\Facades\Zip;
 use ZanySoft\Zip\ZipManager;
 
@@ -96,9 +95,9 @@ class PajakFileController extends Controller
             flash()
                 ->error($th->getMessage())
                 ->flash();
-
-            return redirect()->back();
         }
+
+        return redirect()->back();
     }
 
     public function unPublish(Request $request)
@@ -111,17 +110,9 @@ class PajakFileController extends Controller
             Storage::disk('public')->deleteDirectory('files/shares/pajak/extrack/' . $published_file);
             $deletePublish = PublishFile::where('folder_name', $request->folder_target);
             $filenpwp      = $deletePublish->first()->id;
-
-            $dataPublish = PublishFileNpwp::where('publish_file_id', $filenpwp)->get()->toArray();
-            foreach (array_chunk($dataPublish, 50) as $dp => $val) {
-                foreach ($val as $v) {
-                    $dataUrl = UrlService::findByPlainText($v['original_link']);
-                    $dataUrl->forceDelete();;
-                }
-            }
-
             PublishFileNpwp::where('publish_file_id', $filenpwp)->forceDelete();
             $deletePublish->forceDelete();
+
             flash()
                 ->success('folder berhasil di unpublished')
                 ->flash();
@@ -131,9 +122,9 @@ class PajakFileController extends Controller
             flash()
                 ->error($th->getMessage())
                 ->flash();
-
-            return redirect()->back();
         }
+
+        return redirect()->back();
     }
 
     public function uploadBuktiPotong(Request $request)

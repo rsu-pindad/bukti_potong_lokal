@@ -39,7 +39,6 @@
               <th>NPWP</th>
               <th>NIK</th>
               <th>Nama</th>
-              <th>Alamat</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -52,7 +51,6 @@
                 <td>{{ $file->file_identitas_npwp }}</td>
                 <td>{{ $file->file_identitas_nik }}</td>
                 <td>{{ $file->file_identitas_nama }}</td>
-                <td>{{ $file->file_identitas_alamat }}</td>
                 <td>
                   <a target="_blank"
                      class="btn btn-outline-danger"
