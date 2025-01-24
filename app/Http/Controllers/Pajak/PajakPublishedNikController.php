@@ -96,6 +96,9 @@ class PajakPublishedNikController extends Controller
     private function crawlingData(array $resultFormulir, $eNik, $eNama, $eNpwp, $publishedFileName)
     {
         $filtered = [];
+        if ($eNik == null) {
+            return [];
+        }
         foreach (array_chunk($resultFormulir, 10) as $formulir) {
             foreach ($formulir as $value) {
                 $squishContent = Str::of($value['formulir'])->squish();
