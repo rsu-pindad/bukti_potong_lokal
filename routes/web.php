@@ -30,9 +30,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guest'])->group(function () {
     Route::post('/user-dokumen-pdf/{id}/{name}', [UserDokumenController::class, 'index'])->name('user-dokumen-pdf')->middleware('signed');
 
-    Route::get('/lupa-password', [ForgotPasswordController::class,           'index'])->name('auth-forgot-password');
-    Route::post('/send-reset-link', [ForgotPasswordController::class,        'resetLink'])->name('auth-send-reset-link');
-    Route::get('/password-reset/{token}', [ForgotPasswordController::class,  'resetPassword'])->name('auth-get-reset-password');
+    Route::get('/lupa-password', [ForgotPasswordController::class, 'index'])->name('auth-forgot-password');
+    Route::post('/send-reset-link', [ForgotPasswordController::class, 'resetLink'])->name('auth-send-reset-link');
+    Route::get('/password-reset/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('auth-get-reset-password');
     Route::post('/password-reset/{token}', [ForgotPasswordController::class, 'submitResetPassword'])->name('auth-submit-reset-password');
 
     Route::controller(LoginController::class)->group(function () {
@@ -103,12 +103,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [PersonaliaTablesEmployeeController::class, 'index'])->name('personalia-employee-index');
 
         // Normal Controller
-        Route::get('/edit/{id}', [PersonaliaEmployeeController::class,       'edit'])->name('personalia-employee-edit');
-        Route::patch('/edit/{id}', [PersonaliaEmployeeController::class,     'update'])->name('personalia-employee-update');
+        Route::get('/edit/{id}', [PersonaliaEmployeeController::class, 'edit'])->name('personalia-employee-edit');
+        Route::patch('/edit/{id}', [PersonaliaEmployeeController::class, 'update'])->name('personalia-employee-update');
         Route::delete('/destroy/{id}', [PersonaliaEmployeeController::class, 'destroy'])->name('personalia-employee-destroy');
-        Route::post('/import', [PersonaliaEmployeeController::class,         'import'])->name('personalia-employee-import');
-        Route::get('/export', [PersonaliaEmployeeController::class,          'export'])->name('personalia-employee-export');
-        Route::get('/template', [PersonaliaEmployeeController::class,        'template'])->name('personalia-employee-template');
+        Route::post('/import', [PersonaliaEmployeeController::class, 'import'])->name('personalia-employee-import');
+        Route::get('/export', [PersonaliaEmployeeController::class, 'export'])->name('personalia-employee-export');
+        Route::get('/template', [PersonaliaEmployeeController::class, 'template'])->name('personalia-employee-template');
     })->middleware('role:personalia');
 
     // Pajak
@@ -120,19 +120,19 @@ Route::middleware(['auth'])->group(function () {
 
             // Epin Employee
             Route::group(['prefix' => 'epin'], function () {
-                Route::get('/edit/{id}', [PajakEpinEmployeeController::class,   'edit'])->name('pajak-employee-epin-edit');
+                Route::get('/edit/{id}', [PajakEpinEmployeeController::class, 'edit'])->name('pajak-employee-epin-edit');
                 Route::patch('/edit/{id}', [PajakEpinEmployeeController::class, 'update'])->name('pajak-employee-epin-update');
-                Route::post('/import', [PajakEpinEmployeeController::class,     'import'])->name('pajak-employee-epin-import');
-                Route::get('/export', [PajakEpinEmployeeController::class,      'export'])->name('pajak-employee-epin-export');
-                Route::get('/template', [PajakEpinEmployeeController::class,    'template'])->name('pajak-employee-epin-template');
+                Route::post('/import', [PajakEpinEmployeeController::class, 'import'])->name('pajak-employee-epin-import');
+                Route::get('/export', [PajakEpinEmployeeController::class, 'export'])->name('pajak-employee-epin-export');
+                Route::get('/template', [PajakEpinEmployeeController::class, 'template'])->name('pajak-employee-epin-template');
             });
         });
 
         Route::group(['prefix' => 'pajak-file'], function () {
-            Route::get('/', [PajakFileController::class,                                'index'])->name('pajak-file-index');
-            Route::get('/target/{filename}', [PajakFileController::class,               'publish'])->name('pajak-file-publish');
-            Route::post('/target', [PajakFileController::class,                         'published'])->name('pajak-file-published');
-            Route::post('/unpublish', [PajakFileController::class,                      'unPublish'])->name('pajak-file-unpublish');
+            Route::get('/', [PajakFileController::class, 'index'])->name('pajak-file-index');
+            Route::get('/target/{filename}', [PajakFileController::class, 'publish'])->name('pajak-file-publish');
+            Route::post('/target', [PajakFileController::class, 'published'])->name('pajak-file-published');
+            Route::post('/unpublish', [PajakFileController::class, 'unPublish'])->name('pajak-file-unpublish');
             Route::post('/pajak-file-upload-bukti-potong', [PajakFileController::class, 'uploadBuktiPotong'])->name('pajak-file-upload-bukti-potong');
             Route::post('/pajak-file-remove-bukti-potong', [PajakFileController::class, 'removeBuktiPotong'])->name('pajak-file-remove-bukti-potong');
         });
@@ -141,23 +141,23 @@ Route::middleware(['auth'])->group(function () {
             // Api Datatable
             Route::get('/', [PajakPublishedController::class, 'index'])->name('pajak-published-file-index');
 
-            Route::post('/cari-data-pajak', [PajakPublishedController::class,                    'cariDataPajak'])->name('pajak-published-file-cari-data-pajak');
-            Route::post('/aone-cari-data-pajak', [PajakPublishedController::class,               'cariDataPajakAOne'])->name('pajak-published-file-aone-cari-data-pajak');
-            Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedController::class,      'fileDataPajak'])->name('pajak-published-file-data-pajak');
+            Route::post('/cari-data-pajak', [PajakPublishedController::class, 'cariDataPajak'])->name('pajak-published-file-cari-data-pajak');
+            Route::post('/aone-cari-data-pajak', [PajakPublishedController::class, 'cariDataPajakAOne'])->name('pajak-published-file-aone-cari-data-pajak');
+            Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedController::class, 'fileDataPajak'])->name('pajak-published-file-data-pajak');
             Route::get('/cari-file-pajak/{folder}/{filename}', [PajakPublishedController::class, 'publishedCariFilePajak'])->name('pajak-published-cari-file-pajak');
         });
 
         Route::group(['prefix' => 'pajak-cari'], function () {
-            Route::get('/', [BupotController::class,                'index'])->name('pajak-cari-index');
+            Route::get('/', [BupotController::class, 'index'])->name('pajak-cari-index');
             Route::get('/file-bupot/{id}', [BupotController::class, 'findFile'])->name('pajak-cari-file-bupot');
-            Route::get('/link/export', [BupotController::class,     'exportLink'])->name('pajak-cari-link-export');
+            Route::get('/link/export', [BupotController::class, 'exportLink'])->name('pajak-cari-link-export');
         });
     });
 
     Route::group(['middleware' => 'role:employee', 'prefix' => 'personal'], function () {
         // Route::controller(EmployeeController::class)->group(function () {
-        Route::get('/', [PersonalController::class,       'index'])->name('personal');
-        Route::put('/edit', [PersonalController::class,   'edit'])->name('personal-edit');
+        Route::get('/', [PersonalController::class, 'index'])->name('personal');
+        Route::put('/edit', [PersonalController::class, 'edit'])->name('personal-edit');
         Route::patch('/edit', [PersonalController::class, 'update'])->name('personal-update');
         // Route::get('employee/pajak/', 'lihatDokumen')->name('pajak')->middleware('signed');
         // });
