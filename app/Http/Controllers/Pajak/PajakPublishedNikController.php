@@ -117,6 +117,8 @@ class PajakPublishedNikController extends Controller
                         'file_identitas_nik'  => $eNik,
                         'file_identitas_nama' => $eNama,
                     ];
+                } else {
+                    $filtered = [];
                 }
             }
         }
