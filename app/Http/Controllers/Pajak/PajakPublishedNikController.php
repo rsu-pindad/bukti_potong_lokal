@@ -86,7 +86,6 @@ class PajakPublishedNikController extends Controller
 
         try {
             $dataFilter = array_filter($filtered);
-
             return PublishFileNpwp::insert($dataFilter);
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -96,9 +95,6 @@ class PajakPublishedNikController extends Controller
     private function crawlingData(array $resultFormulir, $eNik, $eNama, $eNpwp, $publishedFileName)
     {
         $filtered = [];
-        if ($eNik == null) {
-            return [];
-        }
         foreach (array_chunk($resultFormulir, 10) as $formulir) {
             foreach ($formulir as $value) {
                 $squishContent = Str::of($value['formulir'])->squish();
@@ -111,18 +107,11 @@ class PajakPublishedNikController extends Controller
                         'file_identitas_nik'  => $eNik,
                         'file_identitas_nama' => $eNama,
                     ];
-                } elseif (Str::of($squishContent)->isMatch('/' . $eNpwp . '/')) {
-                    $filtered = [
-                        'publish_file_id'     => $value['publish_file_id'],
-                        'file_path'           => $publishedFileName,
-                        'file_name'           => $value['lokasi_formulir'],
-                        'file_identitas_npwp' => $eNpwp,
-                        'file_identitas_nik'  => $eNik,
-                        'file_identitas_nama' => $eNama,
-                    ];
-                } else {
+                    break;
+                }else {
                     $filtered = [];
                 }
+                $squishContent = '';
             }
         }
 
