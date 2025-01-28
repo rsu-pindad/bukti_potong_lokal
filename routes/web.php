@@ -163,6 +163,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::group(['prefix' => 'personal-parser'], function () {
             // Non A1
+            Route::get('/', [ParserController::class, 'index'])
+                ->name('personal-parser-index');
             Route::post('/bulan', [ParserController::class, 'pdfParser'])
                 ->name('personal-parser-bp')
                 ->middleware('signed');
@@ -180,6 +182,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::group(['prefix' => 'aone-personal-parse'], function () {
             // A1
+            Route::get('/', [ParserAOneController::class, 'index'])
+                ->name('aone-personal-parser-index');
             Route::post('/aone-search', [ParserAOneController::class, 'pdfParserSearch'])
                 ->name('aone-personal-parser-bp-search')
                 ->middleware('signed');

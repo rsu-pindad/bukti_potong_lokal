@@ -1,87 +1,67 @@
-<!doctype html>
-<html lang="en">
+<x-guest>
+    <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-sm">
+        <div class="py-6 px-10">
+            <div class="text-center text-balance">
+                <h1 class="block text-2xl font-bold text-gray-800">PMU Bukti Potong</h1>
+            </div>
+            <!-- Form -->
+            <form class="mt-4" action="{{ route('auth-authenticate') }}"
+            method="post">
+            @csrf
+                <div class="grid gap-y-4">
+                <!-- Form Group -->
+                <div>
+                    <label for="username" class="block text-md mb-2">Username</label>
+                    <div class="relative">
+                        <input type="text" name="username" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-md focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="masukan username" aria-describedby="username-error">
+                    </div>
+                    @error('username')
+                    <p class="text-xs text-red-600 mt-2">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <!-- End Form Group -->
 
-  <head>
-    <title>PT PINDAD MEDIKA UTAMA | {{ $title }}</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ config('app.name', 'Bukti Potong') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-  </head>
+                <!-- Form Group -->
+                <div>
+                    <div class="flex justify-between items-center">
+                    <label for="password" class="block text-md mb-2">Password</label>
+                    </div>
+                    <div class="relative">
+                    <input type="password"  name="password" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-md focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="masukan password" aria-describedby="password-error">
+                    </div>
+                    @error('password')
+                    <p class="text-xs text-red-600 mt-2">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <!-- End Form Group -->
 
-  <body>
-    <main class="row"
-          style="height: 100vh;">
-      <div class="col-lg-4 col-md-6 col-sm-10 col-xs-12 m-auto p-5">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="m-0 text-center">
-              <i class="fa-solid fa-file-invoice-dollar px-2"></i> PMU Bukti Potong
-            </h4>
-          </div>
-          <div class="card-body">
-            <form action="{{ route('auth-authenticate') }}"
-                  method="post">
-              @csrf
-              <label for="username"
-                     class="form-label">Username</label>
-              <div class="input-group mb-3">
-                <input id="username"
-                       type="text"
-                       class="form-control @error('username') is-invalid @enderror"
-                       name="username"
-                       placeholder="Username"
-                       value="{{ old('username') }}">
-                <span id="basic-addon1"
-                      class="input-group-text">
-                  <i class="fa-solid fa-user"></i>
-                </span>
-                @error('username')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-              </div>
-              <label for="password"
-                     class="form-label">Password</label>
-              <div class="input-group mb-3">
-                <input id="password"
-                       type="password"
-                       class="form-control @error('password') is-invalid @enderror"
-                       name="password"
-                       placeholder="Password">
-                <span id="basic-addon2"
-                      class="input-group-text">
-                  <i class="fa-solid fa-lock"></i>
-                </span>
-                @error('password')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-              </div>
-              <div class="d-grid">
-                <button type="submit"
-                        class="btn btn-primary">
-                  Masuk
+                <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-md font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                    Masuk
                 </button>
-              </div>
+                </div>
             </form>
-          </div>
-          <div class="card-footer d-flex justify-content-around flex-row">
-            <div class="px-2">
-              <a href="{{ route('cari-index') }}">belum punya akun ?</a>
+            <!-- End Form -->
+            
+            <div class="my-2">
+                <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">
+                    atau
+                </div>
             </div>
-            <div class="px-2">
-              <a href="{{ route('auth-forgot-password') }}">lupa password</a>
+
+            <div class="mt-2 sm:mt-4 flex flex-row gap-x-4 justify-between">
+                <a class="inline-flex items-center gap-x-1 text-md text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" href="{{ route('cari-index') }}">
+                Daftar
+                </a>
+
+                <a class="inline-flex items-center gap-x-1 text-md text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" href="{{ route('auth-forgot-password') }}">
+                Lupa password
+                </a>
             </div>
-          </div>
+
         </div>
-      </div>
-    </main>
-
-  </body>
-
-</html>
+    </div>
+</x-guest>

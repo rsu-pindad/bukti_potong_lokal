@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Karyawan;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -21,13 +22,24 @@ class ForgotPasswordController extends Controller
 
     public function resetLink(Request $request)
     {
-        $request->validate(['npp' => 'required']);
+        $validator = Validator::make($request->only('npp'), [
+            'npp' => 'required',
+        ], [
+            'npp.required' => 'mohon isi npp'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                       ->back()
+                       ->withErrors($validator)
+                       ->withInput();
+        }
 
         try {
             $token = Str::random(64);
 
-            $karyawan = Karyawan::where('npp', $request->npp)->first();
-            if (!$karyawan) {
+            $employee = Employee::where('npp', $validator->safe()->npp)->first();
+            if (!$employee) {
                 flash()
                     ->warning('NPP tidak ditemukan.')
                     ->flash();
@@ -37,13 +49,13 @@ class ForgotPasswordController extends Controller
             }
 
             $reset = DB::table('password_reset_tokens')->insert([
-                'npp'        => $request->npp,
+                'npp'        => $validator->safe()->npp,
                 'token'      => $token,
                 'created_at' => Carbon::now()
             ]);
 
-            if ($karyawan) {
-                $this->sendWa($karyawan, $token);
+            if ($employee) {
+                $this->sendWa($employee, $token);
             }
             flash()
                 ->success('Password reset sudah dikirim.')
@@ -61,7 +73,7 @@ class ForgotPasswordController extends Controller
         }
     }
 
-    private function sendWa($karyawan, $token)
+    private function sendWa($employee, $token)
     {
         $url    = URL::temporarySignedRoute('auth-get-reset-password', now()->addMinutes(60), ['token' => $token]);
         $pesan  = 'Reset password link : ' . PHP_EOL;
@@ -73,21 +85,21 @@ class ForgotPasswordController extends Controller
         $curl   = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_URL            => 'https://api.fonnte.com/send',
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
+            CURLOPT_ENCODING       => '',
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_TIMEOUT        => 0,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target'      => $karyawan->no_tel,
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST  => 'POST',
+            CURLOPT_POSTFIELDS     => array(
+                'target'      => $employee->no_hp,
                 'message'     => $pesan,
                 'delay'       => '5',
                 'countryCode' => '62',
             ),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER     => array(
                 'Authorization: ' . config('app.FONNTE')
             ),
         ));
@@ -137,9 +149,9 @@ class ForgotPasswordController extends Controller
         }
 
         try {
-            $karyawan = Karyawan::where('npp', $updatePassword->npp)->first();
-            $user     = User::find($karyawan->user_id)
-                            ->update(['password'               => Hash::make($request->password)]);
+            $employee = Employee::where('npp', $updatePassword->npp)->first();
+            $user     = User::find($employee->user_id)
+                            ->update(['password' => Hash::make($request->password)]);
             DB::table('password_reset_tokens')->where(['token' => request('token')])->delete();
 
             flash()

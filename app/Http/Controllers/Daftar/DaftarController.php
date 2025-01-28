@@ -21,13 +21,16 @@ class DaftarController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only([
+            'username',
+            'password',
+            'password_confirmation',
+            'otp'
+        ]), [
             'username' => 'required|string|unique:tbl_user|min:5|max:15',
             'password' => 'required|confirmed|min:6',
             'otp'      => 'required',
         ]);
-
-        $request->session()->reflash();
 
         if ($validator->fails()) {
             return redirect('daftar')
@@ -79,7 +82,6 @@ class DaftarController extends Controller
             ->flash();
 
         return response()->json(['status' => 'gagal']);
-        // sleep(3);
     }
 
     private function sendWa()
@@ -91,21 +93,21 @@ class DaftarController extends Controller
         $curl  = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_URL            => 'https://api.fonnte.com/send',
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
+            CURLOPT_ENCODING       => '',
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_TIMEOUT        => 0,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST  => 'POST',
+            CURLOPT_POSTFIELDS     => array(
                 'target'      => $noHP,
                 'message'     => $pesan,
                 'delay'       => '5',
                 'countryCode' => '62',
             ),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER     => array(
                 'Authorization: ' . config('app.FONNTE')
             ),
         ));

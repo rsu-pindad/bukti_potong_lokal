@@ -21,8 +21,6 @@ class User extends Authenticatable
      */
     protected $table = 'tbl_user';
 
-    protected $guarded = ['id'];
-
     protected $fillable = [
         'username',
         'password',
@@ -48,26 +46,39 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function karyawan(): HasOne
+    // public function karyawan(): HasOne
+    // {
+    //     return $this->hasOne(Karyawan::class, 'user_id', 'id');
+    // }
+
+    public function employee(): HasOne
     {
-        return $this->hasOne(Karyawan::class, 'user_id', 'id');
+        return $this->hasOne(Employee::class, 'user_id', 'id');
     }
 
     protected static function boot()
     {
         parent::boot();
+        // self::created(function ($model) {
+        //     $karyawan          = new Karyawan;
+        //     $karyawan->nama    = session()->pull('nama', null);
+        //     $karyawan->npp     = session()->pull('npp', null);
+        //     $karyawan->nik     = session()->pull('nik', null);
+        //     $karyawan->npwp    = session()->pull('npwp', null);
+        //     $karyawan->email   = session()->pull('email', null);
+        //     $karyawan->no_tel  = session()->pull('no_hp', null);
+        //     $karyawan->st_ptkp = session()->pull('status_ptkp', null);
+        //     $karyawan->st_peg  = session()->pull('status_kepegawaian', null);
+        //     $karyawan->epin    = session()->pull('epin', null);
+        //     $model->karyawan()->save($karyawan);
+        //     $model->syncRoles('employee');
+        // });
         self::created(function ($model) {
-            $karyawan          = new Karyawan;
-            $karyawan->nama    = session()->pull('nama', null);
-            $karyawan->npp     = session()->pull('npp', null);
-            $karyawan->nik     = session()->pull('nik', null);
-            $karyawan->npwp    = session()->pull('npwp', null);
-            $karyawan->email   = session()->pull('email', null);
-            $karyawan->no_tel  = session()->pull('no_hp', null);
-            $karyawan->st_ptkp = session()->pull('status_ptkp', null);
-            $karyawan->st_peg  = session()->pull('status_kepegawaian', null);
-            $karyawan->epin    = session()->pull('epin', null);
-            $model->karyawan()->save($karyawan);
+            $employee            = Employee::find(session()->pull('daftar_id'));
+            $employee->user_id   = $model->id;
+            $employee->is_taken  = true;
+            $employee->is_active = true;
+            $model->employee()->save($employee);
             $model->syncRoles('employee');
         });
     }

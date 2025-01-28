@@ -1,26 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible"
-          content="ie=edge">
-    <meta name="_token"
-          content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Guest Layout' }}</title>
-
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/src/notiflix.min.css">
+      <title>{{ config('app.name', 'Bukti Potong') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('styles')
-
   </head>
 
-  <body class="d-flex align-items-center py-4">
+  <body>
 
+  <main class="w-full mx-auto h-screen flex items-center justify-center">
     {{ $slot }}
+  </main>
 
-    @stack('scripts')
   </body>
 
 </html>

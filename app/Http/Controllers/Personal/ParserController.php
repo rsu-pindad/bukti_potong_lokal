@@ -13,6 +13,12 @@ use Smalot\PdfParser\Parser;
 
 class ParserController extends Controller
 {
+
+    public function index()
+    {
+        return view('employee.berkas.berkas');
+    }
+
     public function pdfParser(Request $request)
     {
         if (!$request->hasValidSignature()) {
@@ -23,7 +29,7 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
@@ -47,11 +53,11 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
                 $result[] = File::basename($file);
                 break;
             } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
                 $filterNpwp = Str::remove('-', $filterNpwp);
                 $filterNpwp = Str::remove('.', $filterNpwp);
                 if (str_contains($content, $filterNpwp)) {
@@ -113,7 +119,7 @@ class ParserController extends Controller
                        ->withInput();
         }
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
@@ -138,11 +144,11 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
                 $result[] = File::basename($file);
                 break;
             } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
                 $filterNpwp = Str::remove('-', $filterNpwp);
                 $filterNpwp = Str::remove('.', $filterNpwp);
                 if (str_contains($content, $filterNpwp)) {
@@ -191,7 +197,7 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
@@ -215,11 +221,11 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
                 $result[] = File::basename($file);
                 break;
             } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
                 $filterNpwp = Str::remove('-', $filterNpwp);
                 $filterNpwp = Str::remove('.', $filterNpwp);
                 if (str_contains($content, $filterNpwp)) {
@@ -281,7 +287,7 @@ class ParserController extends Controller
                        ->withInput();
         }
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
@@ -306,11 +312,11 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
                 $result[] = File::basename($file);
                 break;
             } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
                 $filterNpwp = Str::remove('-', $filterNpwp);
                 $filterNpwp = Str::remove('.', $filterNpwp);
                 if (str_contains($content, $filterNpwp)) {

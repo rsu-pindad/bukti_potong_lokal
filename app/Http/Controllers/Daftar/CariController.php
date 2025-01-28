@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Daftar;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use App\Models\Karyawan;
-use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -22,11 +20,9 @@ class CariController extends Controller
 
     public function search(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only('npp'), [
             'npp' => 'required|numeric|min:5'
         ]);
-
-        $request->session()->reflash();
 
         if ($validator->fails()) {
             return redirect('cari')
@@ -34,8 +30,26 @@ class CariController extends Controller
                        ->withInput();
         }
         try {
-            $pegawai = Employee::where('npp', $validator->safe()->npp)->first();
-            if (!$pegawai) {
+            $employee = Employee::select([
+                'id',
+                'npp',
+                'npp_baru',
+                'nik',
+                'nama',
+                'npwp',
+                'status_ptkp',
+                'status_kepegawaian',
+                'email',
+                'no_hp',
+                'epin',
+                'is_taken',
+                'is_active'
+            ])->where('npp', $validator->safe()->npp)
+              ->orWhere('npp', $validator->safe()->npp)
+              ->where('is_taken', false)
+              ->where('is_active', false)
+              ->first();
+            if (!$employee) {
                 toastr()
                     ->closeOnHover(true)
                     ->closeDuration(10)
@@ -43,9 +57,8 @@ class CariController extends Controller
 
                 return redirect('cari');
             }
-            $karyawan = Karyawan::where('npp', $pegawai->npp)->get();
             // dd(count($karyawan));
-            if (count($karyawan) > 0) {
+            if ($employee->is_taken) {
                 toastr()
                     ->closeOnHover(true)
                     ->closeDuration(10)
@@ -59,19 +72,17 @@ class CariController extends Controller
                 ->closeDuration(10)
                 ->addSuccess('npp ditemukan');
 
-            // return redirect('daftar')->onlyInput('npp');
-            // dd($validator->safe()->npp);
-            $request->session()->put('npp', $validator->safe()->npp);
-            $request->session()->put('nama', $pegawai->nama);
-            $request->session()->put('nik', $pegawai->nik);
-            $request->session()->put('npwp', $pegawai->npwp);
-            $request->session()->put('email', $pegawai->email);
-            $request->session()->put('no_hp', $pegawai->no_hp);
-            $request->session()->put('status_ptkp', $pegawai->status_ptkp);
-            $request->session()->put('status_kepegawaian', $pegawai->status_kepegawaian);
-            $request->session()->put('epin', $pegawai->epin);
+            $request->session()->put('daftar_id', $employee->id);
+            $request->session()->put('npp', $employee->npp);
+            $request->session()->put('nama', $employee->nama);
+            $request->session()->put('nik', $employee->nik);
+            $request->session()->put('npwp', $employee->npwp);
+            $request->session()->put('email', $employee->email);
+            $request->session()->put('no_hp', $employee->no_hp);
+            $request->session()->put('status_ptkp', $employee->status_ptkp);
+            $request->session()->put('status_kepegawaian', $employee->status_kepegawaian);
+            $request->session()->put('epin', $employee->epin);
 
-            // return redirect('daftar');
             return redirect('daftar')->withInput($request->input());
         } catch (\Throwable $th) {
             toastr()

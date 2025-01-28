@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Personal;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Models\Karyawan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -11,12 +13,15 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use ZanySoft\Zip\Facades\Zip;
 use ZanySoft\Zip\ZipManager;
+use Illuminate\Support\Facades\DB;
 
 class PersonalController extends Controller
 {
     public function index(): View
     {
-        return view('employee.beranda');
+        return view('employee.beranda')->with([
+            'profil' => User::with('employee')->find(auth()->id()),
+        ]);
     }
 
     public function edit(Request $request)
@@ -27,7 +32,7 @@ class PersonalController extends Controller
                 'email',
                 Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
             ],
-            'nama' => 'required',
+            'nama'  => 'required',
             'notel' => [
                 'required',
                 'numeric',
@@ -66,19 +71,11 @@ class PersonalController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'npwp' => [
-                // 'required|numeric|unique:karyawan,npwp,except,id',
-                'required',
-                'string',
-                Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
-            ],
-            'ptkp' => 'required',
-            'st_peg' => 'required',
-            'persetujuan' => 'accepted'
+        $validator = Validator::make($request->only('aggrement'), [
+            'aggrement' => 'required|accepted'
+        ], [
+            'aggrement.required' => 'persetuan harus dicentang.'
         ]);
-
-        $request->session()->reflash();
 
         if ($validator->fails()) {
             flash()
@@ -92,15 +89,9 @@ class PersonalController extends Controller
         }
 
         try {
-            $karyawan = Karyawan::find(Auth::user()->karyawan->id);
-            // $karyawan->npwp        = $validator->safe()->npwp;
-            // $karyawan->st_ptkp     = $validator->safe()->ptkp;
-            // $karyawan->st_peg      = $validator->safe()->st_peg;
-            $karyawan->user_edited = true;
-            $karyawan->save();
-            // flash()
-            //     ->success('identitas pegawai berhasil diperbarui')
-            //     ->flash();
+            $employee = DB::table('employees')
+                            ->where('user_id', auth()->user()->employee->user_id)
+                            ->update(['is_aggree' => true]);
             flash()
                 ->success('form pencarian bukti potong terbuka')
                 ->flash();
