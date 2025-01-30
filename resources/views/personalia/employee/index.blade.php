@@ -1,225 +1,192 @@
-@extends('layout.main')
-@section('content')
-  <div class="container">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between flex-row">
-        <h4>Data Pegawai</h4>
-        <div class="my-auto">
-          <div class="dropdown">
-            <button class="btn btn-outline-secondary"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              <i class="fa-solid fa-ellipsis"></i>
-            </button>
-            <ul class="dropdown-menu">
-              @hasexactroles('personalia')
-                <li>
-                  <a type="button"
-                     class="dropdown-item"
-                     data-bs-toggle="modal"
-                     data-bs-target="#modalImportEmployee">
-                    Import Pegawai <i class="fa-solid fa-file-import text-success ml-4"></i>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('personalia-employee-export') }}">
-                    Eksport Pegawai <i class="fa-solid fa-file-export text-success ml-4"></i>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('personalia-employee-template') }}">
-                    Template Import <i class="fa-solid fa-table-cells text-danger ml-4"></i>
-                  </a>
-                </li>
-              @endhasexactroles
-              @hasexactroles('pajak')
-                <li>
-                  <a type="button"
-                     class="dropdown-item"
-                     data-bs-toggle="modal"
-                     data-bs-target="#modalEpinImportEmployee">
-                    Import (Upload) <br>Epin Data Pegawai
-                    <i class="fa-solid fa-file-import text-success ml-4"></i>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('pajak-karyawan-epin-export') }}">
-                    Eksport (Download) <br>Epin Data Pegawai
-                    <i class="fa-solid fa-file-export text-success ml-4"></i>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('pajak-karyawan-epin-template') }}">
-                    Download <br>Template EPin Import
-                    <i class="fa-solid fa-table-cells text-danger ml-4"></i>
-                  </a>
-                </li>
-              @endhasexactroles
-            </ul>
+<x-personalia>
+
+<!-- Table Section -->
+<div class="max-w-[85rem] px-4 py-4 sm:px-4 lg:px-4 lg:py-4 mx-auto">
+  <!-- Card -->
+  <div class="flex flex-col">
+    <div class="-m-1.5 overflow-x-auto">
+      <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <!-- Header -->
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
+            <div>
+              <h2 class="text-xl font-semibold text-gray-800">
+                Pegawai
+              </h2>
+              <p class="text-sm text-gray-600">
+                Edit, Export, Import Pegawai
+              </p>
+            </div>
+
+            <div>
+              <div class="inline-flex gap-x-2">
+                <button id="hs-as-table-table-export-dropdown" type="button" 
+                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" 
+                aria-haspopup="dialog" 
+                aria-expanded="false" 
+                aria-controls="import-modal-pegawai" 
+                data-hs-overlay="#import-modal-pegawai"
+                >
+                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Import Pegawai
+                </button>
+                <button id="hs-as-table-table-export-dropdown" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Export Pegawai
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table id="employee-table"
-                 class="table-bordered table">
-            <thead>
+          <!-- End Header -->
+
+          <!-- Table -->
+          <table class="min-w-full divide-y divide-gray-200" id="employee-table">
+            <thead class="bg-gray-50">
               <tr>
-                <th>No</th>
-                <th>Npp Lama</th>
-                <th>Npp Baru</th>
-                <th>Nama</th>
-                <th>Status</th>
-                <th>NIK</th>
-                <th>NPWP</th>
-                <th>Email</th>
-                <th>No HP</th>
-                <th>PTKP</th>
-                <th>Masuk</th>
-                <th>Keluar</th>
-                <th>Update</th>
-                <th></th>
+                <!-- <th scope="col" class="ps-6 py-3 text-start">
+                  <label for="hs-at-with-checkboxes-main" class="flex">
+                    <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" id="hs-at-with-checkboxes-main">
+                    <span class="sr-only">Checkbox</span>
+                  </label>
+                </th> -->
+
+                <th scope="col" class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NO
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NPP LAMA
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NPP BARU
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NAMA
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      STATUS
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NIK
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NPWP
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      EMAIL
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      NO HP
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      PTKP
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      MASUK
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      KELUAR
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      UPDATE
+                    </span>
+                  </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-end"></th>
               </tr>
             </thead>
           </table>
+          <!-- End Table -->
+
         </div>
       </div>
     </div>
   </div>
-@endsection
+  <!-- End Card -->
+</div>
+<!-- End Table Section -->
 
-@once
-  @push('modals')
-    @hasexactroles('personalia')
-      <!-- Modal -->
-      <div id="modalImportEmployee"
-           class="modal fade"
-           tabindex="-1"
-           role="dialog"
-           aria-labelledby="modalTitleId"
-           aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-lg"
-             role="document">
-          <div class="modal-content">
-            <form action="{{ route('personalia-employee-import') }}"
-                  method="post"
-                  enctype="multipart/form-data">
-              @csrf
-              <div class="modal-header">
-                <h5 class="modal-title">Impor Data Pegawai</h5>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label for="filePegawai"
-                         class="form-label">File</label>
-                  <input id="filePegawai"
-                         type="file"
-                         class="form-control @error('filePegawai') is-invalid @enderror"
-                         name="filePegawai"
-                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                         required>
-                  @error('filePegawai')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">Tutup</button>
-                <button type="submit"
-                        class="btn btn-primary">Import
-                  <i class="fa-solid fa-file-import"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    @endhasexactroles
+<x-personalia.import-modal-pegawai/>
 
-    @hasexactroles('pajak')
-      <!-- Modal -->
-      <div id="modalEpinImportEmployee"
-           class="modal fade"
-           tabindex="-1"
-           role="dialog"
-           aria-labelledby="modalTitleId"
-           aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-lg"
-             role="document">
-          <div class="modal-content">
-            <form action="{{ route('pajak-karyawan-epin-import') }}"
-                  method="post"
-                  enctype="multipart/form-data">
-              @csrf
-              <div class="modal-header">
-                <h5 class="modal-title">Impor EPin Data Pegawai</h5>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label for="filePegawai"
-                         class="form-label">File</label>
-                  <input id="filePegawai"
-                         type="file"
-                         class="form-control @error('filePegawai') is-invalid @enderror"
-                         name="filePegawai"
-                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-                  @error('filePegawai')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">Tutup</button>
-                <button type="submit"
-                        class="btn btn-primary">Import
-                  <i class="fa-solid fa-file-import"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    @endhasexactroles
-  @endpush
-  @push('scripts')
-    <script type="module">
-      var i = 1;
-      document.addEventListener("DOMContentLoaded", (e) => {
-        e.preventDefault();
-        const token = "{{ csrf_token() }}";
-        const apiUrl = "{{ route('personalia-employee-index') }}";
-        let EmployeeTable = new DataTable('#employee-table', {
-          processing: true,
-          serverSide: true,
-          paging: true,
-          pageLength: 25,
-          lengthMenu: [
-            [25, 50, 100, -1],
-            [25, 50, 100, 'All']
-          ],
-          ajax: apiUrl,
-          columns: [{
+<script type="module">
+    var i = 1;
+    document.addEventListener("DOMContentLoaded", (e) => {
+    e.preventDefault();
+    const token = "{{ csrf_token() }}";
+    const apiUrl = "{{ route('personalia-employee-index') }}";
+    let EmployeeTable = new DataTable('#employee-table', {
+        processing: true,
+        serverSide: true,
+        paging: true,
+        pageLength: 25,
+        lengthMenu: [
+        [25, 50, 100, -1],
+        [25, 50, 100, 'All']
+        ],
+        ajax: apiUrl,
+        columns: [{
               data: null,
               render: function(data, type, row, meta) {
                 // return i++;
@@ -301,66 +268,37 @@
               class: 'actionButton d-flex',
               orderable: false,
               searchable: false,
-              render: function(data, type, row, meta) {
-                let htm = $('<a>')
-                  .attr('class', 'btn btn-info btn-sm edit mx-2')
-                  .attr('data-id', data)
-                  .attr('href', '#')
-                  .text('Edit')
-                  .wrap('<div></div>')
-                  .parent()
-                  .html();
-                htm += $('<a>')
-                  .attr('class', 'btn btn-danger btn-sm hapus mx-2')
-                  .attr('data-id', data)
-                  .attr('href', '#')
-                  .text('Hapus')
-                  .wrap('<div></div>')
-                  .parent()
-                  .html();
-                return htm;
-              }
+            //   render: function(data, type, row, meta) {
+            //     let htm = $('<a>')
+            //       .attr('class', 'btn btn-info btn-sm edit mx-2')
+            //       .attr('data-id', data)
+            //       .attr('href', '#')
+            //       .text('Edit')
+            //       .wrap('<div></div>')
+            //       .parent()
+            //       .html();
+            //     htm += $('<a>')
+            //       .attr('class', 'btn btn-danger btn-sm hapus mx-2')
+            //       .attr('data-id', data)
+            //       .attr('href', '#')
+            //       .text('Hapus')
+            //       .wrap('<div></div>')
+            //       .parent()
+            //       .html();
+            //     return htm;
+            //   }
             },
           ]
-        });
+    });
 
-        EmployeeTable.on('click', 'td.actionButton a.edit', function(e) {
-          var dataId = this.getAttribute('data-id');
-          var url = `{{ route('personalia-employee-edit', ':data_id') }}`;
-          url = url.replace(':data_id', dataId);
-          window.location.href = url;
-        });
+    // EmployeeTable.on('click', 'td.actionButton a.epin', function(e) {
+    //     var dataId = this.getAttribute('data-id');
+    //     var url = "{{ route('pajak-employee-epin-edit', ':data_id') }}";
+    //     url = url.replace(':data_id', dataId);
+    //     window.location.href = url;
+    // });
 
-        EmployeeTable.on('click', 'td.actionButton a.hapus', async function(e) {
-          e.preventDefault();
-          var dataId = this.getAttribute('data-id');
-          var url = await `{{ route('personalia-employee-destroy', ':data_id') }}`;
-          url = url.replace(':data_id', dataId);
-          fetch(url, {
-            method: 'DELETE',
-            credentials: "same-origin",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              "X-Requested-With": "XMLHttpRequest",
-              "X-CSRF-TOKEN": token,
-            },
-          }).then((response) => {
-            return response.json();
-          }).then((res) => {
-            if (res.status === 201) {
-              Notiflix.Notify.warning(res.message);
-              EmployeeTable.clear();
-              EmployeeTable.ajax.reload();
-            }else{
-              Notiflix.Notify.warning(res.message);
-            }
-          }).catch((error) => {
-            Notiflix.Notify.failure(error);
-          });
-        });
+    });
+</script>
 
-      });
-    </script>
-  @endpush
-@endonce
+</x-personalia>

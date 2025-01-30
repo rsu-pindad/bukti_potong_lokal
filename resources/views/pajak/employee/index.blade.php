@@ -167,7 +167,7 @@
       document.addEventListener("DOMContentLoaded", (e) => {
         e.preventDefault();
         const token = "{{ csrf_token() }}";
-        const apiUrl = '{{ route('pajak-employee-index') }}';
+        const apiUrl = "{{ route('pajak-employee-index') }}";
         let EmployeeTable = new DataTable('#employee-table', {
           processing: true,
           serverSide: true,

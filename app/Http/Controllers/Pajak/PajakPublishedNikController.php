@@ -26,7 +26,7 @@ class PajakPublishedNikController extends Controller
     public function cariDataPajak(Request $request)
     {
         try {
-            $result = $this->jenisFormulir($request->id);
+            $result = $this->jenisFormulir($request->fileId);
             if ($result) {
                 flash()
                     ->success('pencarian data selesai dilakukan')
@@ -76,6 +76,7 @@ class PajakPublishedNikController extends Controller
                 $filtered[] = $this->crawlingData($resultFormulir, $employee->nik, $employee->nama, $employee->npwp, $publishedFile->folder_name);
             }
         }
+        // dd($filtered);
         $folderTarget = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
 
         $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0] ?? 0));
@@ -86,6 +87,7 @@ class PajakPublishedNikController extends Controller
 
         try {
             $dataFilter = array_filter($filtered);
+
             return PublishFileNpwp::insert($dataFilter);
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -96,22 +98,25 @@ class PajakPublishedNikController extends Controller
     {
         $filtered = [];
         foreach (array_chunk($resultFormulir, 10) as $formulir) {
-            foreach ($formulir as $value) {
+            foreach ($formulir as $key => $value) {
+                if($eNik == ''){
+                    return null;
+                }
                 $squishContent = Str::of($value['formulir'])->squish();
                 if (Str::of($squishContent)->isMatch('/' . $eNik . '/')) {
                     $filtered = [
                         'publish_file_id'     => $value['publish_file_id'],
                         'file_path'           => $publishedFileName,
                         'file_name'           => $value['lokasi_formulir'],
-                        'file_identitas_npwp' => $eNpwp,
+                        'file_identitas_npwp' => $eNpwp ?? null,
                         'file_identitas_nik'  => $eNik,
                         'file_identitas_nama' => $eNama,
                     ];
                     break;
-                }else {
-                    $filtered = [];
+                }else{
+                    $filtered = null;
                 }
-                $squishContent = '';
+                $squishContent = null;
             }
         }
 
