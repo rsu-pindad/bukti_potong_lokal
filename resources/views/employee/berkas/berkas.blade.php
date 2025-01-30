@@ -1,6 +1,6 @@
 <x-employee>
 <!-- Card Section -->
-<div class="max-w-2xl px-4 py-6 sm:px-4 lg:px-6 lg:py-10 mx-auto">
+<div class="max-w-full px-4 py-6 sm:px-4 lg:px-6 lg:py-10 mx-auto">
   <!-- Card -->
   <div class="bg-white rounded-xl shadow p-4 sm:p-7">
     <div class="text-center mb-8">
@@ -80,7 +80,7 @@
 <!-- End Card Section -->
 
 <!-- Card Section -->
-<div class="max-w-2xl px-4 py-6 sm:px-4 lg:px-6 lg:py-10 mx-auto">
+<div class="max-w-full px-4 py-6 sm:px-4 lg:px-6 lg:py-10 mx-auto">
   <!-- Card -->
   <div class="bg-white rounded-xl shadow p-4 sm:p-7">
     <div class="text-center mb-8">

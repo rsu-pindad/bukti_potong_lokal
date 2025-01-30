@@ -1,6 +1,6 @@
 <x-pajak>
 <!-- Card Section -->
-<div class="max-w-2xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+<div class="max-w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 
   <div class="flex flex-col shadow rounded-xl p-4">
     <div class="-m-1.5 overflow-x-auto">
