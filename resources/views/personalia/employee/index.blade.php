@@ -20,7 +20,7 @@
 
             <div>
               <div class="inline-flex gap-x-2">
-                <button id="hs-as-table-table-export-dropdown" type="button" 
+                <button id="" type="button" 
                 class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" 
                 aria-haspopup="dialog" 
                 aria-expanded="false" 
@@ -28,12 +28,16 @@
                 data-hs-overlay="#import-modal-pegawai"
                 >
                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                    Import Pegawai
+                    Import
                 </button>
-                <button id="hs-as-table-table-export-dropdown" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                <a href="{{ route('personalia-employee-export') }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-green-600 hover:bg-green-700 text-white shadow-sm focus:outline-none focus:bg-green-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                    Export Pegawai
-                </button>
+                    Export
+                </a>
+                <a href="{{ route('personalia-employee-template') }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-orange-300 hover:bg-orange-500 text-white shadow-sm  focus:outline-none focus:bg-orange-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Template
+                </a>
               </div>
             </div>
           </div>
@@ -265,38 +269,38 @@
             },
             {
               data: 'id',
-              class: 'actionButton d-flex',
+              class: 'actionButton flex flex-col justify-evenly gap-4',
               orderable: false,
               searchable: false,
-            //   render: function(data, type, row, meta) {
-            //     let htm = $('<a>')
-            //       .attr('class', 'btn btn-info btn-sm edit mx-2')
-            //       .attr('data-id', data)
-            //       .attr('href', '#')
-            //       .text('Edit')
-            //       .wrap('<div></div>')
-            //       .parent()
-            //       .html();
-            //     htm += $('<a>')
-            //       .attr('class', 'btn btn-danger btn-sm hapus mx-2')
-            //       .attr('data-id', data)
-            //       .attr('href', '#')
-            //       .text('Hapus')
-            //       .wrap('<div></div>')
-            //       .parent()
-            //       .html();
-            //     return htm;
-            //   }
+              render: function(data, type, row, meta) {
+                let htm = $('<a>')
+                  .attr('class', 'edit py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:outline-none focus:bg-gray-100 focus:text-gray-800 active:bg-gray-100 active:text-gray-800 disabled:opacity-50 disabled:pointer-events-none')
+                  .attr('data-id', data)
+                  .attr('href', '#')
+                  .text('Edit')
+                  .wrap('<div></div>')
+                  .parent()
+                  .html();
+                htm += $('<a>')
+                  .attr('class', 'hapus py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-red-600 hover:bg-red-100 hover:text-red-800 focus:outline-none focus:bg-red-100 focus:text-red-800 active:bg-red-100 active:text-red-800 disabled:opacity-50 disabled:pointer-events-none')
+                  .attr('data-id', data)
+                  .attr('href', '#')
+                  .text('Hapus')
+                  .wrap('<div></div>')
+                  .parent()
+                  .html();
+                return htm;
+              }
             },
           ]
     });
 
-    // EmployeeTable.on('click', 'td.actionButton a.epin', function(e) {
-    //     var dataId = this.getAttribute('data-id');
-    //     var url = "{{ route('pajak-employee-epin-edit', ':data_id') }}";
-    //     url = url.replace(':data_id', dataId);
-    //     window.location.href = url;
-    // });
+    EmployeeTable.on('click', 'td.actionButton a.epin', function(e) {
+        var dataId = this.getAttribute('data-id');
+        var url = "{{ route('pajak-employee-epin-edit', ':data_id') }}";
+        url = url.replace(':data_id', dataId);
+        window.location.href = url;
+    });
 
     });
 </script>

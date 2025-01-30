@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
                 return redirect()->route('akses');
             }
             if ($user->hasRole('personalia')) {
-                return redirect()->route('karyawan');
+                return redirect()->route('personalia-employee-index');
             }
 
             return redirect()->intended(route('employee'));

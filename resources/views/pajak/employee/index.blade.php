@@ -20,14 +20,24 @@
 
             <div>
               <div class="inline-flex gap-x-2">
-                <button id="hs-as-table-table-export-dropdown" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+              <button id="" type="button" 
+                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" 
+                aria-haspopup="dialog" 
+                aria-expanded="false" 
+                aria-controls="import-modal-epin" 
+                data-hs-overlay="#import-modal-epin"
+                >
                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                    Import Epin
+                    Import
                 </button>
-                <button id="hs-as-table-table-export-dropdown" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                <a href="{{ route('pajak-employee-epin-export') }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-green-600 hover:bg-green-700 text-white shadow-sm focus:outline-none focus:bg-green-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                    Export Epin
-                </button>
+                    Export
+                </a>
+                <a href="{{ route('pajak-employee-epin-template') }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-orange-300 hover:bg-orange-500 text-white shadow-sm  focus:outline-none focus:bg-orange-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Template
+                </a>
               </div>
             </div>
           </div>
@@ -162,126 +172,128 @@
 </div>
 <!-- End Table Section -->
 
+<x-pajak.import-modal-epin/>
+
 <script type="module">
-      var i = 1;
-      document.addEventListener("DOMContentLoaded", (e) => {
-        e.preventDefault();
-        const token = "{{ csrf_token() }}";
-        const apiUrl = "{{ route('pajak-employee-index') }}";
-        let EmployeeTable = new DataTable('#employee-table', {
-          processing: true,
-          serverSide: true,
-          paging: true,
-          pageLength: 25,
-          lengthMenu: [
-            [25, 50, 100, -1],
-            [25, 50, 100, 'All']
-          ],
-          ajax: apiUrl,
-          columns: [{
-              data: null,
-              render: function(data, type, row, meta) {
-                return meta.row + meta.settings._iDisplayStart + 1;
-              },
-              searchable: false,
-              orderable: false,
-            },
-            {
-              data: 'npp',
-              name: 'npp',
-              class: 'text-right',
-            },
-            {
-              data: 'nama',
-              name: 'nama',
-              class: 'text-left',
-            },
-            {
-              data: 'status_kepegawaian',
-              name: 'status_kepegawaian',
-            },
-            {
-              data: 'nik',
-              name: 'nik',
-              class: 'text-right',
-            },
-            {
-              data: 'npwp',
-              name: 'npwp',
-              searchable: false,
-              orderable: false,
-            },
-            {
-              data: 'email',
-              name: 'email',
-              class: 'text-left',
-            },
-            {
-              data: 'no_hp',
-              name: 'no_hp',
-              orderable: false,
-              searchable: false,
-            },
-            {
-              data: 'status_ptkp',
-              name: 'status_ptkp',
-              orderable: false,
-              searchable: false,
-            },
-            {
-              data: 'epin',
-              name: 'epin',
-              orderable: false,
-              searchable: false,
-            },
-            {
-              data: 'tmt_masuk',
-              name: 'tmt_masuk',
-              class: 'text-left',
-              searchable: false,
-              render: DataTable.render.date(),
-            },
-            {
-              data: 'tmt_keluar',
-              name: 'tmt_keluar',
-              class: 'text-left',
-              searchable: false,
-              render: DataTable.render.date(),
-            },
-            {
-              data: 'updated_at',
-              name: 'updated_at',
-              class: 'text-left',
-              searchable: false,
-              render: DataTable.render.date(),
-            },
-            {
-              data: 'id',
-              class: 'actionButton flex',
-              orderable: false,
-              searchable: false,
-              render: function(data, type, row, meta) {
-                return $('<a>')
-                  .attr('class', "py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600 hover:bg-blue-100 hover:text-blue-800 focus:outline-none focus:bg-blue-100 focus:text-blue-800 active:bg-blue-100 active:text-blue-800 disabled:opacity-50 disabled:pointer-events-none")
-                  .attr('data-id', data)
-                  .attr('href', '#')
-                  .text('Epin')
-                  .wrap('<div></div>')
-                  .parent()
-                  .html();
-              }
-            },
-          ]
-        });
+  var i = 1;
+  document.addEventListener("DOMContentLoaded", (e) => {
+    e.preventDefault();
+    const token = "{{ csrf_token() }}";
+    const apiUrl = "{{ route('pajak-employee-index') }}";
+    let EmployeeTable = new DataTable('#employee-table', {
+      processing: true,
+      serverSide: true,
+      paging: true,
+      pageLength: 25,
+      lengthMenu: [
+        [25, 50, 100, -1],
+        [25, 50, 100, 'All']
+      ],
+      ajax: apiUrl,
+      columns: [{
+          data: null,
+          render: function(data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          searchable: false,
+          orderable: false,
+        },
+        {
+          data: 'npp',
+          name: 'npp',
+          class: 'text-right',
+        },
+        {
+          data: 'nama',
+          name: 'nama',
+          class: 'text-left',
+        },
+        {
+          data: 'status_kepegawaian',
+          name: 'status_kepegawaian',
+        },
+        {
+          data: 'nik',
+          name: 'nik',
+          class: 'text-right',
+        },
+        {
+          data: 'npwp',
+          name: 'npwp',
+          searchable: false,
+          orderable: false,
+        },
+        {
+          data: 'email',
+          name: 'email',
+          class: 'text-left',
+        },
+        {
+          data: 'no_hp',
+          name: 'no_hp',
+          orderable: false,
+          searchable: false,
+        },
+        {
+          data: 'status_ptkp',
+          name: 'status_ptkp',
+          orderable: false,
+          searchable: false,
+        },
+        {
+          data: 'epin',
+          name: 'epin',
+          orderable: false,
+          searchable: false,
+        },
+        {
+          data: 'tmt_masuk',
+          name: 'tmt_masuk',
+          class: 'text-left',
+          searchable: false,
+          render: DataTable.render.date(),
+        },
+        {
+          data: 'tmt_keluar',
+          name: 'tmt_keluar',
+          class: 'text-left',
+          searchable: false,
+          render: DataTable.render.date(),
+        },
+        {
+          data: 'updated_at',
+          name: 'updated_at',
+          class: 'text-left',
+          searchable: false,
+          render: DataTable.render.date(),
+        },
+        {
+          data: 'id',
+          class: 'actionButton flex flex-col justify-evenly gap-4',
+          orderable: false,
+          searchable: false,
+          render: function(data, type, row, meta) {
+            return $('<a>')
+              .attr('class', "epin py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:outline-none focus:bg-gray-100 focus:text-gray-800 active:bg-gray-100 active:text-gray-800 disabled:opacity-50 disabled:pointer-events-none")
+              .attr('data-id', data)
+              .attr('href', '#')
+              .text('Epin')
+              .wrap('<div></div>')
+              .parent()
+              .html();
+          }
+        },
+      ]
+    });
 
-        EmployeeTable.on('click', 'td.actionButton a.epin', function(e) {
-          var dataId = this.getAttribute('data-id');
-          var url = `{{ route('pajak-employee-epin-edit', ':data_id') }}`;
-          url = url.replace(':data_id', dataId);
-          window.location.href = url;
-        });
+    EmployeeTable.on('click', 'td.actionButton a.epin', function(e) {
+      var dataId = this.getAttribute('data-id');
+      var url = `{{ route('pajak-employee-epin-edit', ':data_id') }}`;
+      url = url.replace(':data_id', dataId);
+      window.location.href = url;
+    });
 
-      });
-    </script>
+  });
+</script>
 
 </x-pajak>
