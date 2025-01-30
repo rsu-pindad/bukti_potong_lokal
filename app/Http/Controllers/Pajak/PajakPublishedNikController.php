@@ -65,10 +65,12 @@ class PajakPublishedNikController extends Controller
                 $resultFormulir[] = [
                     'publish_file_id' => $publishedFile->id,
                     'lokasi_formulir' => File::basename($f),
-                    'formulir'        => $content,
+                    // 'formulir'        => $content,
+                    'formulirSquish'  => Str::of($content)->squish(),
                 ];
             }
         }
+        // dd($resultFormulir);
         $batchEmployees = Employee::select(['id', 'nik', 'nama', 'npwp'])->whereNotNull('status_kepegawaian')->get();
         $filtered       = [];
         foreach ($batchEmployees->chunk(10) as $employees) {
@@ -102,8 +104,10 @@ class PajakPublishedNikController extends Controller
                 if($eNik == ''){
                     return null;
                 }
-                $squishContent = Str::of($value['formulir'])->squish();
-                if (Str::of($squishContent)->isMatch('/' . $eNik . '/')) {
+                $squishContent = Str::of($value['formulirSquish'])->contains($eNik);
+                // if (Str::of($squishContent)->isMatch('/' . $eNik . '/')) {
+                // $isContaints = Str::of();
+                if ($squishContent) {
                     $filtered = [
                         'publish_file_id'     => $value['publish_file_id'],
                         'file_path'           => $publishedFileName,
@@ -113,10 +117,8 @@ class PajakPublishedNikController extends Controller
                         'file_identitas_nama' => $eNama,
                     ];
                     break;
-                }else{
-                    $filtered = null;
                 }
-                $squishContent = null;
+                $squishContent = false;
             }
         }
 
