@@ -12,6 +12,7 @@ use App\Http\Controllers\Personal\ParserController;
 use App\Http\Controllers\Personal\PersonalController;
 use App\Http\Controllers\Personalia\PersonaliaEmployeeController;
 use App\Http\Controllers\Tables\Pajak\BupotController;
+use App\Http\Controllers\Tables\Pajak\PublishedController;
 use App\Http\Controllers\Tables\PajakTablesEmployeeController;
 use App\Http\Controllers\Tables\PersonaliaTablesEmployeeController;
 use Illuminate\Support\Facades\Route;
@@ -142,7 +143,12 @@ Route::middleware(['auth'])->group(function () {
 
             Route::post('/cari-data-pajak', [PajakPublishedNikController::class, 'cariDataPajak'])->name('pajak-published-file-cari-data-pajak');
             Route::post('/aone-cari-data-pajak', [PajakPublishedNikController::class, 'cariDataPajakAOne'])->name('pajak-published-file-aone-cari-data-pajak');
-            Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedNikController::class, 'fileDataPajak'])->name('pajak-published-file-data-pajak');
+            // Route::get('/file-data-pajak/{file?}{cari?}', [PajakPublishedNikController::class, 'fileDataPajak'])->name('pajak-published-file-data-pajak');
+            
+            // Api Datatable
+            Route::get('/file-data-pajak/{file?}', [PublishedController::class, 'index'])->name('pajak-published-file-data-pajak');
+
+            
             Route::get('/cari-file-pajak/{folder}/{filename}', [PajakPublishedNikController::class, 'publishedCariFilePajak'])->name('pajak-published-cari-file-pajak');
         });
 
@@ -162,6 +168,7 @@ Route::middleware(['auth'])->group(function () {
         // });
 
         Route::group(['prefix' => 'personal-parser'], function () {
+
             // Non A1
             Route::get('/', [ParserController::class, 'index'])
                 ->name('personal-parser-index');

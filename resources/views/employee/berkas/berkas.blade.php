@@ -24,7 +24,7 @@
 
         <div class="mt-2 space-y-3">
           <div class="flex flex-col sm:flex-row gap-3">
-            <div>
+            <div class="grow">
             <select name="bulan" class="py-2 px-3 pe-9 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 <option hidden value="" selected>Pilih Bulan</option>
                 <option value="01">Januari</option>
@@ -41,7 +41,7 @@
                 <option value="12">Desember</option>
             </select>
             </div>
-            <div>
+            <div class="grow">
             <select name="tahun" class="py-2 px-3 pe-9 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 <option hidden value="" selected>Pilih Tahun</option>
                 <option value="2021">2021</option>
@@ -70,9 +70,9 @@
     </form>
 
     <div class="mt-5 flex justify-end gap-x-2">
-      <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none">
+      <a href="{{route('aone-personal-parser-index')}}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none">
         Cari A1 ?
-      </button>
+      </a>
     </div>
   </div>
   <!-- End Card -->
@@ -104,7 +104,7 @@
 
         <div class="mt-2 space-y-3">
           <div class="flex flex-col sm:flex-row gap-3">
-            <div>
+            <div class="grow">
             <select name="bulan" class="py-2 px-3 pe-9 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 <option hidden value="" selected>Pilih Bulan</option>
                 <option value="01">Januari</option>
@@ -121,7 +121,7 @@
                 <option value="12">Desember</option>
             </select>
             </div>
-            <div>
+            <div class="grow">
             <select name="tahun" class="py-2 px-3 pe-9 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 <option hidden value="" selected>Pilih Tahun</option>
                 <option value="2021">2021</option>
@@ -150,9 +150,9 @@
     </form>
 
     <div class="mt-5 flex justify-end gap-x-2">
-      <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none">
+      <a href="{{route('aone-personal-parser-index')}}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 disabled:opacity-50 disabled:pointer-events-none">
         Unduh A1 ?
-      </button>
+      </a>
     </div>
   </div>
   <!-- End Card -->

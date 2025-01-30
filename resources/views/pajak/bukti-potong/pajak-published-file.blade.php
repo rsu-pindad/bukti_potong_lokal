@@ -55,7 +55,11 @@
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       Sudah Dicari
                       </td>
-                      <td colspan="3" class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {{ $publish->folder_jumlah_final + $publish->folder_jumlah_tidak_final + $publish->folder_jumlah_aone }}
+                      </td>
+                      <td colspan="2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                           <form action="{{ route('pajak-published-file-data-pajak') }}"
                               method="get">
                               <div>
@@ -64,8 +68,8 @@
                                   value="{{ $publish->id }}"
                                   readonly>
                                   <button type="submit"
-                                  class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
-                                  {{ $publish->folder_jumlah_final + $publish->folder_jumlah_tidak_final + $publish->folder_jumlah_aone }}
+                                    class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-blue-600 hover:bg-blue-100 hover:text-blue-800 focus:outline-none focus:bg-blue-100 focus:text-blue-800 active:bg-blue-100 active:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
+                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
                                   </button>
                               </div>
                           </form>

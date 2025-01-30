@@ -13,7 +13,6 @@ use Smalot\PdfParser\Parser;
 
 class ParserAOneController extends Controller
 {
-
     public function index()
     {
         return view('employee.berkas.berkasone');
@@ -23,6 +22,15 @@ class ParserAOneController extends Controller
     {
         if (!$request->hasValidSignature()) {
             return abort(401);
+        }
+
+        if (Auth::user()->employee->is_aggree == false) {
+            flash()
+                ->error('Anda belum menyetujui kepegawain.')
+                ->flash();
+
+            return redirect()
+                       ->back();
         }
 
         $validator = Validator::make($request->all(), [
@@ -50,7 +58,7 @@ class ParserAOneController extends Controller
                        ->back();
         }
 
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun. '/bupot_tahunan/');
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/');
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')
@@ -109,6 +117,15 @@ class ParserAOneController extends Controller
             return abort(401);
         }
 
+        if (Auth::user()->employee->is_aggree == false) {
+            flash()
+                ->error('Anda belum menyetujui kepegawain.')
+                ->flash();
+
+            return redirect()
+                       ->back();
+        }
+
         $validator = Validator::make($request->all(), [
             'bulan' => 'required|numeric',
             'tahun' => 'required|numeric'
@@ -134,7 +151,7 @@ class ParserAOneController extends Controller
                        ->back();
         }
 
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun.'/bupot_tahunan/');
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/');
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')

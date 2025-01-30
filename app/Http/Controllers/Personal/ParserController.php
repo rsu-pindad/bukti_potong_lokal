@@ -27,6 +27,15 @@ class ParserController extends Controller
                 ->flash();
         }
 
+        if(Auth::user()->employee->is_aggree == false){
+            flash()
+                ->error('Anda belum menyetujui kepegawain.')
+                ->flash();
+
+            return redirect()
+                       ->back();
+        }
+
         $target_bulan = $request->bulan_ini;
 
         if (Auth::user()->employee->npwp == '') {
@@ -101,6 +110,15 @@ class ParserController extends Controller
     {
         if (!$request->hasValidSignature()) {
             return abort(401);
+        }
+
+        if(Auth::user()->employee->is_aggree == false){
+            flash()
+                ->error('Anda belum menyetujui kepegawain.')
+                ->flash();
+
+            return redirect()
+                       ->back();
         }
 
         $validator = Validator::make($request->all(), [
@@ -195,6 +213,15 @@ class ParserController extends Controller
                 ->flash();
         }
 
+        if(Auth::user()->employee->is_aggree == false){
+            flash()
+                ->error('Anda belum menyetujui kepegawain.')
+                ->flash();
+
+            return redirect()
+                       ->back();
+        }
+
         $target_bulan = $request->bulan_ini;
 
         if (Auth::user()->employee->npwp == '') {
@@ -269,6 +296,15 @@ class ParserController extends Controller
     {
         if (!$request->hasValidSignature()) {
             return abort(401);
+        }
+
+        if(Auth::user()->employee->is_aggree == false){
+            flash()
+                ->error('Anda belum menyetujui kepegawain.')
+                ->flash();
+
+            return redirect()
+                       ->back();
         }
 
         $validator = Validator::make($request->all(), [

@@ -108,7 +108,7 @@
         Identitas kepegawaian
       </h2>
     </div>
-    @if (Auth::user()->employee->is_aggree == false)
+    @if (!Auth::user()->employee->is_aggree)
     <form action="{{ route('personal-update') }}"
     method="POST">
     @method('patch')
@@ -193,7 +193,7 @@
           </div>
         </div>
 
-        @if (Auth::user()->employee->is_aggree == false)
+        @if (!Auth::user()->employee->is_aggree)
         <!-- End Col -->
         <div class="sm:col-span-12 mt-4">
           <div class="sm:flex">
@@ -217,16 +217,19 @@
 
       </div>
       <!-- End Grid -->
-      @if (Auth::user()->employee->is_aggree == false)
+      @if (!Auth::user()->employee->is_aggree)
       <div class="mt-5 flex justify-end gap-x-2" id="ikAggre">
         <button type="submit" class="w-full py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
            Terapkan & Buka Form Pencarian Bupot
         </button>
       </div>
       @else
-      <div class="mt-5 flex justify-end gap-x-2" id="ikAggre">
-        <a href="{{ route('personal-parser-index') }}" class="w-full py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-            Cari Bupot
+      <div class="mt-5 flex flex-col justify-end gap-x-2 gap-y-4" id="ikAggre">
+        <a href="{{ route('personal-parser-index') }}" class="w-full py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
+            Cari Bupot Bukan A1
+        </a>
+        <a href="{{ route('aone-personal-parser-index') }}" class="w-full py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 focus:outline-none focus:bg-cyan-700 disabled:opacity-50 disabled:pointer-events-none">
+            Cari Bupot A1
         </a>
       </div>
       @endif
