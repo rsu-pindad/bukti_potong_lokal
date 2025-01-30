@@ -85,8 +85,7 @@
                               <input type="hidden"
                                       name="folder_target"
                                       value="{{ $folderTanggal }}">
-                              <i class="fa-solid fa-ban"></i>
-                              <button type="submit" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
+                              <button type="submit" onclick="return confirm('Unpublish dokumen?')" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-yellow-600 hover:bg-yellow-100 hover:text-yellow-800 focus:outline-none focus:bg-yellow-100 focus:text-yellow-800 active:bg-yellow-100 active:text-yellow-800 disabled:opacity-50 disabled:pointer-events-none">
                                 Unpublish
                               </button>
                           </form>
@@ -95,9 +94,10 @@
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       Unpublish
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                      <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium flex flex-col justify-evenly gap-4">
                           <div>
-                              <a href="{{ route('pajak-file-publish', ['filename' => $itemName['3']]) }}">
+                              <a class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-blue-600 hover:bg-blue-100 hover:text-blue-800 focus:outline-none focus:bg-blue-100 focus:text-blue-800 active:bg-blue-100 active:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+                                href="{{ route('pajak-file-publish', ['filename' => $itemName['3']]) }}">
                               Set
                               </a>
                           </div>
@@ -109,7 +109,7 @@
                                   name="filename"
                                   value="{{ $itemName['3'] }}"
                                   readonly>
-                                  <button type="submit" onclick="return confirm('Hapus file?')" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
+                                  <button type="submit" onclick="return confirm('Hapus file?')" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-red-600 hover:bg-red-100 hover:text-red-800 focus:outline-none focus:bg-red-100 focus:text-red-800 active:bg-red-100 active:text-red-800 disabled:opacity-50 disabled:pointer-events-none">
                                   Hapus
                                   </button>
                               </form>

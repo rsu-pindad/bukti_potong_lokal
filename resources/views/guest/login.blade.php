@@ -2,10 +2,10 @@
     <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-sm">
         <div class="py-6 px-10">
             <div class="text-center text-balance">
-                <h1 class="block text-2xl font-bold text-gray-800">PMU Bukti Potong</h1>
+                <h1 class="block text-3xl font-bold font-mono text-gray-800">PMU Bukti Potong</h1>
             </div>
             <!-- Form -->
-            <form class="mt-4" action="{{ route('auth-authenticate') }}"
+            <form class="mt-8" action="{{ route('auth-authenticate') }}"
             method="post">
             @csrf
                 <div class="grid gap-y-4">

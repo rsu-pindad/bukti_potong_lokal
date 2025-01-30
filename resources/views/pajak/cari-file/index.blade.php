@@ -145,7 +145,7 @@
         },
         {
             data: 'id',
-            class: 'actionButton d-flex',
+            class: 'actionButton flex',
             orderable: false,
             searchable: false,
             render: function(data, type, row, meta) {
@@ -153,7 +153,7 @@
             url = url.replace(':slug', data);
 
             return $('<a>')
-                .attr('class', 'btn btn-info lihatBupot mx-2')
+                .attr('class', 'lihatBupot py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border text-blue-600 hover:bg-blue-100 hover:text-blue-800 focus:outline-none focus:bg-blue-100 focus:text-blue-800 active:bg-blue-100 active:text-blue-800 disabled:opacity-50 disabled:pointer-events-none')
                 .attr('href', url)
                 .attr('target', '_blank')
                 .text('lihat')

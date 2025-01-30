@@ -57,19 +57,24 @@
                 peer-[:not(:placeholder-shown)]:text-xs
                 peer-[:not(:placeholder-shown)]:-translate-y-1.5
                 peer-[:not(:placeholder-shown)]:text-gray-500">Bulan</label>
+            @error('bulan')
+                <p class="text-xs text-red-600 mt-2">
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
         <!-- End Floating Select -->
 
         <!-- Floating Select -->
         <div class="relative py-2">
-            <select name="tahun" id="tahun" class="peer p-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
+            <select name="tahun" id="tahun" class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
             focus:pt-6
             focus:pb-2
             [&:not(:placeholder-shown)]:pt-6
             [&:not(:placeholder-shown)]:pb-2
             autofill:pt-6
             autofill:pb-2">
-                <option selected="">Pilih Tahun</option>
+                <option selected hidden value="">Pilih Tahun</option>
                 <option value="2023">2023</option>
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
@@ -83,6 +88,11 @@
                 peer-[:not(:placeholder-shown)]:text-xs
                 peer-[:not(:placeholder-shown)]:-translate-y-1.5
                 peer-[:not(:placeholder-shown)]:text-gray-500">Tahun</label>
+            @error('tahun')
+                <p class="text-xs text-red-600 mt-2">
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
         <!-- End Floating Select -->
 

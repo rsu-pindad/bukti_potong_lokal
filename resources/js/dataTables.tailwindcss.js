@@ -30,40 +30,40 @@ $.extend(true, DataTable.defaults, {
 
 // Default class modification
 $.extend(true, DataTable.ext.classes, {
-    container: "dt-container dt-tailwindcss",
+    container: "dt-container dt-tailwindcss p-6",
     search: {
-        input: "border placeholder-gray-500 ml-2 px-3 py-2 rounded-lg border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-blue-500 dark:placeholder-gray-400"
+        input: "border w-full block placeholder-gray-500 ml-2 px-3 py-2 rounded-lg border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
     },
     info: {
         container: "dt-info"
     },
     length: {
         container: "dt-length",
-        select: "border py-2 rounded-lg border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-blue-500"
+        select: "border py-2 rounded-lg border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
     },
     processing: {
         container: "dt-processing"
     },
     paging: {
-        active: 'font-semibold bg-gray-100 dark:bg-gray-700/75',
-        notActive: 'bg-white dark:bg-gray-800',
-        button: 'relative inline-flex justify-center items-center space-x-2 border px-4 py-2 -mr-px leading-6 hover:z-10 focus:z-10 active:z-10 border-gray-200 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:active:border-gray-700',
+        active: 'font-semibold bg-gray-100',
+        notActive: 'bg-white',
+        button: 'relative inline-flex justify-center items-center space-x-2 border px-4 py-2 -mr-px leading-6 hover:z-10 focus:z-10 active:z-10 border-gray-200 active:border-gray-200 active:shadow-none',
         first: 'rounded-l-lg',
         last: 'rounded-r-lg',
-        enabled: 'text-gray-800 hover:text-gray-900 hover:border-gray-300 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40',
-        notEnabled: 'text-gray-300 dark:text-gray-600'
+        enabled: 'text-gray-800 hover:text-gray-900 hover:border-gray-300 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25',
+        notEnabled: 'text-gray-300'
     },
     table: 'dataTable min-w-full text-sm align-middle whitespace-nowrap',
     thead: {
-        row: 'border-b border-gray-100 dark:border-gray-700/50 uppercase',
-        cell: 'px-3 py-4 text-gray-900 bg-gray-100/75 font-semibold text-left dark:text-gray-50 dark:bg-gray-700/25'
+        row: 'border-b border-gray-100 uppercase',
+        cell: 'px-3 py-4 text-gray-900 bg-gray-100/75 font-semibold text-left'
     },
     tbody: {
-        row: 'even:bg-gray-50 dark:even:bg-gray-900/50',
+        row: 'even:bg-gray-50',
         cell: 'p-3'
     },
     tfoot: {
-        row: 'even:bg-gray-50 dark:even:bg-gray-900/50',
+        row: 'even:bg-gray-50',
         cell: 'p-3 text-left'
     },
 });
@@ -99,8 +99,8 @@ DataTable.ext.renderer.pagingContainer.tailwindcss = function (settings, buttonE
 DataTable.ext.renderer.layout.tailwindcss = function (settings, container, items) {
     let row = $('<div/>', {
         "class": items.full ?
-            'grid grid-cols-1 gap-4 mb-4' :
-            'grid grid-cols-2 gap-4 mb-4'
+            'grid grid-cols-1 gap-x-4 mb-4' :
+            'grid grid-cols-2 gap-x-4 mb-4'
     })
         .appendTo(container);
 
