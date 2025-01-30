@@ -13,7 +13,6 @@ use Smalot\PdfParser\Parser;
 
 class ParserController extends Controller
 {
-
     public function index()
     {
         return view('employee.berkas.berkas');
@@ -27,7 +26,7 @@ class ParserController extends Controller
                 ->flash();
         }
 
-        if(Auth::user()->employee->is_aggree == false){
+        if (Auth::user()->employee->is_aggree == false) {
             flash()
                 ->error('Anda belum menyetujui kepegawain.')
                 ->flash();
@@ -38,9 +37,9 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        if (Auth::user()->employee->npwp == '') {
+        if (Auth::user()->employee->nik == '') {
             flash()
-                ->warning('Maaf npwp masih kosong')
+                ->warning('Maaf NIK masih kosong')
                 ->flash();
 
             return redirect()
@@ -55,24 +54,14 @@ class ParserController extends Controller
         }
         $result = [];
         foreach ($files as $file) {
-            $getFile = Storage::disk('public')->path($file);
-            // dd(File::basename($file));
-            // $fileName = $file->getClientOriginalName();
+            $getFile   = Storage::disk('public')->path($file);
             $pdfParser = new Parser();
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
+            if (str_contains($content, Str::remove('/', Auth::user()->employee->nik))) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
             }
         }
         $hasil = count($result);
@@ -112,7 +101,7 @@ class ParserController extends Controller
             return abort(401);
         }
 
-        if(Auth::user()->employee->is_aggree == false){
+        if (Auth::user()->employee->is_aggree == false) {
             flash()
                 ->error('Anda belum menyetujui kepegawain.')
                 ->flash();
@@ -137,9 +126,9 @@ class ParserController extends Controller
                        ->withInput();
         }
 
-        if (Auth::user()->employee->npwp == '') {
+        if (Auth::user()->employee->nik == '') {
             flash()
-                ->warning('Maaf npwp masih kosong')
+                ->warning('Maaf NIK masih kosong')
                 ->flash();
 
             return redirect()
@@ -162,17 +151,9 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
+            if (str_contains($content, Auth::user()->employee->nik)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
             }
         }
         $hasil = count($result);
@@ -213,7 +194,7 @@ class ParserController extends Controller
                 ->flash();
         }
 
-        if(Auth::user()->employee->is_aggree == false){
+        if (Auth::user()->employee->is_aggree == false) {
             flash()
                 ->error('Anda belum menyetujui kepegawain.')
                 ->flash();
@@ -224,9 +205,9 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        if (Auth::user()->employee->npwp == '') {
+        if (Auth::user()->employee->nik == '') {
             flash()
-                ->warning('Maaf npwp masih kosong')
+                ->warning('Maaf NIK masih kosong')
                 ->flash();
 
             return redirect()
@@ -241,24 +222,14 @@ class ParserController extends Controller
         }
         $result = [];
         foreach ($files as $file) {
-            $getFile = Storage::disk('public')->path($file);
-            // dd(File::basename($file));
-            // $fileName = $file->getClientOriginalName();
+            $getFile   = Storage::disk('public')->path($file);
             $pdfParser = new Parser();
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
+            if (str_contains($content, Auth::user()->employee->nik)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
             }
         }
         $hasil = count($result);
@@ -298,7 +269,7 @@ class ParserController extends Controller
             return abort(401);
         }
 
-        if(Auth::user()->employee->is_aggree == false){
+        if (Auth::user()->employee->is_aggree == false) {
             flash()
                 ->error('Anda belum menyetujui kepegawain.')
                 ->flash();
@@ -323,9 +294,9 @@ class ParserController extends Controller
                        ->withInput();
         }
 
-        if (Auth::user()->employee->npwp == '') {
+        if (Auth::user()->employee->nik == '') {
             flash()
-                ->warning('Maaf npwp masih kosong')
+                ->warning('Maaf NIK masih kosong')
                 ->flash();
 
             return redirect()
@@ -348,17 +319,9 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
+            if (str_contains($content, Auth::user()->employee->nik)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
             }
         }
         $hasil = count($result);

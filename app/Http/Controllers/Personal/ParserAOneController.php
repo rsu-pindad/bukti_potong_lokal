@@ -49,9 +49,9 @@ class ParserAOneController extends Controller
                        ->withInput();
         }
 
-        if (Auth::user()->employee->npwp == '') {
+        if (Auth::user()->employee->nik == '') {
             flash()
-                ->warning('Maaf npwp masih kosong')
+                ->warning('Maaf NIK masih kosong')
                 ->flash();
 
             return redirect()
@@ -74,17 +74,9 @@ class ParserAOneController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
+            if (str_contains($content, Auth::user()->employee->nik)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
             }
         }
         $hasil = count($result);
@@ -142,9 +134,9 @@ class ParserAOneController extends Controller
                        ->withInput();
         }
 
-        if (Auth::user()->employee->npwp == '') {
+        if (Auth::user()->employee->nik == '') {
             flash()
-                ->warning('Maaf npwp masih kosong')
+                ->warning('Maaf NIK masih kosong')
                 ->flash();
 
             return redirect()
@@ -167,17 +159,9 @@ class ParserAOneController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->employee->npwp))) {
+            if (str_contains($content, Auth::user()->employee->nik)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
             }
         }
         $hasil = count($result);
