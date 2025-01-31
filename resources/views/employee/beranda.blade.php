@@ -127,7 +127,7 @@
         <!-- End Col -->
         <div class="sm:col-span-9" id="ikEpin">
           <div class="sm:flex">
-            <input readonly id="epin" value="{{$profil->employee->epin}}" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="{{$profil->employee->epin}}">
+            <input readonly id="epin" value="{{$profil->employee->epin}}" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none bg-gray-300" placeholder="{{$profil->employee->epin}}">
           </div>
         </div>
         <!-- End Col -->
@@ -140,7 +140,7 @@
         <!-- End Col -->
 
         <div class="sm:col-span-9" id="ikNpp">
-          <input readonly id="npp" value="{{$profil->employee->npp}}" type="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="{{$profil->employee->npp}}">
+          <input readonly id="npp" value="{{$profil->employee->npp_baru ?? $profil->employee->npp}}" type="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="{{$profil->employee->npp}}">
         </div>
         <!-- End Col -->
 

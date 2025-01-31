@@ -88,9 +88,10 @@ class PajakPublishedNikController extends Controller
         $publishedFile->save();
 
         try {
-            $dataFilter = array_filter($filtered);
+            $dataFilter    = array_filter($filtered);
+            $collectFilter = collect($dataFilter)->flatten(1)->toArray();
 
-            return PublishFileNpwp::insert($dataFilter);
+            return PublishFileNpwp::insert($collectFilter);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -101,14 +102,14 @@ class PajakPublishedNikController extends Controller
         $filtered = [];
         foreach (array_chunk($resultFormulir, 10) as $formulir) {
             foreach ($formulir as $key => $value) {
-                if($eNik == ''){
+                if ($eNik == '') {
                     return null;
                 }
                 $squishContent = Str::of($value['formulirSquish'])->contains($eNik);
                 // if (Str::of($squishContent)->isMatch('/' . $eNik . '/')) {
                 // $isContaints = Str::of();
                 if ($squishContent) {
-                    $filtered = [
+                    $filtered[] = [
                         'publish_file_id'     => $value['publish_file_id'],
                         'file_path'           => $publishedFileName,
                         'file_name'           => $value['lokasi_formulir'],
@@ -116,7 +117,7 @@ class PajakPublishedNikController extends Controller
                         'file_identitas_nik'  => $eNik,
                         'file_identitas_nama' => $eNama,
                     ];
-                    break;
+                    // break;
                 }
                 $squishContent = false;
             }

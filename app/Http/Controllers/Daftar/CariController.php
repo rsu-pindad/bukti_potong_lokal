@@ -10,8 +10,15 @@ use Illuminate\View\View;
 
 class CariController extends Controller
 {
-    public function index(): View
+    // public function __construct(Request $request)
+    // {
+    // }
+    public function index(Request $request): View
     {
+        // $request->session()->forget(['name', 'status']);
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+
         return view('guest.daftar')->with([
             'route'    => 'cari',
             'showSelf' => false,
@@ -45,7 +52,7 @@ class CariController extends Controller
                 'is_taken',
                 'is_active'
             ])->where('npp', $validator->safe()->npp)
-              ->orWhere('npp', $validator->safe()->npp)
+              ->orWhere('npp_baru', $validator->safe()->npp)
               ->where('is_taken', false)
               ->where('is_active', false)
               ->first();
@@ -71,9 +78,13 @@ class CariController extends Controller
                 ->closeOnHover(true)
                 ->closeDuration(10)
                 ->addSuccess('npp ditemukan');
-
+                
+            $npp = $employee->npp;
+            if ($npp == '') {
+                $npp = $employee->npp_baru;
+            }
             $request->session()->put('daftar_id', $employee->id);
-            $request->session()->put('npp', $employee->npp);
+            $request->session()->put('npp', $npp);
             $request->session()->put('nama', $employee->nama);
             $request->session()->put('nik', $employee->nik);
             $request->session()->put('npwp', $employee->npwp);
