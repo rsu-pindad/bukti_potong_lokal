@@ -53,6 +53,9 @@ COPY ./dev/docker-compose/php/supervisord-app.conf /etc/supervisord.conf
 
 # COPY --chown=www-data:www-data . /var/www
 # USER www-data
+RUN addgroup -g 1000 --system localserver
+RUN adduser -G localserver --system -D -s /bin/sh -u 1000 localserver
+
 COPY --chown=localserver:www-data . /var/www
 USER localserver
 
