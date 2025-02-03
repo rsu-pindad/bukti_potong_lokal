@@ -52,7 +52,8 @@ RUN rm /var/cache/apk/* && \
 COPY ./dev/docker-compose/php/supervisord-app.conf /etc/supervisord.conf
 
 # COPY --chown=www-data:www-data . /var/www
-COPY --chown=www-data:www-data . /var/www
-USER www-data
+# USER www-data
+COPY --chown=localserver:www-data . /var/www
+USER localserver
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
