@@ -53,6 +53,6 @@ COPY ./dev/docker-compose/php/supervisord-app.conf /etc/supervisord.conf
 
 # COPY --chown=www-data:www-data . /var/www
 COPY --chown=www-data:www-data . /var/www
-# USER www-data
+USER www-data
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
