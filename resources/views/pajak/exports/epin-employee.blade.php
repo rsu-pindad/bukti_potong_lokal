@@ -1,7 +1,8 @@
 <table>
   <thead>
     <tr>
-      <th>npp</th>
+      <th>npp lama</th>
+      <th>npp baru</th>
       <th>nama</th>
       <th>status_kepegawaian</th>
       <th>nik</th>
@@ -15,7 +16,8 @@
   <tbody>
     @foreach ($employees as $employee)
       <tr>
-        <td>{{ $employee->npp_baru == null ? $employee->npp : $employee->npp_baru }}</td>
+        <td>{{ $employee->npp }}</td>
+        <td>{{ $employee->npp_baru }}</td>
         <td>{{ $employee->nama }}</td>
         <td>{{ $employee->status_kepegawaian }}</td>
         <td>{{ $employee->nik }}</td>
