@@ -218,9 +218,10 @@ class PajakPublishedController extends Controller
             }
         }
         $folderTarget                             = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
-        $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0])) ?? 0;
-        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1])) ?? 0;
-        $publishedFile->folder_jumlah_aone        = count(Storage::disk('public')->allFiles($folderTarget[2])) ?? 0;
+        // dd($folderTarget);
+        $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0] ?? null));
+        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1] ?? null));
+        $publishedFile->folder_jumlah_aone        = count(Storage::disk('public')->allFiles($folderTarget[2] ?? null));
         $publishedFile->folder_status             = true;
         $publishedFile->save();
         try {
