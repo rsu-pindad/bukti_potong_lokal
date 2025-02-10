@@ -97,10 +97,8 @@ class PersonaliaEmployeeController extends Controller
         $request->validate([
             'filePegawai' => 'required',
         ]);
-        $mulai = $request->input('mulai');
-        $akhir = $request->input('akhir');
         try {
-            Excel::import(new PersonaliaEmployeeImport(), $request->file('filePegawai'));
+            Excel::import(new PersonaliaEmployeeImport(), $request->file('filePegawai'), 'public', \Maatwebsite\Excel\Excel::CSV);
             flash()
                 ->success('berhasil import data pegawai')
                 ->flash();

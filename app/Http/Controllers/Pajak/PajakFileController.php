@@ -17,7 +17,6 @@ class PajakFileController extends Controller
     public function index()
     {
         $zip_files = Storage::disk('public')->files('files/shares/pajak');
-
         return view('pajak.bukti-potong.pajak-file')->with([
             'title' => 'Publish Pajak',
             'zip_files' => $zip_files

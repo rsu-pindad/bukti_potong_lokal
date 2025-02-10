@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Karyawan;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,14 +26,14 @@ class ForgotPasswordController extends Controller
         try {
             $token = Str::random(64);
 
-            $karyawan = Karyawan::where('npp', $request->npp)->first();
-            if (!$karyawan) {
+            $employee = Employee::where('npp', $request->npp)->first();
+            if (!$employee) {
                 flash()
                     ->warning('NPP tidak ditemukan.')
                     ->flash();
 
                 return redirect()
-                           ->back();
+                    ->back();
             }
 
             $reset = DB::table('password_reset_tokens')->insert([
@@ -42,8 +42,8 @@ class ForgotPasswordController extends Controller
                 'created_at' => Carbon::now()
             ]);
 
-            if ($karyawan) {
-                $this->sendWa($karyawan, $token);
+            if ($employee) {
+                $this->sendWa($employee, $token);
             }
             flash()
                 ->success('Password reset sudah dikirim.')
@@ -57,16 +57,20 @@ class ForgotPasswordController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
-    private function sendWa($karyawan, $token)
+    private function sendWa($employee, $token)
     {
+        dd($employee->user_id);
         $url    = URL::temporarySignedRoute('auth-get-reset-password', now()->addMinutes(60), ['token' => $token]);
-        $pesan  = 'Reset password link : ' . PHP_EOL;
+        $pesan  = 'usernmae : ' . $employee->user()->first()->username . PHP_EOL;
+        $pesan  .= 'Reset password link : ' . PHP_EOL;
+        $pesan .= PHP_EOL;
         $pesan .= PHP_EOL;
         $pesan .= $url;
+        $pesan .= PHP_EOL;
         $pesan .= PHP_EOL;
         $pesan .= 'Berlaku 60 menit' . PHP_EOL;
         $pesan .= 'atau 1x perubahan password' . PHP_EOL;
@@ -82,7 +86,7 @@ class ForgotPasswordController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target'      => $karyawan->no_tel,
+                'target'      => $employee->no_tel,
                 'message'     => $pesan,
                 'delay'       => '5',
                 'countryCode' => '62',
@@ -122,10 +126,10 @@ class ForgotPasswordController extends Controller
         ]);
 
         $updatePassword = DB::table('password_reset_tokens')
-                              ->where([
-                                  'token' => request('token')
-                              ])
-                              ->first();
+            ->where([
+                'token' => request('token')
+            ])
+            ->first();
 
         if (!$updatePassword) {
             flash()
@@ -133,13 +137,13 @@ class ForgotPasswordController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
 
         try {
-            $karyawan = Karyawan::where('npp', $updatePassword->npp)->first();
-            $user     = User::find($karyawan->user_id)
-                            ->update(['password'               => Hash::make($request->password)]);
+            $employee = Employee::where('npp', $updatePassword->npp)->first();
+            $user     = User::find($employee->user_id)
+                ->update(['password'               => Hash::make($request->password)]);
             DB::table('password_reset_tokens')->where(['token' => request('token')])->delete();
 
             flash()
@@ -154,7 +158,7 @@ class ForgotPasswordController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 }

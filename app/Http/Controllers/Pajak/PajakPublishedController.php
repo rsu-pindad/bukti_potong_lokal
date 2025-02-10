@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\PublishFile;
 use App\Models\PublishFileNpwp;
-use App\Models\ShortLinkFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
-use YorCreative\UrlShortener\Services\UrlService;
 
 class PajakPublishedController extends Controller
 {
@@ -45,14 +43,14 @@ class PajakPublishedController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
@@ -75,14 +73,14 @@ class PajakPublishedController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
@@ -308,10 +306,6 @@ class PajakPublishedController extends Controller
                     'id'   => $formulir['publish_file_id'],
                     'name' => $formulir['lokasi_formulir'],
                 ]);
-                $shortUrl = UrlService::shorten($signedUrl)
-                                ->withOpenLimit(10)
-                                ->withPassword($eNik)
-                                ->build();
                 $filtered = [
                     'publish_file_id'     => $formulir['publish_file_id'],
                     'file_path'           => $publishedFileName,
@@ -319,8 +313,6 @@ class PajakPublishedController extends Controller
                     'file_identitas_npwp' => $eNpwp,
                     'file_identitas_nik'  => $eNik,
                     'file_identitas_nama' => $eNama,
-                    'short_link'          => $shortUrl,
-                    'original_link'       => $signedUrl,
                 ];
                 // unset($resultFormulir[$key]);
                 $squishContent = '';
@@ -379,6 +371,6 @@ class PajakPublishedController extends Controller
             ->flash();
 
         return redirect()
-                   ->back();
+            ->back();
     }
 }

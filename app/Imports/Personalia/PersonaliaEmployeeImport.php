@@ -3,81 +3,53 @@
 namespace App\Imports\Personalia;
 
 use App\Models\Employee;
-use Carbon\Carbon;
-use Maatwebsite\Excel\Concerns\OnEachRow;
-use Maatwebsite\Excel\Concerns\SkipsErrors;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithUpserts;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithMappedCells;
-use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
-use Maatwebsite\Excel\Row;
 
-class PersonaliaEmployeeImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements OnEachRow, WithMappedCells, WithCustomValueBinder, WithHeadingRow, WithChunkReading, WithSkipDuplicates, SkipsOnError
+class PersonaliaEmployeeImport extends StringValueBinder implements ToModel, WithUpserts, WithBatchInserts, WithStartRow, WithCustomValueBinder
 {
-    use SkipsErrors;
+    use RemembersChunkOffset;
 
-    protected $mulai;
-    protected $akhir;
-
-    public function onError(\Throwable $e)
+    public function model(array $row)
     {
-        Log::debug($e->getMessage());
-    }
-
-    public function mapping(): array
-    {
-        return [
-            'npp'                => 'A1',
-            'npp_baru'           => 'B1',
-            'nama'               => 'C1',
-            'status_kepegawaian' => 'D1',
-            'nik'                => 'E1',
-            'npwp'               => 'F1',
-            'status_ptkp'        => 'G1',
-            'email'              => 'H1',
-            'no_hp'              => 'I1',
-            'tmt_masuk'          => 'J1',
-            'tmt_keluar'         => 'K1',
-        ];
+        return new Employee([
+            'npp'                => $row[0],
+            'npp_baru'           => ($row[1] != null) ? $row[1] : null,
+            'nama'               => $row[2],
+            'status_kepegawaian' => $row[3],
+            'nik'                => $row[4],
+            'npwp'               => ($row[5] != null) ? $row[5] : null,
+            'status_ptkp'        => $row[6],
+            'email'              => $row[7],
+            'no_hp'              => $row[8],
+            'tmt_masuk'          => ($row[9] != null) ? Carbon::createFromFormat('Y-m-d', $row[9])->format('Y-m-d') : null,
+            'tmt_keluar'         => ($row[10] != null) ? Carbon::createFromFormat('Y-m-d', $row[10])->format('Y-m-d') : null,
+        ]);
     }
 
     public function uniqueBy()
     {
-        return ['id', 'nik'];
+        return 'nik ';
     }
 
-    public function onRow(Row $row)
+    public function startRow(): int
     {
-        $rowIndex = $row->getIndex();
-        $row      = $row->toArray();
-
-        return Employee::updateOrInsert(
-            ['nik' => $row['nik']],
-            [
-                'npp'                => $row['npp'],
-                'npp_baru'           => ($row['npp_baru'] != null) ? $row['npp_baru'] : null,
-                'nama'               => $row['nama'],
-                'status_kepegawaian' => $row['status_kepegawaian'],
-                'npwp'               => ($row['npwp'] != null) ? $row['npwp'] : null,
-                'status_ptkp'        => $row['status_ptkp'],
-                'email'              => $row['email'],
-                'no_hp'              => $row['no_hp'],
-                'tmt_masuk'          => ($row['tmt_masuk'] != null) ? Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((float) $row['tmt_masuk']))->toDateString() : null,
-                'tmt_keluar'         => ($row['tmt_keluar'] != null) ? Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((float) $row['tmt_keluar']))->toDateString() : null,
-                'created_at'         => Carbon::now(),
-            ]
-        );
+        return 2;
     }
 
     public function batchSize(): int
     {
-        return 1000;
+        return 50;
     }
 
     public function chunkSize(): int
     {
-        return 300;
+        return 50;
     }
 }

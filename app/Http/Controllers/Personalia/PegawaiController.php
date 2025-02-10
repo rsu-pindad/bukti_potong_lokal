@@ -35,27 +35,13 @@ class PegawaiController extends Controller
         return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
     }
 
-    public function import(Request $request)
-    {
-        $request->validate([
-            'filePegawai' => 'required'
-        ]);
-        try {
-            Excel::import(new PegawaiImport, $request->file('filePegawai'));
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('toast_error', 'upload file yang benar!');
-        }
-
-        return redirect()->back()->withToastSuccess('berhasil memperbarui data pegawai');
-    }
-
     public function importBaru(Request $request)
     {
         $request->validate([
             'filePegawai' => 'required'
         ]);
         try {
-            Excel::import(new PersonaliaEmployeeImport, $request->file('filePegawai'));
+            Excel::import(new PersonaliaEmployeeImport, $request->file('filePegawai'),'public',\Maatwebsite\Excel\Excel::CSV);
         } catch (\Throwable $th) {
             return redirect()->back()->with('toast_error', 'upload file yang benar!');
         }

@@ -3,22 +3,14 @@
 namespace App\Imports\Pajak;
 
 use App\Models\Employee;
-use Maatwebsite\Excel\Concerns\OnEachRow;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithSkipDuplicates;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Row;
+use Maatwebsite\Excel\Concerns\OnEachRow;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 
-class EpinPegawaiImport implements OnEachRow, WithHeadingRow, WithUpserts, WithChunkReading, WithBatchInserts, SkipsEmptyRows, WithSkipDuplicates
+class EpinPegawaiImport extends StringValueBinder implements OnEachRow, WithHeadingRow, WithChunkReading
 {
-    public function uniqueBy()
-    {
-        return ['id', 'nik'];
-    }
-
     public function onRow(Row $row)
     {
         $rowIndex = $row->getIndex();
