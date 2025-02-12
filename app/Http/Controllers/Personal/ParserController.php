@@ -23,14 +23,14 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        if (Auth::user()->karyawan->npwp == '') {
-            flash()
-                ->warning('Maaf npwp masih kosong')
-                ->flash();
+        // if (Auth::user()->karyawan->npwp == '') {
+        //     flash()
+        //         ->warning('Maaf npwp masih kosong')
+        //         ->flash();
 
-            return redirect()
-                       ->back();
-        }
+        //     return redirect()
+        //                ->back();
+        // }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $target_bulan);
         if ($files < 1) {
@@ -41,23 +41,21 @@ class ParserController extends Controller
         $result = [];
         foreach ($files as $file) {
             $getFile = Storage::disk('public')->path($file);
-            // dd(File::basename($file));
-            // $fileName = $file->getClientOriginalName();
             $pdfParser = new Parser();
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+
+            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+            $filterNpwp = Str::remove('-', $filterNpwp);
+            $filterNpwp = Str::remove('.', $filterNpwp);
+            $filterNik = Auth::user()->karyawan->nik;
+            if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
+            } elseif (str_contains($content, $filterNik)) {
+                $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
@@ -67,7 +65,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $target_bulan . '/bupot_final_tidakfinal/' . $result[0]);
@@ -87,7 +85,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
@@ -108,9 +106,9 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         if (Auth::user()->karyawan->npwp == '') {
@@ -119,7 +117,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
@@ -129,7 +127,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         $result = [];
         foreach ($files as $file) {
@@ -138,17 +136,17 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+
+            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+            $filterNpwp = Str::remove('-', $filterNpwp);
+            $filterNpwp = Str::remove('.', $filterNpwp);
+            $filterNik = Auth::user()->karyawan->nik;
+            if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
+            } elseif (str_contains($content, $filterNik)) {
+                $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
@@ -158,7 +156,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0]);
@@ -177,7 +175,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
@@ -197,7 +195,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $target_bulan);
@@ -209,23 +207,21 @@ class ParserController extends Controller
         $result = [];
         foreach ($files as $file) {
             $getFile = Storage::disk('public')->path($file);
-            // dd(File::basename($file));
-            // $fileName = $file->getClientOriginalName();
             $pdfParser = new Parser();
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+
+            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+            $filterNpwp = Str::remove('-', $filterNpwp);
+            $filterNpwp = Str::remove('.', $filterNpwp);
+            $filterNik = Auth::user()->karyawan->nik;
+            if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
+            } elseif (str_contains($content, $filterNik)) {
+                $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
@@ -235,7 +231,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $target_bulan . '/bupot_final_tidakfinal/' . $result[0]);
@@ -255,7 +251,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
@@ -276,9 +272,9 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         if (Auth::user()->karyawan->npwp == '') {
@@ -287,7 +283,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
@@ -297,7 +293,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         $result = [];
         foreach ($files as $file) {
@@ -306,17 +302,17 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+
+            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
+            $filterNpwp = Str::remove('-', $filterNpwp);
+            $filterNpwp = Str::remove('.', $filterNpwp);
+            $filterNik = Auth::user()->karyawan->nik;
+            if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
+            } elseif (str_contains($content, $filterNik)) {
+                $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
@@ -326,7 +322,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_final_tidakfinal/' . $result[0]);
@@ -345,7 +341,7 @@ class ParserController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 }

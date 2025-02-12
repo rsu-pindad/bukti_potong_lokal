@@ -132,13 +132,6 @@
                   <input type="hidden"
                     name="id"
                     value="{{ $publish->id }}">
-                  <input type="hidden"
-                    name="isMetode2"
-                    value="true">
-                  <button class="btn btn-warning btn-sm mx-4">
-                    Metode 2
-                    <i class="fa-solid fa-arrow-rotate-right"></i>
-                  </button>
                 </form>
               </div>
               <div class="py-2">
