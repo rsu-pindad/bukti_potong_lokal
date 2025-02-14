@@ -7,9 +7,9 @@ use App\Models\Employee;
 use App\Models\PublishFile;
 use App\Models\PublishFileNpwp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 
@@ -28,9 +28,9 @@ class PajakPublishedController extends Controller
         $isReset   = request()->input('isReset');
         try {
             if ($isReset == 'true') {
-                $this->jenisFormulir($request->id, true, false);
+                $this->jenisFormulir($request->id, true);
             } else {
-                $this->jenisFormulir($request->id, false, false);
+                $this->jenisFormulir($request->id, false);
             }
             flash()
                 ->success('pencarian data selesai dilakukan')
@@ -48,65 +48,66 @@ class PajakPublishedController extends Controller
         }
     }
 
-    public function cariDataPajakAOne(Request $request)
+    private function jenisFormulir($id, $isReset = false)
     {
-        $isReset   = request()->input('isReset');
-        $isMetode2 = request()->input('isMetode2') ?? false;
-        try {
-            if ($isReset == 'true') {
-                $this->jenisFormulirAOne($request->id, true, false);
-            } else {
-                if ($isMetode2) {
-                    $this->jenisFormulirAOne($request->id, false, true);
-                } else {
-                    $this->jenisFormulirAOne($request->id, false, false);
-                }
-            }
-            flash()
-                ->success('pencarian data selesai dilakukan')
-                ->flash();
-
-            return redirect()
-                ->back();
-        } catch (\Throwable $th) {
-            flash()
-                ->warning($th->getMessage())
-                ->flash();
-
-            return redirect()
-                ->back();
-        }
-    }
-
-    private function jenisFormulir($id, $isReset = false, $isMetode2 = false)
-    {
-        $isReset = $isReset;
-        $isMetode2 = $isMetode2;
-        $publishedFile = PublishFile::find($id);
-        $searchDir = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
-        $arrayDir = array_filter($searchDir, function ($value) use ($publishedFile) {
-            return $value !== 'files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan';
-        });
-        $searchDir = array_filter($arrayDir);
-        $files     = [];
-        foreach ($searchDir as $dir) {
-            $files[] = Storage::disk('public')->allFiles($dir);
-        }
-        $files = Arr::flatten($files);
-
-        $resultFormulir = [];
-        foreach ($files as $file) {
-            $getFile   = Storage::disk('public')->path($file);
-            $pdfParser = new Parser();
-            $pdf       = $pdfParser->parseFile($getFile);
-            $content = $pdf->getText();
-            $resultFormulir[] = [
+        $publishedFile = PublishFile::select(['id', 'folder_name'])->find($id);
+        $searchFile = collect(Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name))->skip(1);
+        $parser = new Parser();
+        $resultFormulir = collect();
+        $searchFile->filter(function (string $value, int $key) use ($parser, $publishedFile, $resultFormulir) {
+            $pdf = $parser->parseFile(Storage::disk('public')->path($value));
+            $resultFormulir[$key] = [
                 'publish_file_id' => $publishedFile->id,
-                'lokasi_formulir' => File::basename($file),
-                'formulir'        => $content,
+                'lokasi_formulir' => File::basename($value),
+                'formulir'        => $pdf->getText(),
             ];
-        }
+            return false;
+        });
         $batchEmployees = Employee::whereNotNull('status_kepegawaian')->get();
+        $chunks = $resultFormulir->chunk(10);
+        $matchDocument = [];
+        $x = collect();
+        $x = $batchEmployees->each(function (object $employee, int $keyVal) use ($chunks, $matchDocument) {
+            $matchDocument = $chunks->mapSpread(function (array $value, array $key) use ($employee) {
+                // return collect($value)->values();
+                $formulir = collect([$value]);
+                $documents = $formulir->mapToGroups(function (array $item, int $keyItem) use ($employee) {
+                    // if ($employee->npwp == null || $employee->nik == null) {
+                    //     return [];
+                    // }
+                    // dd(Str::of($item['formulir'])->squish());
+                    $squishContent = Str::of($item['formulir'])->squish();
+                    // dd($batchEmployees);
+                    // if (Str::of($squishContent)->isMatch('/' . $employee->npwp . '/')) {
+                    //     $matchDocument[] = [
+                    //         'publish_file_id'     => $item['publish_file_id'],
+                    //         // 'file_path'           => $publishedFileName,
+                    //         'file_name'           => $item['lokasi_formulir'],
+                    //         'file_identitas_npwp' => $employee->npwp,
+                    //         'file_identitas_nik'  => $employee->nik,
+                    //         // 'file_identitas_nama' => $eNama,
+                    //     ];
+                    // }
+                    return $squishContent;
+                });
+                // dd($documents);
+                return collect(Arr::flatten($documents))->values();
+            });
+            // dd($matchDocument);
+            return collect($matchDocument)->values();
+        });
+        dd($x);
+        $filterChunk = $chunks->mapSpread(function (array $value, array $key) use ($batchEmployees) {
+            $formulir = collect([$value]);
+            $formulir->mapToGroups(function (array $item, int $keyItem) use ($batchEmployees) {
+                // dd(Str::of($item['formulir'])->squish());
+                $squishContent = Str::of($item['formulir'])->squish();
+                // dd($batchEmployees);
+
+            });
+        });
+        dd($filterChunk);
+        $batchEmployees = Employee::whereNotNull('npwp')->whereNotNull('status_kepegawaian')->get();
         $filtered       = [];
         $filterNpwp     = '';
         foreach ($batchEmployees->chunk(10) as $employees) {
@@ -115,6 +116,7 @@ class PajakPublishedController extends Controller
                 $filterNpwp = Str::remove('-', $filterNpwp);
                 $filterNpwp = Str::remove('.', $filterNpwp);
                 $filtered[] = $this->crawlingData($resultFormulir, $filterNpwp, $employee->nik, $employee->nama, $publishedFile->folder_name);
+
                 $filterNpwp = '';
             }
         }
@@ -135,50 +137,6 @@ class PajakPublishedController extends Controller
             return $th->getMessage();
         }
     }
-
-    // A1
-    private function jenisFormulirAOne($id, $isReset = false, $isMetode2 = false)
-    {
-        $isReset        = $isReset;
-        $isMetode2      = $isMetode2;
-        $publishedFile  = PublishFile::find($id);
-        $files          = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name . '/bupot_tahunan/');
-        $resultFormulir = [];
-        foreach ($files as $file) {
-            $getFile = Storage::disk('public')->path($file);
-            $pdfParser = new Parser();
-            $pdf = $pdfParser->parseFile($getFile);
-            $content = $pdf->getText();
-            $resultFormulir[] = [
-                'publish_file_id' => $publishedFile->id,
-                'lokasi_formulir' => File::basename($file),
-                'formulir'        => $content,
-            ];
-        }
-        $batchEmployees = Employee::whereNotNull('status_kepegawaian')->get();
-        $filtered       = [];
-        $filterNpwp     = '';
-        foreach ($batchEmployees->chunk(10) as $employees) {
-            foreach ($employees as $employee) {
-                $filterNpwp = Str::remove('/', $employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                $filtered[] = $this->crawlingData($resultFormulir, $filterNpwp, $employee->nik, $employee->nama, $publishedFile->folder_name);
-                $filterNpwp = '';
-            }
-        }
-
-        try {
-            if ($isReset) {
-                PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
-            } else {
-                PublishFileNpwp::createMany(array_filter($filtered));
-            }
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
-    }
-    // END A1
 
     private function crawlingData(array $resultFormulir, $eNpwp, $eNik, $eNama, $publishedFileName)
     {
