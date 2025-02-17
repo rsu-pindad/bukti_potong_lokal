@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
 
 class PublishFileNpwp extends Model
@@ -20,7 +19,6 @@ class PublishFileNpwp extends Model
         'file_identitas_npwp',
         'file_identitas_nik',
         'file_identitas_nama',
-        'file_identitas_alamat',
     ];
 
     protected $hidden = [

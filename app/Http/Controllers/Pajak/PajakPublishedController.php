@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Pajak;
 
-use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\PublishFile;
-use App\Models\PublishFileNpwp;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use Smalot\PdfParser\Parser;
+use App\Models\PublishFileNpwp;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Smalot\PdfParser\Parser;
 
 class PajakPublishedController extends Controller
 {
@@ -26,16 +25,24 @@ class PajakPublishedController extends Controller
     public function cariDataPajak(Request $request)
     {
         $isReset   = request()->input('isReset');
+        $formula = '';
+        set_time_limit(300);
         try {
-            if ($isReset == 'true') {
-                $this->jenisFormulir($request->id, true);
-            } else {
-                $this->jenisFormulir($request->id, false);
+            // if ($isReset == 'true') {
+            // $formula = $this->jenisFormulir($request->id, true);
+            // } else {
+            $formula = $this->jenisFormulir($request->id, false);
+            // }
+            if (is_null($formula)) {
+                flash()
+                    ->success('pencarian berhasil dilakukan')
+                    ->flash();
+                return redirect()
+                    ->back();
             }
             flash()
-                ->success('pencarian data selesai dilakukan')
+                ->info($formula)
                 ->flash();
-
             return redirect()
                 ->back();
         } catch (\Throwable $th) {
@@ -50,131 +57,83 @@ class PajakPublishedController extends Controller
 
     private function jenisFormulir($id, $isReset = false)
     {
-        $publishedFile = PublishFile::select(['id', 'folder_name'])->find($id);
-        $searchFile = collect(Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name))->skip(1);
-        $parser = new Parser();
-        $resultFormulir = collect();
-        $searchFile->filter(function (string $value, int $key) use ($parser, $publishedFile, $resultFormulir) {
-            $pdf = $parser->parseFile(Storage::disk('public')->path($value));
-            $resultFormulir[$key] = [
-                'publish_file_id' => $publishedFile->id,
-                'lokasi_formulir' => File::basename($value),
-                'formulir'        => $pdf->getText(),
-            ];
-            return false;
-        });
-        $batchEmployees = Employee::whereNotNull('status_kepegawaian')->get();
-        $chunks = $resultFormulir->chunk(10);
-        $matchDocument = [];
-        $x = collect();
-        $x = $batchEmployees->each(function (object $employee, int $keyVal) use ($chunks, $matchDocument) {
-            $matchDocument = $chunks->mapSpread(function (array $value, array $key) use ($employee) {
-                // return collect($value)->values();
-                $formulir = collect([$value]);
-                $documents = $formulir->mapToGroups(function (array $item, int $keyItem) use ($employee) {
-                    // if ($employee->npwp == null || $employee->nik == null) {
-                    //     return [];
-                    // }
-                    // dd(Str::of($item['formulir'])->squish());
-                    $squishContent = Str::of($item['formulir'])->squish();
-                    // dd($batchEmployees);
-                    // if (Str::of($squishContent)->isMatch('/' . $employee->npwp . '/')) {
-                    //     $matchDocument[] = [
-                    //         'publish_file_id'     => $item['publish_file_id'],
-                    //         // 'file_path'           => $publishedFileName,
-                    //         'file_name'           => $item['lokasi_formulir'],
-                    //         'file_identitas_npwp' => $employee->npwp,
-                    //         'file_identitas_nik'  => $employee->nik,
-                    //         // 'file_identitas_nama' => $eNama,
-                    //     ];
-                    // }
-                    return $squishContent;
-                });
-                // dd($documents);
-                return collect(Arr::flatten($documents))->values();
-            });
-            // dd($matchDocument);
-            return collect($matchDocument)->values();
-        });
-        dd($x);
-        $filterChunk = $chunks->mapSpread(function (array $value, array $key) use ($batchEmployees) {
-            $formulir = collect([$value]);
-            $formulir->mapToGroups(function (array $item, int $keyItem) use ($batchEmployees) {
-                // dd(Str::of($item['formulir'])->squish());
-                $squishContent = Str::of($item['formulir'])->squish();
-                // dd($batchEmployees);
 
-            });
-        });
-        dd($filterChunk);
-        $batchEmployees = Employee::whereNotNull('npwp')->whereNotNull('status_kepegawaian')->get();
-        $filtered       = [];
-        $filterNpwp     = '';
-        foreach ($batchEmployees->chunk(10) as $employees) {
-            foreach ($employees as $employee) {
-                $filterNpwp = Str::remove('/', $employee->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                $filtered[] = $this->crawlingData($resultFormulir, $filterNpwp, $employee->nik, $employee->nama, $publishedFile->folder_name);
-
-                $filterNpwp = '';
-            }
-        }
-        $folderTarget                             = Storage::disk('public')->allDirectories('files/shares/pajak/extrack/' . $publishedFile->folder_name);
-        $publishedFile->folder_jumlah_final       = count(Storage::disk('public')->allFiles($folderTarget[0] ?? null));
-        $publishedFile->folder_jumlah_tidak_final = count(Storage::disk('public')->allFiles($folderTarget[1] ?? null));
-        $publishedFile->folder_jumlah_aone        = count(Storage::disk('public')->allFiles($folderTarget[2] ?? null));
-        $publishedFile->folder_status             = true;
-        $publishedFile->save();
         try {
+            $publishedFile = PublishFile::select(['id', 'folder_name'])->find($id);
+            $searchFile = collect(
+                Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $publishedFile->folder_name)
+                // )->skip(1);
+            );
+            $parser = new Parser();
+            $resultFormulir = $searchFile->map(function (string $value, int $key) use ($parser, $publishedFile) {
+                $paths = Storage::disk('public')->path($value);
+                $pdf = $parser->parseFile($paths);
+                return [
+                    'publish_file_id' => $publishedFile->id,
+                    'lokasi_formulir' => File::basename($value),
+                    'formulir'        => $pdf->getText(),
+                ];
+            });
+            $resultFormulirs = collect($resultFormulir);
+            $batchEmployees = Employee::select([
+                'id',
+                'nama',
+                'nik',
+                'npwp',
+                'status_kepegawaian'
+            ])
+                ->whereNotNull('nik')
+                ->whereNotNull('status_kepegawaian')
+                ->get();
+            foreach ($batchEmployees->chunk(10) as $employees) {
+                foreach ($employees as $employee) {
+                    $this->crawlingData($resultFormulirs->all(), $employee, $publishedFile);
+                }
+            }
+            // dd(array_filter($resultData));
             if ($isReset) {
                 PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
             } else {
-                $dataFilter = array_filter($filtered);
-                PublishFileNpwp::insert($dataFilter);
+                $publishedFile->folder_status             = true;
+                $publishedFile->folder_jumlah_file       = count($searchFile) ?? 0;
+                $publishedFile->save();
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
     }
 
-    private function crawlingData(array $resultFormulir, $eNpwp, $eNik, $eNama, $publishedFileName)
+    private function crawlingData(array $resultFormulirs, $employee, $publishedFileName)
     {
         $filtered = [];
-        foreach ($resultFormulir as $key => $formulir) {
-            $squishContent = Str::of($formulir['formulir'])->squish();
-            // if ($eNpwp == '') {
-            //     $squishContent = '';
-            //     return null;
-            // }
-            if (Str::of($squishContent)->isMatch('/' . $eNpwp . '/')) {
-                $filtered = [
+        foreach ($resultFormulirs as $formulir) {
+            $squishContent = Str::squish($formulir['formulir']);
+            $slugs = $employee->nik;
+            $slugs2 = $employee->npwp ?? 'BLM ADA NPWP';
+            $limitContent =  Str::limit($squishContent, 580);
+            if (Str::of($limitContent)->contains($slugs)) {
+                PublishFileNpwp::insert([
                     'publish_file_id'     => $formulir['publish_file_id'],
-                    'file_path'           => $publishedFileName,
+                    'file_path'           => $publishedFileName->folder_name,
                     'file_name'           => $formulir['lokasi_formulir'],
-                    'file_identitas_npwp' => $eNpwp,
-                    'file_identitas_nik'  => $eNik,
-                    'file_identitas_nama' => $eNama,
-                ];
-                $squishContent = '';
-                break;
-            } elseif (Str::of($squishContent)->contains($eNik)) {
-                $filtered = [
+                    'file_identitas_npwp' => $slugs2,
+                    'file_identitas_nik'  => $slugs,
+                    'file_identitas_nama' => $employee->nama,
+                ]);
+            } elseif (Str::of($limitContent)->contains($slugs2)) {
+                PublishFileNpwp::insert([
                     'publish_file_id'     => $formulir['publish_file_id'],
-                    'file_path'           => $publishedFileName,
+                    'file_path'           => $publishedFileName->folder_name,
                     'file_name'           => $formulir['lokasi_formulir'],
-                    'file_identitas_npwp' => $eNpwp,
-                    'file_identitas_nik'  => $eNik,
-                    'file_identitas_nama' => $eNama,
-                ];
-                $squishContent = '';
-                break;
+                    'file_identitas_npwp' => $slugs2,
+                    'file_identitas_nik'  => $slugs,
+                    'file_identitas_nama' => $employee->nama,
+                ]);
+            } else {
+                $filtered[] = [];
+                // break;
             }
-            $filtered = [];
-            $squishContent = '';
         }
-
-        return $filtered;
     }
 
     public function fileDataPajak(Request $request)

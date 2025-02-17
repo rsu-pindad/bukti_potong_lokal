@@ -1,58 +1,52 @@
 @extends('layout.main')
 @section('content')
-  <div class="container">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between flex-row">
-        <h4>Bukti Potong Pegawai</h4>
-        <div class="my-auto">
-          <div class="dropdown">
-            <button class="btn btn-outline-secondary"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              <i class="fa-solid fa-ellipsis"></i>
-            </button>
-            <ul class="dropdown-menu">
-              @hasexactroles('pajak')
-                <li>
-                  <a class="dropdown-item"
-                     href="{{ route('pajak-cari-link-export') }}">
-                    Eksport Link Bupot
-                    <i class="fa-solid fa-file-export text-success ml-4"></i>
-                  </a>
-                </li>
-              @endhasexactroles
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table id="bupot-table"
-                 class="table-bordered table">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Folder</th>
-                <th>Nama File</th>
-                <th>NPWP</th>
-                <th>NIK</th>
-                <th>Nama Pegawai</th>
-                <th>Url Keluar</th>
-                <th></th>
-              </tr>
-            </thead>
-          </table>
+<div class="container">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between flex-row">
+      <h4>Bukti Potong Pegawai</h4>
+      <div class="my-auto">
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-ellipsis"></i>
+          </button>
+          <ul class="dropdown-menu">
+            @hasexactroles('pajak')
+            <li>
+              <a class="dropdown-item" href="{{ route('pajak-cari-link-export') }}">
+                Eksport Link Bupot
+                <i class="fa-solid fa-file-export text-success ml-4"></i>
+              </a>
+            </li>
+            @endhasexactroles
+          </ul>
         </div>
       </div>
     </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="bupot-table" class="table-bordered table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Folder</th>
+              <th>Nama File</th>
+              <th>NPWP</th>
+              <th>NIK</th>
+              <th>Nama Pegawai</th>
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
   </div>
+</div>
 @endsection
 
 @once
-  @push('scripts')
-    <script type="module">
-      var i = 1;
+@push('scripts')
+<script type="module">
+  var i = 1;
       document.addEventListener("DOMContentLoaded", (e) => {
         e.preventDefault();
         const token = "{{ csrf_token() }}";
@@ -101,16 +95,12 @@
               name: 'file_identitas_nama',
             },
             {
-              data: 'short_link',
-              name: 'short_link',
-            },
-            {
               data: 'id',
               class: 'actionButton d-flex',
               orderable: false,
               searchable: false,
               render: function(data, type, row, meta) {
-                var url = '{{ route('pajak-cari-file-bupot', ':slug') }}';
+                var url = "{{ route('pajak-cari-file-bupot', ':slug') }}";
                 url = url.replace(':slug', data);
 
                 return $('<a>')
@@ -128,5 +118,5 @@
 
       });
     </script>
-  @endpush
+@endpush
 @endonce

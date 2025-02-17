@@ -20,9 +20,7 @@
           <th>File</th>
           <th>Nama folder</th>
           <th>Status</th>
-          <th>File Bulanan</th>
-          <th>File Tidak Final</th>
-          <th>File Tahunan</th>
+          <th>Jumlah File</th>
           <th>Aksi</th>
         </tr>
       </thead>
@@ -36,9 +34,7 @@
           <td>
             <span class="badge rounded-pill text-bg-secondary p-2">Belum Dicari</span>
           </td>
-          <td>{{ $publish->folder_jumlah_final }}</td>
-          <td>{{ $publish->folder_jumlah_tidak_final }}</td>
-          <td>{{ $publish->folder_jumlah_aone }}</td>
+          <td>{{ $publish->folder_jumlah_file }}</td>
           <td>
             <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
               method="post">
@@ -59,7 +55,7 @@
           <td>
             <span class="badge rounded-pill text-bg-success p-2">Sudah Dicari</span>
           </td>
-          <td>
+          <td colspan="2">
             <form action="{{ route('pajak-published-file-data-pajak') }}"
               method="get">
               <div>
@@ -69,104 +65,11 @@
                   readonly>
                 <button type="submit"
                   class="btn btn-sm btn-outline-secondary mx-4">
-                  {{ $publish->folder_jumlah_final }}
+                  {{ $publish->folder_jumlah_file }}
                   <i class="fa-solid fa-eye px-2"></i>
                 </button>
               </div>
             </form>
-          </td>
-          <td>
-            <form action="{{ route('pajak-published-file-data-pajak') }}"
-              method="get">
-              <div>
-                <input type="hidden"
-                  name="file"
-                  value="{{ $publish->id }}"
-                  readonly>
-                <button type="submit"
-                  class="btn btn-sm btn-outline-secondary mx-4">
-                  {{ $publish->folder_jumlah_tidak_final }}
-                  <i class="fa-solid fa-eye px-2"></i>
-                </button>
-              </div>
-            </form>
-          </td>
-          <td>
-            <form action="{{ route('pajak-published-file-data-pajak') }}"
-              method="get">
-              <div>
-                <input type="hidden"
-                  name="file"
-                  value="{{ $publish->id }}"
-                  readonly>
-                <button type="submit"
-                  class="btn btn-sm btn-outline-secondary mx-4">
-                  {{ $publish->folder_jumlah_aone }}
-                  <i class="fa-solid fa-eye px-2"></i>
-                </button>
-              </div>
-            </form>
-          </td>
-          <td>
-            <div class="justify-content-around flex flex-row">
-              <div class="py-2">
-                <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
-                  method="post">
-                  @csrf
-                  <input type="hidden"
-                    name="id"
-                    value="{{ $publish->id }}">
-                  <input type="hidden"
-                    name="isReset"
-                    value="true">
-                  <button class="btn btn-danger btn-sm mx-4">
-                    Reset
-                    <i class="fa-solid fa-arrow-rotate-left"></i>
-                  </button>
-                </form>
-              </div>
-              <div class="py-2">
-                <form action="{{ route('pajak-published-file-cari-data-pajak') }}"
-                  method="post">
-                  @csrf
-                  <input type="hidden"
-                    name="id"
-                    value="{{ $publish->id }}">
-                </form>
-              </div>
-              <div class="py-2">
-                <form action="{{ route('pajak-published-file-aone-cari-data-pajak') }}"
-                  method="post">
-                  @csrf
-                  <input type="hidden"
-                    name="id"
-                    value="{{ $publish->id }}">
-                  <input type="hidden"
-                    name="isReset"
-                    value="false">
-                  <button class="btn btn-info btn-sm mx-4">
-                    Cari A1 (Metode 1)
-                    <i class="fa-solid fa-arrow-rotate-right"></i>
-                  </button>
-                </form>
-              </div>
-              <div class="py-2">
-                <form action="{{ route('pajak-published-file-aone-cari-data-pajak') }}"
-                  method="post">
-                  @csrf
-                  <input type="hidden"
-                    name="id"
-                    value="{{ $publish->id }}">
-                  <input type="hidden"
-                    name="isMetode2"
-                    value="true">
-                  <button class="btn btn-secondary btn-sm mx-4">
-                    Cari A1 (Metode 2)
-                    <i class="fa-solid fa-arrow-rotate-right"></i>
-                  </button>
-                </form>
-              </div>
-            </div>
           </td>
           @endif
         </tr>

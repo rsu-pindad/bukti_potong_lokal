@@ -19,9 +19,7 @@ class PublishFile extends Model
         'folder_publish',
         'folder_name',
         'folder_status',
-        'folder_jumlah_final',
-        'folder_jumlah_tidak_final',
-        'folder_jumlah_aone'
+        'folder_jumlah_file',
     ];
 
     protected $hidden = [
