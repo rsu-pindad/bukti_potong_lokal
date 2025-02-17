@@ -7,7 +7,7 @@
     </li>
   </x-employee.breadcrumb>
   <x-employee.personal-profile username_karyawan="{{ Auth::user()->username }}"
-                               npp_karyawan="{{ Auth::user()->employee->npp }}"
+                               npp_karyawan="{{ Auth::user()->employee->npp ?? '' }}"
                                nama_karyawan="{{ Auth::user()->employee->nama ?? '' }}"
                                npwp_karyawan="{{ Auth::user()->employee->npwp ?? '' }}"
                                nik_karyawan="{{ Auth::user()->employee->nik ?? '' }}"
@@ -118,18 +118,10 @@
                 <x-inputs.select id="ptkp"
                                  name="ptkp"
                                  readonly>
-                  {{-- <option hidden>Pilih Status PTKP</option> --}}
                   <option value="{{ Auth::user()->employee->status_ptkp ?? '' }}"
                           selected
                           readonly>{{ Auth::user()->employee->status_ptkp ?? 'Belum Diisi' }}</option>
-                  {{-- <option value="TK0">TK0</option>
-                  <option value="TK1">TK1</option>
-                  <option value="TK2">TK2</option>
-                  <option value="TK3">TK3</option>
-                  <option value="K0">K0</option>
-                  <option value="K1">K1</option>
-                  <option value="K2">K2</option>
-                  <option value="K3">K3</option> --}}
+                  
                 </x-inputs.select>
               </x-forms.floating-labels>
             </div>
@@ -140,12 +132,10 @@
                 <x-inputs.select id="st_peg"
                                  name="st_peg"
                                  readonly>
-                  {{-- <option hidden>Pilih Status Karyawan</option> --}}
                   <option value="{{ Auth::user()->employee->status_kepegawaian ?? '' }}"
                           selected
                           readonly>{{ Auth::user()->employee->status_kepegawaian ?? 'Belum Diisi' }}</option>
-                  {{-- <option value="KONTRAK">KONTRAK</option>
-                  <option value="TETAP">TETAP</option> --}}
+                  
                 </x-inputs.select>
               </x-forms.floating-labels>
             </div>
