@@ -24,40 +24,31 @@ class PajakPublishedController extends Controller
 
     public function cariDataPajak(Request $request)
     {
-        $isReset   = request()->input('isReset');
-        $formula = '';
         set_time_limit(300);
         try {
-            // if ($isReset == 'true') {
-            // $formula = $this->jenisFormulir($request->id, true);
-            // } else {
-            $formula = $this->jenisFormulir($request->id, false);
-            // }
+            $formula = $this->jenisFormulir($request->id);
             if (is_null($formula)) {
                 flash()
                     ->success('pencarian berhasil dilakukan')
                     ->flash();
-                return redirect()
-                    ->back();
+            } else {
+                flash()
+                    ->info($formula)
+                    ->flash();
             }
-            flash()
-                ->info($formula)
-                ->flash();
             return redirect()
                 ->back();
         } catch (\Throwable $th) {
             flash()
                 ->warning($th->getMessage())
                 ->flash();
-
             return redirect()
                 ->back();
         }
     }
 
-    private function jenisFormulir($id, $isReset = false)
+    private function jenisFormulir($id)
     {
-
         try {
             $publishedFile = PublishFile::select(['id', 'folder_name'])->find($id);
             $searchFile = collect(
@@ -91,13 +82,13 @@ class PajakPublishedController extends Controller
                 }
             }
             // dd(array_filter($resultData));
-            if ($isReset) {
-                PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
-            } else {
+            // if ($isReset) {
+            //     PublishFileNpwp::where('publish_file_id', $publishedFile->id)->delete();
+            // } else {
                 $publishedFile->folder_status             = true;
                 $publishedFile->folder_jumlah_file       = count($searchFile) ?? 0;
                 $publishedFile->save();
-            }
+            // }
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
