@@ -3,53 +3,51 @@
 namespace App\Http\Controllers\Personal;
 
 use App\Http\Controllers\Controller;
-use App\Models\Karyawan;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
-use ZanySoft\Zip\Facades\Zip;
-use ZanySoft\Zip\ZipManager;
 
 class PersonalController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         return view('employee.beranda');
     }
 
     public function edit(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['email', 'nama', 'notel']), [
             'email' => [
                 'required',
                 'email',
-                Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
+                Rule::unique('employees')->ignore(Auth::user()->employee->id),
             ],
             'nama' => 'required',
             'notel' => [
                 'required',
                 'numeric',
-                Rule::unique('karyawan', 'no_tel')->ignore(Auth::user()->karyawan->id),
+                Rule::unique('employees', 'no_tel')->ignore(Auth::user()->employee->id),
             ],
         ]);
 
-        $request->session()->reflash();
+        // $request->session()->reflash();
 
         if ($validator->fails()) {
             return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         try {
-            $karyawan         = Karyawan::find(Auth::user()->karyawan->id);
-            $karyawan->nama   = $validator->safe()->nama;
-            $karyawan->email  = $validator->safe()->email;
-            $karyawan->no_tel = $validator->safe()->notel;
-            $karyawan->save();
+            $employee         = Employee::find(Auth::user()->employee->id);
+            // $employee->nama   = $validator->safe()->nama;
+            // $employee->email  = $validator->safe()->email;
+            // $employee->no_hp = $validator->safe()->notel;
+            $employee->is_setuju = true;
+            $employee->save();
             flash()
                 ->success('identitas pribadi berhasil diperbarui')
                 ->flash();
@@ -66,19 +64,19 @@ class PersonalController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['npwp','ptkp','st_peg','persetujuan']), [
             'npwp' => [
                 // 'required|numeric|unique:karyawan,npwp,except,id',
                 'required',
                 'string',
-                Rule::unique('karyawan')->ignore(Auth::user()->karyawan->id),
+                Rule::unique('employees')->ignore(Auth::user()->employee->id),
             ],
             'ptkp' => 'required',
             'st_peg' => 'required',
             'persetujuan' => 'accepted'
         ]);
 
-        $request->session()->reflash();
+        // $request->session()->reflash();
 
         if ($validator->fails()) {
             flash()
@@ -86,18 +84,18 @@ class PersonalController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         try {
-            $karyawan = Karyawan::find(Auth::user()->karyawan->id);
-            // $karyawan->npwp        = $validator->safe()->npwp;
-            // $karyawan->st_ptkp     = $validator->safe()->ptkp;
-            // $karyawan->st_peg      = $validator->safe()->st_peg;
-            $karyawan->user_edited = true;
-            $karyawan->save();
+            $employee = Employee::find(Auth::user()->employee->id);
+            // $employee->npwp        = $validator->safe()->npwp;
+            // $employee->st_ptkp     = $validator->safe()->ptkp;
+            // $employee->st_peg      = $validator->safe()->st_peg;
+            $employee->is_setuju = true;
+            $employee->save();
             // flash()
             //     ->success('identitas pegawai berhasil diperbarui')
             //     ->flash();
@@ -120,20 +118,5 @@ class PersonalController extends Controller
         if (!$request->hasValidSignature()) {
             return abort(401);
         }
-
-        // return view('employee.dokumen');
-        // $locationZip = storage_path('app/public/files/shares/pajak/template_penilaian.zip');
-        // $is_valid = Zip::open($locationZip);
-        // $manager = new ZipManager;
-        // $manager->addZip(Zip::open(storage_path('app/public/files/shares/pajak/template_penilaian.zip')));
-        // $extract = $manager->extract(storage_path('app/public/files/shares/pajak/extrack'), true);
-        // $manager->close();
-
-        // try {
-        //     $file = response()->file(storage_path('app/public/files/shares/pajak/extrack/template_penilaian.pdf', 200));
-        //     return $file;
-        // } catch (\Throwable $th) {
-        //     return abort(404);
-        // }
     }
 }

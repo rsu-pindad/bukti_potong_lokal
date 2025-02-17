@@ -49,8 +49,9 @@ class Handler extends ExceptionHandler
             if ($user->hasRole('personalia')) {
                 return redirect()->route('karyawan');
             }
+            to_route('personal');
 
-            return redirect()->intended(route('employee'));
+            // return redirect()->intended('/personal');
         });
     }
 }

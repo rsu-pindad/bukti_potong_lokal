@@ -1,21 +1,21 @@
 <x-employee>
 
   <x-employee.breadcrumb top_page="beranda"
-                         current_page="{{ Auth::user()->username ?? Route::currentRouteName() }}">
+                         current_page="{{ Auth::user()->username ?? '' }}">
     <li class="breadcrumb-item">
       <a href="#">Beranda</a>
     </li>
   </x-employee.breadcrumb>
   <x-employee.personal-profile username_karyawan="{{ Auth::user()->username }}"
-                               npp_karyawan="{{ Auth::user()->karyawan->npp ?? '' }}"
-                               nama_karyawan="{{ Auth::user()->karyawan->nama ?? '' }}"
-                               npwp_karyawan="{{ Auth::user()->karyawan->npwp ?? '' }}"
-                               nik_karyawan="{{ Auth::user()->karyawan->nik ?? '' }}"
-                               epin_karyawan="{{ Auth::user()->karyawan->epin ?? '-' }}"
-                               email_karyawan="{{ Auth::user()->karyawan->email ?? '' }}"
-                               notel_karyawan="{{ Auth::user()->karyawan->no_tel ?? '' }}"
-                               st_ptkp_karyawan="{{ Auth::user()->karyawan->st_ptkp ?? '' }}"
-                               st_peg_karyawan="{{ Auth::user()->karyawan->st_peg ?? '' }}"
+                               npp_karyawan="{{ Auth::user()->employee->npp }}"
+                               nama_karyawan="{{ Auth::user()->employee->nama ?? '' }}"
+                               npwp_karyawan="{{ Auth::user()->employee->npwp ?? '' }}"
+                               nik_karyawan="{{ Auth::user()->employee->nik ?? '' }}"
+                               epin_karyawan="{{ Auth::user()->employee->epin ?? '-' }}"
+                               email_karyawan="{{ Auth::user()->employee->email ?? '' }}"
+                               notel_karyawan="{{ Auth::user()->employee->no_hp ?? '' }}"
+                               st_ptkp_karyawan="{{ Auth::user()->employee->status_ptkp ?? '' }}"
+                               st_peg_karyawan="{{ Auth::user()->employee->status_kepegawaian ?? '' }}"
                                bsTargetPegawai="#informasiKepegawaian"
                                bsTargetIdentitas="#informasiIdentitas" />
 
@@ -36,7 +36,7 @@
               <x-inputs.input id="nama"
                               name="nama"
                               placeholder="nama..."
-                              value="{{ Auth::user()->karyawan->nama }}"
+                              value="{{ Auth::user()->employee->nama }}"
                               required />
             </x-forms.floating-labels>
           </div>
@@ -49,7 +49,7 @@
                               type="email"
                               name="email"
                               placeholder="email..."
-                              value="{{ Auth::user()->karyawan->email }}"
+                              value="{{ Auth::user()->employee->email }}"
                               required />
             </x-forms.floating-labels>
           </div>
@@ -62,7 +62,7 @@
                               type="tel"
                               name="notel"
                               placeholder="nomor telephone..."
-                              value="{{ Auth::user()->karyawan->no_tel }}"
+                              value="{{ Auth::user()->employee->no_hp }}"
                               required />
             </x-forms.floating-labels>
           </div>
@@ -78,7 +78,7 @@
       </form>
     </x-modal.default-inner>
 
-    @if (Auth::user()->karyawan->user_edited === false)
+    @if (!Auth::user()->employee->is_setuju)
       <x-modal.default-inner rootId="informasiKepegawaian"
                              rootLabel="Informasi Kepegawaian">
         <x-slot:header>
@@ -95,7 +95,7 @@
                 <x-inputs.input id="npp"
                                 name="npp"
                                 class="form-control-plaintext"
-                                value="{{ Auth::user()->karyawan->npp }}"
+                                value="{{ Auth::user()->employee->npp }}"
                                 placeholder="npp...."
                                 readonly />
               </x-forms.floating-labels>
@@ -105,7 +105,7 @@
                                        label="NPWP">
                 <x-inputs.input id="npwp"
                                 name="npwp"
-                                value="{{ Auth::user()->karyawan->npwp }}"
+                                value="{{ Auth::user()->employee->npwp }}"
                                 placeholder="npwp...."
                                 required
                                 readonly />
@@ -119,9 +119,9 @@
                                  name="ptkp"
                                  readonly>
                   {{-- <option hidden>Pilih Status PTKP</option> --}}
-                  <option value="{{ Auth::user()->karyawan->st_ptkp ?? '' }}"
+                  <option value="{{ Auth::user()->employee->status_ptkp ?? '' }}"
                           selected
-                          readonly>{{ Auth::user()->karyawan->st_ptkp ?? 'Belum Diisi' }}</option>
+                          readonly>{{ Auth::user()->employee->status_ptkp ?? 'Belum Diisi' }}</option>
                   {{-- <option value="TK0">TK0</option>
                   <option value="TK1">TK1</option>
                   <option value="TK2">TK2</option>
@@ -141,9 +141,9 @@
                                  name="st_peg"
                                  readonly>
                   {{-- <option hidden>Pilih Status Karyawan</option> --}}
-                  <option value="{{ Auth::user()->karyawan->st_peg ?? '' }}"
+                  <option value="{{ Auth::user()->employee->status_kepegawaian ?? '' }}"
                           selected
-                          readonly>{{ Auth::user()->karyawan->st_peg ?? 'Belum Diisi' }}</option>
+                          readonly>{{ Auth::user()->employee->status_kepegawaian ?? 'Belum Diisi' }}</option>
                   {{-- <option value="KONTRAK">KONTRAK</option>
                   <option value="TETAP">TETAP</option> --}}
                 </x-inputs.select>

@@ -7,8 +7,6 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/src/notiflix.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
@@ -143,7 +141,6 @@
       </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/dist/notiflix-aio-3.2.8.min.js"></script>
     <script type="module">
       $(function() {
         $("form").submit(function() {

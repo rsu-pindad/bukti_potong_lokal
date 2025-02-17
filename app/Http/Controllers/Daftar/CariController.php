@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Daftar;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use App\Models\Karyawan;
-use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -22,19 +20,23 @@ class CariController extends Controller
 
     public function search(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'npp' => 'required|numeric|min:5'
+        $validator = Validator::make($request->only('npp'), [
+            'npp' => 'required|min:5'
+        ], [
+            'npp.required' => 'mohon isi npp',
+            'npp.min' => 'minimal 5 karakter',
         ]);
-
-        $request->session()->reflash();
 
         if ($validator->fails()) {
             return redirect('cari')
-                       ->withErrors($validator)
-                       ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         try {
-            $pegawai = Employee::where('npp', $validator->safe()->npp)->first();
+            session()->flush();
+            $pegawai = Employee::where('npp_baru', $validator->safe()->npp)
+                ->orWhere('npp', $validator->safe()->npp)
+                ->first();
             if (!$pegawai) {
                 toastr()
                     ->closeOnHover(true)
@@ -43,9 +45,7 @@ class CariController extends Controller
 
                 return redirect('cari');
             }
-            $karyawan = Karyawan::where('npp', $pegawai->npp)->get();
-            // dd(count($karyawan));
-            if (count($karyawan) > 0) {
+            if ($pegawai->is_taken) {
                 toastr()
                     ->closeOnHover(true)
                     ->closeDuration(10)
@@ -59,9 +59,14 @@ class CariController extends Controller
                 ->closeDuration(10)
                 ->addSuccess('npp ditemukan');
 
+
             // return redirect('daftar')->onlyInput('npp');
             // dd($validator->safe()->npp);
-            $request->session()->put('npp', $validator->safe()->npp);
+            $nppPegawai = $pegawai->npp_baru;
+            if($nppPegawai == null){
+                $nppPegawai = $pegawai->npp;
+            }
+            $request->session()->put('npp', $nppPegawai);
             $request->session()->put('nama', $pegawai->nama);
             $request->session()->put('nik', $pegawai->nik);
             $request->session()->put('npwp', $pegawai->npwp);

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 
 class ParserAOneController extends Controller
@@ -19,7 +18,7 @@ class ParserAOneController extends Controller
             return abort(401);
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['bulan', 'tahun']), [
             'bulan' => 'required|numeric',
             'tahun' => 'required|numeric'
         ]);
@@ -30,28 +29,28 @@ class ParserAOneController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        if (Auth::user()->karyawan->npwp == '') {
-            flash()
-                ->warning('Maaf npwp masih kosong')
-                ->flash();
+        // if (Auth::user()->employee->npwp == '') {
+        //     flash()
+        //         ->warning('Maaf npwp masih kosong')
+        //         ->flash();
 
-            return redirect()
-                       ->back();
-        }
+        //     return redirect()
+        //                ->back();
+        // }
 
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun. '/bupot_tahunan/');
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/');
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         $result = [];
         foreach ($files as $file) {
@@ -60,17 +59,14 @@ class ParserAOneController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNik = Auth::user()->employee->nik;
+            if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
+            } elseif (str_contains($content, $filterNik)) {
+                $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
@@ -80,7 +76,7 @@ class ParserAOneController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/' . $result[0]);
@@ -93,7 +89,7 @@ class ParserAOneController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 
@@ -114,28 +110,28 @@ class ParserAOneController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back()
-                       ->withErrors($validator)
-                       ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
 
-        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun.'/bupot_tahunan/');
+        $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/');
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         $result = [];
         foreach ($files as $file) {
@@ -144,17 +140,14 @@ class ParserAOneController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            if (str_contains($content, Str::remove('/', Auth::user()->karyawan->npwp))) {
+            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNik = Auth::user()->employee->nik;
+            if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
-            } else {
-                $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-                $filterNpwp = Str::remove('-', $filterNpwp);
-                $filterNpwp = Str::remove('.', $filterNpwp);
-                if (str_contains($content, $filterNpwp)) {
-                    $result[] = File::basename($file);
-                    break;
-                }
+            } elseif (str_contains($content, $filterNik)) {
+                $result[] = File::basename($file);
+                break;
             }
         }
         $hasil = count($result);
@@ -164,7 +157,7 @@ class ParserAOneController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
         try {
             $filesExist   = Storage::disk('public')->exists('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/' . $result[0]);
@@ -178,7 +171,7 @@ class ParserAOneController extends Controller
                 ->flash();
 
             return redirect()
-                       ->back();
+                ->back();
         }
     }
 }

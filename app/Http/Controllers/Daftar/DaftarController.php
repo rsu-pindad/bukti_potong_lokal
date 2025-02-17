@@ -21,18 +21,24 @@ class DaftarController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['username', 'password', 'password_confirmation','otp']), [
             'username' => 'required|string|unique:tbl_user|min:5|max:15',
             'password' => 'required|confirmed|min:6',
             'otp'      => 'required',
+        ], [
+            'username.requierd' => 'mohon isi username',
+            'username.unique' => 'username sudah diambil',
+            'username.min' => 'minimal 5 karakter',
+            'username.max' => 'maksimal 15 karakter',
+            'username.string' => 'simbol dilarang'
         ]);
 
-        $request->session()->reflash();
+        // $request->session()->reflash();
 
         if ($validator->fails()) {
             return redirect('daftar')
-                       ->withErrors($validator)
-                       ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         if ($validator->safe()->otp != session()->get('otp')) {
             flash()

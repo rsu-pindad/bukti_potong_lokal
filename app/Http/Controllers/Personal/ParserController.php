@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 
 class ParserController extends Controller
@@ -23,7 +22,7 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        // if (Auth::user()->karyawan->npwp == '') {
+        // if (Auth::user()->employee->npwp == '') {
         //     flash()
         //         ->warning('Maaf npwp masih kosong')
         //         ->flash();
@@ -45,11 +44,8 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-
-            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-            $filterNpwp = Str::remove('-', $filterNpwp);
-            $filterNpwp = Str::remove('.', $filterNpwp);
-            $filterNik = Auth::user()->karyawan->nik;
+            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNik = Auth::user()->employee->nik;
             if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
@@ -95,7 +91,7 @@ class ParserController extends Controller
             return abort(401);
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['bulan', 'tahun']), [
             'bulan' => 'required|numeric',
             'tahun' => 'required|numeric'
         ]);
@@ -111,14 +107,14 @@ class ParserController extends Controller
                 ->withInput();
         }
 
-        if (Auth::user()->karyawan->npwp == '') {
-            flash()
-                ->warning('Maaf npwp masih kosong')
-                ->flash();
+        // if (Auth::user()->employee->npwp == '') {
+        //     flash()
+        //         ->warning('Maaf npwp masih kosong')
+        //         ->flash();
 
-            return redirect()
-                ->back();
-        }
+        //     return redirect()
+        //         ->back();
+        // }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun);
         if (count($files) < 1) {
@@ -136,11 +132,8 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-
-            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-            $filterNpwp = Str::remove('-', $filterNpwp);
-            $filterNpwp = Str::remove('.', $filterNpwp);
-            $filterNik = Auth::user()->karyawan->nik;
+            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNik = Auth::user()->employee->nik;
             if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
@@ -189,7 +182,7 @@ class ParserController extends Controller
 
         $target_bulan = $request->bulan_ini;
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
@@ -211,11 +204,8 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-
-            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-            $filterNpwp = Str::remove('-', $filterNpwp);
-            $filterNpwp = Str::remove('.', $filterNpwp);
-            $filterNik = Auth::user()->karyawan->nik;
+            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNik = Auth::user()->employee->nik;
             if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
@@ -261,7 +251,7 @@ class ParserController extends Controller
             return abort(401);
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['bulan', 'tahun']), [
             'bulan' => 'required|numeric',
             'tahun' => 'required|numeric'
         ]);
@@ -277,7 +267,7 @@ class ParserController extends Controller
                 ->withInput();
         }
 
-        if (Auth::user()->karyawan->npwp == '') {
+        if (Auth::user()->employee->npwp == '') {
             flash()
                 ->warning('Maaf npwp masih kosong')
                 ->flash();
@@ -302,11 +292,8 @@ class ParserController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-
-            $filterNpwp = Str::remove('/', Auth::user()->karyawan->npwp);
-            $filterNpwp = Str::remove('-', $filterNpwp);
-            $filterNpwp = Str::remove('.', $filterNpwp);
-            $filterNik = Auth::user()->karyawan->nik;
+            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNik = Auth::user()->employee->nik;
             if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
                 break;
