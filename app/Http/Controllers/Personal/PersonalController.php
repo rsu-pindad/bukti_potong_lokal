@@ -13,6 +13,9 @@ class PersonalController extends Controller
 {
     public function index()
     {
+        if(!Auth::user()->employee){
+            return 'Gagal mendapatkan profile, hubungi admin';
+        }
         return view('employee.beranda');
     }
 
