@@ -1,20 +1,22 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pajak\PajakFileController;
+use App\Http\Controllers\Personal\ParserController;
+use App\Http\Controllers\Pajak\UserAssignController;
+use App\Http\Controllers\Tables\PajakUserController;
+use App\Http\Controllers\Personal\PersonalController;
+use App\Http\Controllers\Tables\Pajak\BupotController;
+use App\Http\Controllers\Personal\ParserAOneController;
+use App\Http\Controllers\Employee\UserDokumenController;
+use App\Http\Controllers\Pajak\PajakPublishedController;
+use App\Http\Controllers\Pajak\PajakEpinEmployeeController;
+use App\Http\Controllers\Tables\PajakTablesEmployeeController;
+use App\Http\Controllers\Personalia\PersonaliaEmployeeController;
+use App\Http\Controllers\Daftar\{CariController, DaftarController};
+use App\Http\Controllers\Tables\PersonaliaTablesEmployeeController;
 use App\Http\Controllers\Admin\{AksesController, PermissionController, RoleController};
 use App\Http\Controllers\Auth\{ForgotPasswordController, LoginController, LogoutController};
-use App\Http\Controllers\Daftar\{CariController, DaftarController};
-use App\Http\Controllers\Employee\UserDokumenController;
-use App\Http\Controllers\Pajak\PajakEpinEmployeeController;
-use App\Http\Controllers\Pajak\PajakFileController;
-use App\Http\Controllers\Pajak\PajakPublishedController;
-use App\Http\Controllers\Personal\ParserAOneController;
-use App\Http\Controllers\Personal\ParserController;
-use App\Http\Controllers\Personal\PersonalController;
-use App\Http\Controllers\Personalia\PersonaliaEmployeeController;
-use App\Http\Controllers\Tables\Pajak\BupotController;
-use App\Http\Controllers\Tables\PajakTablesEmployeeController;
-use App\Http\Controllers\Tables\PersonaliaTablesEmployeeController;
-use Illuminate\Support\Facades\Route;
 
 /*
  * |--------------------------------------------------------------------------
@@ -125,6 +127,16 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/import', [PajakEpinEmployeeController::class,     'import'])->name('pajak-employee-epin-import');
                 Route::get('/export', [PajakEpinEmployeeController::class,      'export'])->name('pajak-employee-epin-export');
                 Route::get('/template', [PajakEpinEmployeeController::class,    'template'])->name('pajak-employee-epin-template');
+            });
+
+            
+            // User Assign
+            Route::group(['prefix' => 'user'], function () {
+                Route::get('/', [PajakUserController::class, 'index'])->name('pajak-user-index');
+                Route::get('/edit/{id}', [UserAssignController::class, 'edit'])->name('pajak-user-edit');
+                Route::patch('/edit', [UserAssignController::class, 'update'])->name('pajak-user-assign');
+                Route::get('/assign/edit/{id}', [UserAssignController::class, 'show'])->name('pajak-user-assign-edit');
+                Route::delete('/assign/edit/{id}', [UserAssignController::class, 'remove'])->name('pajak-user-assign-remove');
             });
         });
 

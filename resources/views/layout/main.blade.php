@@ -65,6 +65,13 @@
                     <i class="fa-solid fa-users"></i> Pegawai
                   </a>
                 </li>
+                <li class="nav-item border-top border-dark mx-2">
+                  <a class="nav-link {{ Route::currentRouteName() == 'pajak-user-index' ? 'active' : '' }}"
+                     href="{{ route('pajak-user-index') }}"
+                     aria-current="page">
+                    <i class="fa-solid fa-users"></i> User
+                  </a>
+                </li>
               @endhasexactroles
               @hasexactroles('super-admin')
                 <li class="nav-item dropdown border-top border-dark mx-2">
