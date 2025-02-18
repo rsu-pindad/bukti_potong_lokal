@@ -101,7 +101,7 @@ class PajakPublishedController extends Controller
             $squishContent = Str::squish($formulir['formulir']);
             $slugs = $employee->nik;
             $slugs2 = $employee->npwp ?? 'BLM ADA NPWP';
-            $limitContent =  Str::limit($squishContent, 1200);
+            $limitContent =  Str::limit($squishContent, 1600);
             if (Str::of($limitContent)->contains($slugs)) {
                 PublishFileNpwp::insert([
                     'publish_file_id'     => $formulir['publish_file_id'],
