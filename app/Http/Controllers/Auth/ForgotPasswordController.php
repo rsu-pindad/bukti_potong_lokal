@@ -142,7 +142,9 @@ class ForgotPasswordController extends Controller
         }
 
         try {
-            $employee = Employee::where('npp', $updatePassword->npp)->first();
+            $employee = Employee::where('npp_baru', $updatePassword->npp)
+            ->orWhere('npp', $updatePassword->npp)
+            ->first();
             $user     = User::find($employee->user_id)
                 ->update(['password'               => Hash::make($request->password)]);
             DB::table('password_reset_tokens')->where(['token' => request('token')])->delete();
@@ -154,8 +156,8 @@ class ForgotPasswordController extends Controller
             return to_route('login');
         } catch (\Throwable $th) {
             flash()
-                // ->warning($th->getMessage())
-                ->warning('Terjadi kendala.')
+                ->warning($th->getMessage())
+                // ->warning('Terjadi kendala.')
                 ->flash();
 
             return redirect()
