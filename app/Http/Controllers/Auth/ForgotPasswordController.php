@@ -145,7 +145,6 @@ class ForgotPasswordController extends Controller
             $employee = Employee::where('npp_baru', $updatePassword->npp)
                 ->orWhere('npp', $updatePassword->npp)
                 ->first();
-
             if ($employee) {
                 User::find($employee->user_id)
                     ->update(['password'               => Hash::make($request->password)]);
