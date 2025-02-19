@@ -143,11 +143,14 @@ class ForgotPasswordController extends Controller
 
         try {
             $employee = Employee::where('npp_baru', $updatePassword->npp)
-            ->orWhere('npp', $updatePassword->npp)
-            ->first();
-            $user     = User::find($employee->user_id)
-                ->update(['password'               => Hash::make($request->password)]);
-            DB::table('password_reset_tokens')->where(['token' => request('token')])->delete();
+                ->orWhere('npp', $updatePassword->npp)
+                ->first();
+
+            if ($employee) {
+                User::find($employee->user_id)
+                    ->update(['password'               => Hash::make($request->password)]);
+                DB::table('password_reset_tokens')->where(['token' => request('token')])->delete();
+            }
 
             flash()
                 ->success('Update password berhasil.')
