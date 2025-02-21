@@ -107,7 +107,6 @@
                                 name="npwp"
                                 value="{{ Auth::user()->employee->npwp }}"
                                 placeholder="npwp...."
-                                required
                                 readonly />
               </x-forms.floating-labels>
             </div>

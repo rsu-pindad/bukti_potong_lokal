@@ -70,7 +70,8 @@ class PersonalController extends Controller
         $validator = Validator::make($request->only(['npwp','ptkp','st_peg','persetujuan']), [
             'npwp' => [
                 // 'required|numeric|unique:karyawan,npwp,except,id',
-                'required',
+                // 'required',
+                'nullable',
                 'string',
                 Rule::unique('employees')->ignore(Auth::user()->employee->id),
             ],
