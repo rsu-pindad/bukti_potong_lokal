@@ -44,6 +44,7 @@ class ParserAOneController extends Controller
         // }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/');
+        
         if (count($files) < 1) {
             flash()
                 ->warning('Bukti Potong A1 bulan ini belum di unggah')
@@ -59,7 +60,7 @@ class ParserAOneController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNpwp = Auth::user()->employee->npwp ?? 'BLMAADANPWPWPROFILNYA';
             $filterNik = Auth::user()->employee->nik;
             if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
@@ -115,14 +116,14 @@ class ParserAOneController extends Controller
                 ->withInput();
         }
 
-        if (Auth::user()->employee->npwp == '') {
-            flash()
-                ->warning('Maaf npwp masih kosong')
-                ->flash();
+        // if (Auth::user()->employee->npwp == '') {
+        //     flash()
+        //         ->warning('Maaf npwp masih kosong')
+        //         ->flash();
 
-            return redirect()
-                ->back();
-        }
+        //     return redirect()
+        //         ->back();
+        // }
 
         $files = Storage::disk('public')->allFiles('files/shares/pajak/extrack/' . $validator->safe()->bulan . $validator->safe()->tahun . '/bupot_tahunan/');
         if (count($files) < 1) {
@@ -140,7 +141,7 @@ class ParserAOneController extends Controller
             $pdf       = $pdfParser->parseFile($getFile);
             $content   = $pdf->getText();
 
-            $filterNpwp = Auth::user()->employee->npwp;
+            $filterNpwp = Auth::user()->employee->npwp ?? 'BLMAADANPWPWPROFILNYA';
             $filterNik = Auth::user()->employee->nik;
             if (str_contains($content, $filterNpwp)) {
                 $result[] = File::basename($file);
