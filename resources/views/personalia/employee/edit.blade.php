@@ -234,7 +234,7 @@
         maskNpwp.mask(inputNpwp);
 
         var inputHp = document.getElementById("no_hp");
-        var maskHp = new Inputmask("08999999[9999]");
+        var maskHp = new Inputmask("0899999999999");
         maskHp.mask(inputHp);
       });
     </script>
